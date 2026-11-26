@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#881337" />
+  <title>Ujian Khusus Kelas 6 - SDN 4 Tugusari</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] } };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root { --maroon-dark:#881337; --maroon:#be123c; --rose:#e11d48; --gold:#fbbf24; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      min-height: 100vh; min-height: 100dvh;
+      background: linear-gradient(180deg, #fecdd3 0%, #ffe4e6 38%, #fff1f2 72%, #fef3c7 100%);
+      background-attachment: fixed;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    input, textarea, .select-text { -webkit-user-select: text; user-select: text; }
+    .font-judul { font-family: 'Fredoka', sans-serif; }
+
+    /* ---- LATAR CERIA KELAS 6 ---- */
+    .scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .sun { position:absolute; top:-70px; right:-70px; width:240px; height:240px; border-radius:50%;
+      background: radial-gradient(circle, #fef08a 0%, #fbbf24 55%, rgba(251,191,36,0) 72%); opacity:.9; }
+    .cloud { position:absolute; background:#fff; border-radius:999px; opacity:.88; animation: drift linear infinite; }
+    .cloud::before, .cloud::after { content:""; position:absolute; background:#fff; border-radius:50%; }
+    .cloud::before { width:55%; height:160%; left:12%; top:-85%; }
+    .cloud::after { width:40%; height:130%; right:14%; top:-60%; }
+    .c1 { width:130px; height:34px; top:12%; left:-160px; animation-duration:72s; }
+    .c2 { width:95px; height:26px; top:28%; left:-120px; animation-duration:96s; animation-delay:-40s; }
+    .c3 { width:160px; height:40px; top:6%; left:-200px; animation-duration:120s; animation-delay:-80s; }
+    @keyframes drift { to { transform: translateX(calc(100vw + 320px)); } }
+    .hills { position:absolute; left:0; right:0; bottom:0; height:26vh; min-height:120px; }
+    .doodle { position:absolute; color:var(--maroon-dark); opacity:.12; }
+
+    .wrap { position: relative; z-index: 1; min-height: 100vh; min-height: 100dvh; display:flex; flex-direction:column; }
+
+    .judul-besar {
+      font-family:'Fredoka',sans-serif; font-weight:700; color:var(--maroon-dark);
+      font-size: clamp(2.4rem, 7vw, 4.4rem); line-height:1.02; letter-spacing:-.01em;
+    }
+    .angka-6 {
+      display:inline-grid; place-items:center; width:1.15em; height:1.15em; margin-left:.12em;
+      background:var(--gold); color:var(--maroon-dark); border-radius:.32em; border:.06em solid var(--maroon-dark);
+      box-shadow: .07em .07em 0 var(--maroon-dark); transform: rotate(-6deg);
+    }
+    .langkah { display:flex; gap:.75rem; align-items:flex-start; }
+    .langkah i { width:2.4rem; height:2.4rem; flex:none; display:grid; place-items:center; border-radius:.9rem;
+      background:#fff; color:var(--maroon); box-shadow:0 2px 0 rgba(136,19,55,.15); border:2px solid #fda4af; }
+
+    .kartu-login { box-shadow: 0 6px 0 rgba(136,19,55,.14), 0 24px 50px -18px rgba(136,19,55,.35); }
+    .field { width:100%; min-height:3.25rem; padding:.75rem 1rem; border:2px solid #cbd5e1; border-radius:1rem;
+      font-size:16px; background:#fff; }
+    .field:focus { outline:none; border-color:var(--rose); box-shadow:0 0 0 4px rgba(225,29,72,.22); }
+    .btn-mulai { min-height:3.5rem; background:var(--gold); color:var(--maroon-dark); border:3px solid var(--maroon-dark);
+      box-shadow:0 5px 0 var(--maroon-dark); transition:transform .08s, box-shadow .08s; }
+    .btn-mulai:hover { background:#fde047; }
+    .btn-mulai:active { transform:translateY(4px); box-shadow:0 1px 0 var(--maroon-dark); }
+    .btn-mulai:disabled { opacity:.7; }
+    :focus-visible { outline:3px solid var(--maroon-dark); outline-offset:2px; }
+
+    .soal-html img { max-width:100%; max-height:280px; height:auto; border-radius:.75rem; margin:.5rem 0; }
+    .soal-html table { border-collapse:collapse; margin:.5rem 0; max-width:100%; display:block; overflow-x:auto; }
+    .soal-html td, .soal-html th { border:1px solid #cbd5e1; padding:.4rem .75rem; }
+    .pad-aman { padding-left:max(1rem, env(safe-area-inset-left)); padding-right:max(1rem, env(safe-area-inset-right)); }
+
+    @media (max-height:520px) and (orientation:landscape) { .judul-besar { font-size:2rem; } }
+    @media (prefers-reduced-motion: reduce) { .cloud { animation:none; left:10%; } .btn-mulai { transition:none; } }
+  </style>
+</head>
+<body class="text-slate-800 select-none">
+
+  <script>
+    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
+  </script>
+
+  <!-- LATAR -->
+  <div class="scene" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+    <i class="doodle fa-solid fa-award text-5xl" style="top:22%;left:6%;transform:rotate(-20deg)"></i>
+    <i class="doodle fa-solid fa-book-open text-5xl" style="top:58%;left:3%;transform:rotate(-8deg)"></i>
+    <i class="doodle fa-solid fa-star text-4xl" style="top:40%;right:5%;transform:rotate(12deg)"></i>
+    <i class="doodle fa-solid fa-microchip text-5xl" style="top:70%;right:8%;transform:rotate(25deg)"></i>
+    <svg class="hills" viewBox="0 0 1440 300" preserveAspectRatio="none">
+      <path d="M0 150 C 240 60 420 60 640 130 S 1100 220 1440 90 V300 H0Z" fill="#fda4af" opacity=".65"/>
+      <path d="M0 210 C 300 120 520 190 760 210 S 1200 130 1440 200 V300 H0Z" fill="#e11d48"/>
+      <path d="M0 262 C 360 220 640 280 940 252 S 1300 230 1440 258 V300 H0Z" fill="#881337"/>
+    </svg>
+  </div>
+
+  <div class="wrap">
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-[#881337] via-[#be123c] to-[#9f1239] text-white shadow-lg sticky top-0 z-30 border-b-4 border-[#fbbf24]">
+      <div class="max-w-6xl mx-auto pad-aman py-2.5 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-11 h-11 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center shrink-0 overflow-hidden">
+            <img src="logo.png" alt="Logo SDN 4 Tugusari" class="w-full h-full object-contain"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hidden w-full h-full rounded-xl bg-[#fbbf24] text-[#881337] items-center justify-center font-judul font-bold text-sm">KLS 6</div>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h1 class="font-judul font-bold text-base sm:text-xl leading-tight truncate">Ruang Ujian Kelas 6</h1>
+              <span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">
+                KHUSUS KELAS 6
+              </span>
+            </div>
+            <p id="headerSub" class="text-xs text-rose-200 font-semibold truncate">SD Negeri 4 Tugusari</p>
+          </div>
+        </div>
+
+        <a id="btnPortalGuru" href="admin.html"
+          class="shrink-0 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-[#fbbf24] hover:text-[#881337] border border-white/25 text-xs font-extrabold transition flex items-center gap-1.5">
+          <i class="fa-solid fa-chalkboard-user"></i> <span>Portal Guru</span>
+        </a>
+
+        <div id="examStatusBar" class="hidden items-center gap-2">
+          <div class="px-3.5 py-1.5 rounded-xl bg-[#fbbf24] text-[#881337] font-mono font-extrabold text-sm shadow">
+            <i class="fa-regular fa-clock mr-1"></i><span id="txtTimer">75:00</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- HALAMAN 1: LANDING + LOGIN -->
+    <main id="sectionLogin" class="flex-1 flex items-center pad-aman py-6 sm:py-10">
+      <div class="w-full max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center">
+
+        <!-- Sambutan -->
+        <section class="text-center lg:text-left">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border-2 border-[#881337] text-[#881337] text-xs sm:text-sm font-extrabold shadow-sm">
+            <i class="fa-solid fa-graduation-cap text-[#be123c]"></i> SD Negeri 4 Tugusari
+          </span>
+          <h2 class="judul-besar mt-4">Ujian Siswa<br />Kelas<span class="angka-6">6</span></h2>
+          <p class="mt-4 text-base sm:text-lg font-bold text-slate-700 max-w-md mx-auto lg:mx-0">
+            Halo, siswa hebat Kelas 6! Baca setiap soal dengan teliti, kerjakan dengan tenang, dan jawab dengan jujur ya.
+          </p>
+
+          <ul class="mt-6 space-y-3 max-w-md mx-auto lg:mx-0 text-left">
+            <li class="langkah"><i class="fa-solid fa-pen-to-square"></i>
+              <p class="text-sm sm:text-base font-bold text-[#881337] pt-1.5">Ketik nama lengkapmu dengan benar</p></li>
+            <li class="langkah"><i class="fa-solid fa-key"></i>
+              <p class="text-sm sm:text-base font-bold text-[#881337] pt-1.5">Masukkan token dari Bapak/Ibu Guru</p></li>
+            <li class="langkah"><i class="fa-solid fa-lightbulb"></i>
+              <p class="text-sm sm:text-base font-bold text-[#881337] pt-1.5">Periksa kembali jawaban sebelum dikumpulkan</p></li>
+          </ul>
+
+          <p class="mt-6 text-xs sm:text-sm font-bold text-slate-600">
+            Wali Kelas 6: <span class="text-[#881337]">Ibu Mifta Hurahma, S.Pd.I.</span>
+          </p>
+        </section>
+
+        <!-- Kartu Login -->
+        <section class="w-full max-w-md mx-auto lg:max-w-none space-y-3">
+          <div class="bg-[#fbbf24] border-2 border-[#881337] rounded-2xl px-4 py-3 flex items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-xl text-[#881337] shrink-0"></i>
+            <p class="text-xs font-bold text-[#881337] leading-snug">
+              Link ini khusus <b>Kelas 6</b>. Siswa Kelas 3, 4, atau 5: silakan minta link kelasmu kepada Bapak/Ibu Guru.
+            </p>
+          </div>
+
+          <div class="kartu-login bg-white rounded-3xl border-2 border-[#881337]/10 overflow-hidden">
+            <div class="bg-gradient-to-br from-[#881337] via-[#be123c] to-[#9f1239] px-5 py-4 text-white flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-white p-1.5 shadow-lg flex items-center justify-center shrink-0">
+                <img src="logo.png" alt="Logo SDN 4 Tugusari" class="w-full h-full object-contain"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="hidden w-full h-full rounded-xl bg-[#fda4af] text-[#881337] items-center justify-center text-2xl">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-judul text-2xl font-bold leading-tight">Ayo Mulai Ujianmu!</h3>
+                <p class="text-xs text-rose-100">Isi data siswa Kelas 6 di bawah ini</p>
+              </div>
+            </div>
+
+            <form id="formMulaiUjian" class="p-5 sm:p-6 space-y-4" autocomplete="off">
+              <div>
+                <label for="inputNamaSiswa" class="block text-sm font-extrabold text-[#881337] mb-1.5">
+                  <i class="fa-solid fa-child-reaching text-[#be123c] mr-1"></i> Nama Lengkap
+                </label>
+                <input type="text" id="inputNamaSiswa" required placeholder="Ketik nama lengkapmu di sini"
+                  class="field select-text uppercase font-bold text-slate-800" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <span class="block text-sm font-extrabold text-[#881337] mb-1.5">
+                    <i class="fa-solid fa-school text-[#be123c] mr-1"></i> Ruang Kelas
+                  </span>
+                  <div class="min-h-[3.25rem] px-4 py-3 border-2 border-rose-200 rounded-2xl bg-rose-50 font-extrabold text-[#881337] flex items-center justify-between">
+                    <span>KELAS 6</span><i class="fa-solid fa-lock text-xs text-[#be123c]"></i>
+                  </div>
+                </div>
+                <div>
+                  <label for="inputTokenUjian" class="block text-sm font-extrabold text-[#881337] mb-1.5">
+                    <i class="fa-solid fa-key text-[#be123c] mr-1"></i> Token Ujian
+                  </label>
+                  <input type="text" id="inputTokenUjian" required placeholder="Contoh: MTK6 / KKA6"
+                    class="field select-text uppercase font-mono font-extrabold text-[#881337] tracking-wider" />
+                </div>
+              </div>
+
+              <label class="flex items-start gap-3 p-3 rounded-2xl bg-rose-50 border border-rose-200 cursor-pointer">
+                <input type="checkbox" id="checkKonfirmasiKelas6" required class="mt-0.5 w-5 h-5 shrink-0 rounded accent-[#881337]" />
+                <span class="text-xs sm:text-sm font-bold text-[#881337] leading-snug">
+                  Saya siswa <b>Kelas 6 SDN 4 Tugusari</b> dan akan mengerjakan ujian dengan jujur tanpa keluar dari layar ujian.
+                </span>
+              </label>
+
+              <button type="submit" id="btnMulai" class="btn-mulai w-full rounded-2xl font-judul font-bold text-lg tracking-wide">
+                Mulai Ujian Kelas 6 <i class="fa-solid fa-rocket ml-1.5"></i>
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- HALAMAN 2: PENGERJAAN UJIAN -->
+    <main id="sectionUjian" class="hidden flex-1 max-w-5xl w-full mx-auto pad-aman py-4 grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div class="lg:col-span-3 space-y-4">
+        <div class="bg-white rounded-3xl shadow-md border-2 border-rose-100 p-4 sm:p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span id="badgeTipeSoal" class="px-3 py-1 rounded-xl bg-[#881337] text-white text-xs font-extrabold">PILIHAN GANDA</span>
+              <span id="labelNomorSoal" class="font-judul font-bold text-lg text-[#881337]">Soal No. 1</span>
+            </div>
+            <span id="labelMapelGuru" class="text-xs font-bold text-[#be123c] bg-rose-50 px-3 py-1 rounded-full"></span>
+          </div>
+
+          <div id="kontenPertanyaan" class="soal-html text-base sm:text-lg text-slate-800 leading-relaxed"></div>
+          <div id="containerOpsiPG" class="space-y-3 pt-2"></div>
+
+          <div id="containerInputIsian" class="hidden pt-2 space-y-2 bg-rose-50/70 p-4 rounded-2xl border border-rose-200">
+            <label for="inputJawabanIsian" class="block text-xs font-extrabold text-[#881337] uppercase">Ketik jawaban singkatmu di bawah ini:</label>
+            <input type="text" id="inputJawabanIsian" placeholder="Tulis jawabanmu di sini..."
+              class="field select-text border-[#be123c] font-bold" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-3 pb-2">
+          <button id="btnPrev" onclick="pindahSoal(-1)"
+            class="px-4 py-3 min-h-[3rem] rounded-2xl bg-white border-2 border-slate-200 hover:bg-slate-50 font-extrabold text-sm text-slate-700 disabled:opacity-40 shadow-sm">
+            <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
+          </button>
+          <button id="btnNext" onclick="pindahSoal(1)"
+            class="px-6 py-3 min-h-[3rem] rounded-2xl bg-[#881337] hover:bg-[#be123c] font-extrabold text-sm text-white shadow">
+            Selanjutnya <i class="fa-solid fa-chevron-right ml-1"></i>
+          </button>
+          <button id="btnSelesaiUjian" onclick="konfirmasiSelesai()"
+            class="hidden px-6 py-3 min-h-[3rem] rounded-2xl bg-amber-500 hover:bg-amber-600 font-extrabold text-sm text-[#881337] shadow-lg">
+            <i class="fa-solid fa-paper-plane mr-1"></i> Kumpulkan Jawaban
+          </button>
+        </div>
+      </div>
+
+      <aside class="bg-white rounded-3xl shadow-md border-2 border-rose-100 p-4 h-fit space-y-3">
+        <div class="flex items-center justify-between border-b pb-2">
+          <h3 class="font-judul font-bold text-base text-[#881337]">Nomor Soal</h3>
+          <span class="px-2 py-0.5 rounded-lg bg-[#fbbf24] text-[#881337] text-[11px] font-extrabold">KELAS 6</span>
+        </div>
+        <div id="gridNomorSoal" class="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-5 gap-2"></div>
+        <div class="pt-2 border-t text-xs text-slate-600 font-semibold space-y-1">
+          <p><span class="inline-block w-3 h-3 rounded bg-rose-600 mr-1.5 align-middle"></span>Sudah dijawab</p>
+          <p><span class="inline-block w-3 h-3 rounded bg-slate-200 mr-1.5 align-middle"></span>Belum dijawab</p>
+        </div>
+        <button onclick="konfirmasiSelesai()"
+          class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-[#881337] font-extrabold text-xs shadow">
+          Selesai &amp; Kumpulkan
+        </button>
+      </aside>
+    </main>
+
+    <!-- HALAMAN 3: SELESAI -->
+    <main id="sectionHasil" class="hidden flex-1 flex items-center justify-center pad-aman py-6">
+      <div class="bg-white w-full max-w-md rounded-3xl shadow-xl border-2 border-rose-100 p-6 sm:p-7 text-center space-y-5">
+        <div class="w-20 h-20 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto text-4xl shadow-inner">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+          <span class="px-3 py-1 rounded-full bg-[#fbbf24] text-[#881337] text-xs font-extrabold">KELAS 6 • UJIAN SELESAI</span>
+          <h2 class="font-judul text-2xl font-bold text-[#881337] mt-2.5">Terima Kasih! Jawabanmu Sudah Terkirim</h2>
+          <p id="hasilNamaMapel" class="text-xs font-bold text-[#be123c] mt-1"></p>
+        </div>
+        <div class="bg-gradient-to-br from-rose-50 to-amber-50 rounded-2xl p-4 border-2 border-rose-200 space-y-1.5 text-slate-700">
+          <p class="text-sm font-extrabold text-[#881337]"><i class="fa-solid fa-star text-[#fbbf24] mr-1"></i> Kerja Bagus, Nak!</p>
+          <p class="text-xs leading-relaxed">
+            Seluruh jawabanmu sudah tersimpan dengan aman dan akan diperiksa oleh <b id="hasilGuruPemeriksa">Bapak/Ibu Guru</b>. Silakan lapor kepada Bapak/Ibu Guru bahwa kamu sudah selesai.
+          </p>
+        </div>
+        <button type="button" onclick="kembaliKeMenuAwal()"
+          class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#881337] to-[#be123c] hover:from-[#be123c] hover:to-[#881337] text-white font-judul font-bold text-base tracking-wide transition shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-house"></i> Kembali ke Menu Awal
+        </button>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#881337] text-white py-3 pad-aman text-center text-xs" style="padding-bottom:max(.75rem, env(safe-area-inset-bottom))">
+      <p class="font-bold">Portal Ujian Online Kelas 6 • SD Negeri 4 Tugusari</p>
+      <p class="text-[11px] text-rose-200 mt-0.5">Created by <span class="font-extrabold text-[#fbbf24]">Amir Salim, S.Si</span></p>
+    </footer>
+  </div>
+
+  <script>
+    const BTN_MULAI_HTML = 'Mulai Ujian Kelas 6 <i class="fa-solid fa-rocket ml-1.5"></i>';
+    const BTN_KUMPUL_HTML = '<i class="fa-solid fa-paper-plane mr-1"></i> Kumpulkan Jawaban';
+
+    function stateAwal() {
+      return { nama:"", kelas:"6", paket:"", mapel:"", guruPengampu:"", durasi:75, soal:[], jawaban:{},
+        idx:0, pelanggaran:0, logCurang:[], selesai:false, timerInterval:null, lastCurangTime:0 };
+    }
+    let state = stateAwal();
+    let antiCurangAktif = false;
+
+    function getDraftKey() {
+      return state.paket && state.nama ? `UJIAN_KLS6_${state.paket}_${state.nama}` : "";
+    }
+
+    function simpanDraftLokal() {
+      const key = getDraftKey();
+      if (!key) return;
+      try {
+        sessionStorage.setItem(key, JSON.stringify({
+          jawaban: state.jawaban,
+          pelanggaran: state.pelanggaran,
+          logCurang: state.logCurang
+        }));
+      } catch (e) {}
+    }
+
+    function muatDraftLokal() {
+      const key = getDraftKey();
+      if (!key) return;
+      try {
+        const raw = sessionStorage.getItem(key);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          state.jawaban = parsed.jawaban || {};
+          state.pelanggaran = Number(parsed.pelanggaran) || 0;
+          state.logCurang = Array.isArray(parsed.logCurang) ? parsed.logCurang : [];
+        }
+      } catch (e) {}
+    }
+
+    function hapusDraftLokal() {
+      const key = getDraftKey();
+      if (!key) return;
+      try { sessionStorage.removeItem(key); } catch (e) {}
+    }
+
+    function tampilStatusBar(tampil) {
+      const el = document.getElementById("examStatusBar");
+      el.classList.toggle("hidden", !tampil);
+      el.classList.toggle("flex", tampil);
+    }
+
+    async function fetchGasWithRetry(payload, maxRetries = 3) {
+      let lastErr = null;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          const res = await fetch(DEFAULT_GAS_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+          return await res.json();
+        } catch (err) {
+          lastErr = err;
+          if (attempt < maxRetries) await new Promise(r => setTimeout(r, 500 + Math.floor(Math.random() * 1000)));
+        }
+      }
+      throw lastErr;
+    }
+
+    document.getElementById("formMulaiUjian").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const nama = document.getElementById("inputNamaSiswa").value.trim().toUpperCase();
+      const token = document.getElementById("inputTokenUjian").value.trim().toUpperCase();
+      const btn = document.getElementById("btnMulai");
+      if (!nama || !token) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Menyiapkan Soal Kelas 6...';
+
+      try {
+        const res = await fetchGasWithRetry({ action: "mulaiUjian", kelas: "6", token });
+        if (res.status !== "success") {
+          alert(res.message);
+          btn.disabled = false; btn.innerHTML = BTN_MULAI_HTML;
+          return;
+        }
+
+        state = Object.assign(stateAwal(), {
+          nama, paket: res.paket, mapel: res.mapel, guruPengampu: res.guruPengampu,
+          durasi: res.durasi || 75, soal: res.soal
+        });
+        muatDraftLokal();
+
+        document.getElementById("headerSub").textContent = `${state.mapel} • ${state.nama}`;
+        document.getElementById("labelMapelGuru").textContent = `${state.mapel} • ${state.guruPengampu}`;
+        document.getElementById("sectionLogin").classList.add("hidden");
+        document.getElementById("btnPortalGuru").classList.add("hidden");
+        document.getElementById("sectionHasil").classList.add("hidden");
+        document.getElementById("sectionUjian").classList.remove("hidden");
+        tampilStatusBar(true);
+        window.scrollTo(0, 0);
+
+        mulaiTimer(state.durasi * 60);
+        aktifkanAntiCurang();
+        renderSoal();
+      } catch (err) {
+        alert("Gagal terhubung ke server ujian. Periksa koneksi internet lalu coba tekan Mulai lagi.");
+        btn.disabled = false; btn.innerHTML = BTN_MULAI_HTML;
+      }
+    });
+
+    function mulaiTimer(detikTotal) {
+      if (state.timerInterval) clearInterval(state.timerInterval);
+      let sisa = detikTotal;
+      const el = document.getElementById("txtTimer");
+      const tampil = () => {
+        const v = Math.max(0, sisa);
+        el.textContent = `${String(Math.floor(v / 60)).padStart(2, "0")}:${String(v % 60).padStart(2, "0")}`;
+      };
+      tampil();
+      state.timerInterval = setInterval(() => {
+        if (state.selesai) return clearInterval(state.timerInterval);
+        sisa--; tampil();
+        if (sisa <= 0) {
+          clearInterval(state.timerInterval);
+          alert("Waktu ujian telah habis! Jawaban otomatis dikumpulkan.");
+          kirimJawabanKeServer();
+        }
+      }, 1000);
+    }
+
+    // Pencatatan pindah tab (senyap, tidak ditampilkan ke siswa)
+    function aktifkanAntiCurang() {
+      if (antiCurangAktif) return;
+      antiCurangAktif = true;
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden || state.selesai || !state.paket) return;
+        const now = Date.now();
+        if (now - state.lastCurangTime < 2500) return;
+        state.lastCurangTime = now;
+        state.pelanggaran++;
+        state.logCurang.push({
+          waktu: new Date().toLocaleTimeString("id-ID"),
+          alasan: "Berpindah tab atau membuka aplikasi lain di luar browser ujian"
+        });
+        simpanDraftLokal();
+      });
+    }
+
+    window.addEventListener("beforeunload", (e) => {
+      if (state.paket && !state.selesai) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+
+    function renderSoal() {
+      const q = state.soal[state.idx];
+      if (!q) return;
+      const isIsian = q.tipe === "ISIAN";
+      const badge = document.getElementById("badgeTipeSoal");
+      badge.textContent = isIsian ? "ISIAN SINGKAT" : "PILIHAN GANDA";
+      badge.className = `px-3 py-1 rounded-xl text-white text-xs font-extrabold ${isIsian ? "bg-[#be123c]" : "bg-[#881337]"}`;
+      document.getElementById("labelNomorSoal").textContent = `${isIsian ? "Isian" : "Soal"} No. ${q.noLabel}`;
+      document.getElementById("kontenPertanyaan").innerHTML = q.pertanyaan;
+
+      const boxPG = document.getElementById("containerOpsiPG");
+      const boxIsian = document.getElementById("containerInputIsian");
+
+      if (isIsian) {
+        boxPG.classList.add("hidden");
+        boxIsian.classList.remove("hidden");
+        const inp = document.getElementById("inputJawabanIsian");
+        inp.value = state.jawaban[q.id] || "";
+        inp.oninput = () => {
+          state.jawaban[q.id] = inp.value;
+          simpanDraftLokal();
+          renderGridNomor();
+        };
+      } else {
+        boxIsian.classList.add("hidden");
+        boxPG.classList.remove("hidden");
+        const jwb = state.jawaban[q.id] || "";
+        const hurufOpsi = ["A", "B", "C", "D"].filter(h => h !== "D" || String(q.opsi.D || "").trim() !== "");
+        boxPG.innerHTML = hurufOpsi.map(h => {
+          const aktif = jwb === h;
+          return `
+            <button type="button" onclick="pilihOpsiPG('${q.id}', '${h}')"
+              class="w-full text-left p-3.5 min-h-[3.25rem] rounded-2xl border-2 transition flex items-start gap-3 ${
+                aktif ? "border-[#881337] bg-rose-50 shadow-sm" : "border-slate-200 hover:border-[#e11d48] bg-white"}">
+              <span class="w-8 h-8 rounded-xl flex items-center justify-center font-extrabold text-xs shrink-0 ${
+                aktif ? "bg-[#881337] text-[#fbbf24]" : "bg-slate-100 text-slate-700"}">${h}</span>
+              <div class="soal-html text-sm sm:text-base text-slate-800 pt-0.5">${q.opsi[h] || ""}</div>
+            </button>`;
+        }).join("");
+      }
+
+      document.getElementById("btnPrev").disabled = state.idx === 0;
+      const terakhir = state.idx === state.soal.length - 1;
+      document.getElementById("btnNext").classList.toggle("hidden", terakhir);
+      document.getElementById("btnSelesaiUjian").classList.toggle("hidden", !terakhir);
+
+      renderGridNomor();
+      if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+    }
+
+    function pilihOpsiPG(qId, huruf) {
+      state.jawaban[qId] = huruf;
+      simpanDraftLokal();
+      renderSoal();
+    }
+
+    function pindahSoal(delta) {
+      const next = state.idx + delta;
+      if (next >= 0 && next < state.soal.length) { state.idx = next; renderSoal(); window.scrollTo(0, 0); }
+    }
+
+    function renderGridNomor() {
+      document.getElementById("gridNomorSoal").innerHTML = state.soal.map((q, i) => {
+        const terisi = String(state.jawaban[q.id] || "").trim() !== "";
+        let cls = "bg-slate-100 text-slate-700 border-slate-200";
+        if (terisi) cls = "bg-rose-600 text-white border-rose-700";
+        if (i === state.idx) cls += " ring-2 ring-[#881337] ring-offset-1";
+        return `<button type="button" onclick="state.idx=${i};renderSoal();window.scrollTo(0,0)" class="h-10 rounded-xl border text-xs font-extrabold ${cls}">
+          ${q.tipe === "ISIAN" ? "I-" + q.noLabel : q.noLabel}</button>`;
+      }).join("");
+    }
+
+    function konfirmasiSelesai() {
+      const belum = state.soal.filter(q => !String(state.jawaban[q.id] || "").trim()).length;
+      const pesan = belum > 0
+        ? `Masih ada ${belum} soal yang belum dijawab. Yakin ingin mengumpulkan sekarang?`
+        : "Semua soal sudah dijawab. Kumpulkan jawaban sekarang?";
+      if (confirm(pesan)) kirimJawabanKeServer();
+    }
+
+    async function kirimJawabanKeServer() {
+      if (state.selesai) return;
+      state.selesai = true;
+      clearInterval(state.timerInterval);
+
+      const btnFinish = document.getElementById("btnSelesaiUjian");
+      btnFinish.disabled = true;
+      btnFinish.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengirim...';
+
+      try {
+        const res = await fetchGasWithRetry({
+          action: "submitUjian", nama: state.nama, kelas: "6", paket: state.paket, mapel: state.mapel,
+          guruPengampu: state.guruPengampu, jawaban: state.jawaban,
+          jmlPelanggaran: state.pelanggaran, logCurang: state.logCurang
+        });
+        if (res.status !== "success") {
+          throw new Error(res.message || "Gagal menyimpan jawaban");
+        }
+        hapusDraftLokal();
+        document.getElementById("sectionUjian").classList.add("hidden");
+        tampilStatusBar(false);
+        document.getElementById("sectionHasil").classList.remove("hidden");
+        document.getElementById("hasilNamaMapel").textContent = `${state.nama} • Kelas 6 • ${state.mapel}`;
+        document.getElementById("hasilGuruPemeriksa").textContent = state.guruPengampu || "Bapak/Ibu Guru";
+        window.scrollTo(0, 0);
+      } catch (err) {
+        state.selesai = false;
+        btnFinish.disabled = false;
+        btnFinish.innerHTML = BTN_KUMPUL_HTML;
+        alert("Gagal mengirim jawaban karena koneksi terputus. Jangan tutup halaman ini, tekan tombol Kumpulkan Jawaban lagi.");
+      }
+    }
+
+    function kembaliKeMenuAwal() {
+      if (state.timerInterval) clearInterval(state.timerInterval);
+      hapusDraftLokal();
+      state = stateAwal();
+      document.getElementById("formMulaiUjian").reset();
+      const btn = document.getElementById("btnMulai");
+      btn.disabled = false; btn.innerHTML = BTN_MULAI_HTML;
+      const fin = document.getElementById("btnSelesaiUjian");
+      fin.disabled = false; fin.innerHTML = BTN_KUMPUL_HTML;
+
+      document.getElementById("headerSub").textContent = "SD Negeri 4 Tugusari";
+      document.getElementById("sectionHasil").classList.add("hidden");
+      document.getElementById("sectionUjian").classList.add("hidden");
+      tampilStatusBar(false);
+      document.getElementById("sectionLogin").classList.remove("hidden");
+      document.getElementById("btnPortalGuru").classList.remove("hidden");
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+</html>
