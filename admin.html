@@ -1682,11 +1682,19 @@
     function renderPreviewSoal() {
       const container = document.getElementById("previewSoalContainer");
       const badgeBox = document.getElementById("ringkasanDeteksiSoal");
-      document.getElementById("countParsed").textContent = parsedSoalList.length;
-      document.getElementById("btnSimpanBankSoal").disabled = parsedSoalList.length === 0;
+      const btnSimpan = document.getElementById("btnSimpanBankSoal");
+      const countEl = document.getElementById("countParsed");
+
+      if (countEl) {
+        countEl.textContent = parsedSoalList.length;
+      } else if (btnSimpan) {
+        btnSimpan.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Simpan ke Bank Soal (<span id="countParsed">${parsedSoalList.length}</span> Soal)`;
+      }
+      if (btnSimpan) btnSimpan.disabled = parsedSoalList.length === 0;
+      if (!container) return;
 
       if (parsedSoalList.length === 0) {
-        badgeBox.classList.add("hidden");
+        if (badgeBox) badgeBox.classList.add("hidden");
         container.innerHTML = '<p class="text-sm text-slate-400 italic">Belum ada soal di daftar pratinjau. Unggah file <b>.docx</b>, klik <b>Muat Soal Tersimpan</b>, atau klik tombol <b>+ PG / + PGK / + Isian / + Essay</b> di atas.</p>';
         return;
       }
@@ -1697,16 +1705,18 @@
       const jmlEssay = parsedSoalList.filter(s => s.tipe === "ESSAY").length;
       const pgKosong = parsedSoalList.filter(s => (s.tipe === "PG" || s.tipe === "PGK") && !String(s.kunci || "").trim()).length;
 
-      badgeBox.classList.remove("hidden");
-      badgeBox.innerHTML = `
-        <span class="px-2 py-0.5 rounded bg-rose-100 text-[#881337]">PG: ${jmlPG}</span>
-        ${jmlPGK > 0 ? `<span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800">PGK: ${jmlPGK}</span>` : ""}
-        <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800">Isian: ${jmlIsian}</span>
-        <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">Essay: ${jmlEssay}</span>
-        ${pgKosong > 0
-          ? `<button type="button" onclick="lompatKePGKosong()" class="px-2 py-0.5 rounded bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-extrabold shadow-sm"><i class="fa-solid fa-circle-exclamation mr-1"></i>Belum Kunci: ${pgKosong}</button>`
-          : ((jmlPG + jmlPGK) > 0 ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i>Kunci Lengkap</span>` : "")}
-      `;
+      if (badgeBox) {
+        badgeBox.classList.remove("hidden");
+        badgeBox.innerHTML = `
+          <span class="px-2 py-0.5 rounded bg-rose-100 text-[#881337]">PG: ${jmlPG}</span>
+          ${jmlPGK > 0 ? `<span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800">PGK: ${jmlPGK}</span>` : ""}
+          <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800">Isian: ${jmlIsian}</span>
+          <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">Essay: ${jmlEssay}</span>
+          ${pgKosong > 0
+            ? `<button type="button" onclick="lompatKePGKosong()" class="px-2 py-0.5 rounded bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-extrabold shadow-sm"><i class="fa-solid fa-circle-exclamation mr-1"></i>Belum Kunci: ${pgKosong}</button>`
+            : ((jmlPG + jmlPGK) > 0 ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i>Kunci Lengkap</span>` : "")}
+        `;
+      }
 
       container.innerHTML = parsedSoalList.map((s, idx) => {
         const isObjektif = (s.tipe === "PG" || s.tipe === "PGK");
@@ -1849,7 +1859,7 @@
         }
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Simpan ke Bank Soal (${parsedSoalList.length} Soal)`;
+        btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Simpan ke Bank Soal (<span id="countParsed">${parsedSoalList.length}</span> Soal)`;
       }
     }
 
