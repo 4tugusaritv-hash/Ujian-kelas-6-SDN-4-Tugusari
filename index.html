@@ -1,747 +1,449 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ujian Online Kelas 6 - SDN 4 Tugusari</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-  <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css)" />
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)" />
-  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
-  <link href="[https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap)" rel="stylesheet" />
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
-    };
-  </script>
-  <script id="MathJax-script" async src="[https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js](https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js)"></script>
-  <style>
-    body {
-      font-family: 'Nunito', sans-serif;
-      background-color: #fff1f2;
-      background-image: radial-gradient(circle at 12% 12%, rgba(225, 29, 72, 0.12) 0%, transparent 26%),
-                        radial-gradient(circle at 88% 18%, rgba(251, 191, 36, 0.18) 0%, transparent 26%);
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    input, textarea, select {
-      user-select: text;
-      -webkit-user-select: text;
-    }
-    .font-judul { font-family: 'Fredoka', sans-serif; }
-    .konten-soal img {
-      max-width: 100%;
-      max-height: 260px;
-      height: auto;
-      border-radius: 0.5rem;
-      margin: 0.4rem 0;
-      display: inline-block;
-    }
-    .konten-soal table {
-      border-collapse: collapse;
-      margin: 0.5rem 0;
-    }
-    .konten-soal td, .konten-soal th {
-      border: 1px solid #cbd5e1;
-      padding: 0.35rem 0.6rem;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Ujian Online Kelas 6 - SDN 4 Tugusari</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{maroon:{DEFAULT:'#6d0f1c',2:'#8b1a2b',3:'#4a0a13'},gold:{DEFAULT:'#f5b301',2:'#ffd24d'}}}}}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]}};</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#4a0a13 0%,#6d0f1c 45%,#8b1a2b 100%);background-attachment:fixed;user-select:none;-webkit-user-select:none;padding-bottom:env(safe-area-inset-bottom)}
+input,textarea,select{user-select:text;-webkit-user-select:text;font-size:16px}
+.font-judul{font-family:'Fredoka',sans-serif}
+/* Latar animasi kelas 6: langit belajar */
+#bgAnim{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#bgAnim .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:blob 14s ease-in-out infinite alternate}
+#bgAnim .b1{width:40vmax;height:40vmax;background:#f5b301;top:-12vmax;left:-10vmax}
+#bgAnim .b2{width:34vmax;height:34vmax;background:#c2253b;bottom:-10vmax;right:-8vmax;animation-delay:-6s}
+#bgAnim .big6{position:absolute;right:4%;top:50%;transform:translateY(-50%);font-family:'Fredoka',sans-serif;font-weight:700;font-size:min(60vmin,420px);color:rgba(245,179,1,.09);line-height:1;animation:pulse6 6s ease-in-out infinite;text-shadow:0 0 40px rgba(245,179,1,.15)}
+#bgAnim .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffe9a8;animation:twinkle 3s ease-in-out infinite}
+#bgAnim .fl{position:absolute;bottom:-70px;color:#f5b301;opacity:0;font-family:'Fredoka',sans-serif;font-weight:700;animation:naik linear infinite;filter:drop-shadow(0 0 6px rgba(245,179,1,.5))}
+#bgAnim .fl.ic{color:#ffd24d}
+#bgAnim .shoot{position:absolute;top:-10px;width:110px;height:2px;background:linear-gradient(90deg,#ffe9a8,transparent);transform:rotate(35deg);opacity:0;animation:shoot 7s linear infinite}
+#bgAnim .rocket{position:absolute;left:-60px;bottom:8%;font-size:34px;color:#ffd24d;animation:roket 22s linear infinite;filter:drop-shadow(0 0 10px rgba(255,210,77,.7))}
+#bgAnim .awan{position:absolute;font-size:60px;color:rgba(255,255,255,.07);animation:awan linear infinite}
+@keyframes naik{0%{transform:translate(0,0) rotate(0);opacity:0}10%{opacity:.45}50%{transform:translate(28px,-60vh) rotate(180deg)}90%{opacity:.3}100%{transform:translate(-20px,-118vh) rotate(360deg);opacity:0}}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1.6)}}
+@keyframes shoot{0%{transform:translate(0,0) rotate(35deg);opacity:0}4%{opacity:1}14%{transform:translate(-320px,220px) rotate(35deg);opacity:0}100%{opacity:0}}
+@keyframes roket{0%{transform:translate(0,0) rotate(-40deg)}100%{transform:translate(115vw,-90vh) rotate(-40deg)}}
+@keyframes awan{from{transform:translateX(-120px)}to{transform:translateX(115vw)}}
+@keyframes blob{to{transform:translate(6vmax,5vmax) scale(1.15)}}
+@keyframes pulse6{50%{transform:translateY(-50%) scale(1.06);color:rgba(245,179,1,.15)}}
+@media (prefers-reduced-motion:reduce){#bgAnim *{animation:none!important}}
+.wrap{position:relative;z-index:1}
+.card{background:#fff;border:2px solid #f5b301;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.konten-soal img{max-width:100%;max-height:260px;height:auto;border-radius:.5rem;margin:.4rem 0;display:inline-block}
+.konten-soal table{border-collapse:collapse;margin:.5rem 0;display:block;overflow-x:auto;max-width:100%}
+.konten-soal td,.konten-soal th{border:1px solid #cbd5e1;padding:.35rem .6rem}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+</style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
+<script>
+const DEFAULT_GAS_URL="https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
+const STORAGE_KEY="UJIAN_SDN4_TUGUSARI_KELAS6_STATE";
+const KELAS_SISWA="6";
+</script>
 
-  <script>
-    const DEFAULT_GAS_URL = "[https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec](https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec)";
-    const STORAGE_KEY = "UJIAN_SDN4_TUGUSARI_KELAS6_STATE";
-    const KELAS_SISWA = "6";
-  </script>
+<div id="bgAnim"><div class="blob b1"></div><div class="blob b2"></div><div class="big6">6</div></div>
 
-  <!-- HEADER -->
-  <header class="bg-gradient-to-r from-[#881337] via-[#be123c] to-[#9f1239] text-white shadow-md border-b-4 border-[#fbbf24] sticky top-0 z-30">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-white p-1 shadow flex items-center justify-center shrink-0 overflow-hidden">
-          <img src="logo.png" alt="Logo" class="w-full h-full object-contain"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="hidden w-full h-full rounded-lg bg-[#fbbf24] text-[#881337] items-center justify-center font-bold">
-            <i class="fa-solid fa-graduation-cap"></i>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-judul font-bold text-base sm:text-lg leading-tight">Ujian Online SD Negeri 4 Tugusari</h1>
-            <span class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
-          </div>
-          <p id="subHeaderInfo" class="text-xs text-rose-200">Kecamatan Sumber Jaya, Kabupaten Lampung Barat</p>
-        </div>
+<div class="wrap flex flex-col min-h-screen">
+<!-- HEADER -->
+<header class="bg-gradient-to-r from-maroon-3 via-maroon to-maroon-2 text-white shadow-lg border-b-4 border-gold sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+      <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-1 shadow flex items-center justify-center shrink-0 overflow-hidden ring-2 ring-gold">
+        <img src="logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-full h-full rounded-lg bg-gold text-maroon items-center justify-center font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
       </div>
-
-      <!-- STATUS BAR SAAT UJIAN AKTIF -->
-      <div id="examTopStatus" class="hidden flex flex-wrap items-center gap-2">
-        <div class="px-3 py-1.5 rounded-xl bg-slate-900/40 border border-white/15 text-xs font-extrabold flex items-center gap-1.5">
-          <i class="fa-regular fa-clock text-[#fbbf24]"></i>
-          <span id="timerDisplay">75:00</span>
+      <div class="min-w-0">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-judul font-bold text-sm sm:text-lg leading-tight">Ujian Online SD Negeri 4 Tugusari</h1>
+          <span class="px-2 py-0.5 rounded-full bg-gold text-maroon text-[10px] font-extrabold">KELAS 6</span>
         </div>
-        <div id="badgePelanggaran" class="px-3 py-1.5 rounded-xl bg-white/15 text-xs font-extrabold flex items-center gap-1.5">
-          <i class="fa-solid fa-shield-halved text-[#fbbf24]"></i>
-          <span>Keluar Layar: <b id="countPelanggaran">0</b>/<b id="maxPelanggaran">25</b></span>
-        </div>
-        <button type="button" onclick="konfirmasiSubmitUjian(false)"
-          class="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-extrabold shadow">
-          <i class="fa-solid fa-paper-plane mr-1"></i> Kumpulkan
-        </button>
+        <p class="text-[11px] sm:text-xs font-extrabold text-gold-2 leading-tight"><i class="fa-solid fa-user-tie mr-1"></i>Kepala Sekolah: Amisis Daniyati, S.Pd.SD., M.M.</p>
+        <p id="subHeaderInfo" class="text-[11px] sm:text-xs text-amber-200 truncate">Kecamatan Sumber Jaya, Kabupaten Lampung Barat</p>
       </div>
     </div>
-  </header>
-
-  <!-- 1. HALAMAN LOGIN SISWA KELAS 6 -->
-  <main id="loginSection" class="flex-1 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-md rounded-3xl shadow-xl border-2 border-rose-100 overflow-hidden">
-      <div class="bg-gradient-to-br from-[#881337] to-[#be123c] p-6 text-white flex items-center gap-4">
-        <div class="w-14 h-14 rounded-2xl bg-white p-1.5 shadow flex items-center justify-center shrink-0">
-          <img src="logo.png" alt="Logo" class="w-full h-full object-contain"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="hidden w-full h-full rounded-xl bg-[#fbbf24] text-[#881337] items-center justify-center text-xl font-bold">
-            <i class="fa-solid fa-user-graduate"></i>
-          </div>
-        </div>
-        <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[11px] font-extrabold mb-1">RUANG UJIAN KELAS 6</span>
-          <h2 class="font-judul text-xl font-bold">Masuk Ruang Ujian</h2>
-          <p class="text-xs text-rose-100 mt-0.5">Isi nama lengkap dan token ujian dari guru</p>
-        </div>
+    <a id="linkPortalGuru" href="admin.html" class="shrink-0 px-3 sm:px-4 py-2 rounded-xl bg-gold hover:bg-gold-2 text-maroon-3 text-xs font-extrabold shadow border-b-2 border-amber-700 transition"><i class="fa-solid fa-lock mr-1"></i>Portal Guru</a>
+    <div id="examTopStatus" class="hidden flex flex-wrap items-center gap-2">
+      <div class="px-3 py-1.5 rounded-xl bg-black/30 border border-gold/60 text-xs font-extrabold flex items-center gap-1.5">
+        <i class="fa-regular fa-clock text-gold"></i><span id="timerDisplay">75:00</span>
       </div>
-
-      <form id="formMulaiUjian" class="p-6 space-y-4">
-        <div>
-          <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap Siswa (Kelas 6)</label>
-          <input type="text" id="inputNamaSiswa" required placeholder="Ketik nama lengkapmu..."
-            class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-bold text-slate-800 focus:border-[#be123c] focus:outline-none" />
-        </div>
-
-        <div>
-          <label class="block text-sm font-bold text-slate-700 mb-1">Token Ujian</label>
-          <input type="text" id="inputTokenUjian" required placeholder="CONTOH: MTK6"
-            class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-mono font-extrabold text-slate-800 focus:border-[#be123c] focus:outline-none" />
-        </div>
-
-        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-xs text-amber-900 space-y-1">
-          <p class="font-extrabold"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>Tata Tertib Ujian Online:</p>
-          <ul class="list-disc pl-4 space-y-0.5 text-[11px]">
-            <li>Dilarang membuka tab lain, Google, atau keluar dari layar ujian.</li>
-            <li>Setiap perpindahan layar membunyikan <b>alarm peringatan</b> dan tercatat otomatis.</li>
-            <li>Jika melebihi batas pelanggaran, ujian otomatis dikumpulkan.</li>
-          </ul>
-        </div>
-
-        <button type="submit" id="btnMulaiUjian"
-          class="w-full py-3 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white font-bold text-sm transition shadow-md">
-          <i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal
-        </button>
-
-        <div class="text-center pt-1">
-          <a href="admin.html" class="text-[11px] font-bold text-slate-400 hover:text-[#881337]">
-            <i class="fa-solid fa-lock mr-1"></i>Portal Guru & Admin
-          </a>
-        </div>
-      </form>
-    </div>
-  </main>
-
-  <!-- 2. HALAMAN PENGERJAAN SOAL -->
-  <main id="examSection" class="hidden flex-1 max-w-6xl w-full mx-auto p-4">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-
-      <!-- KARTU SOAL AKTIF -->
-      <div class="lg:col-span-8 bg-white rounded-3xl shadow-md border border-slate-200 p-5 sm:p-6 space-y-5">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-          <div class="flex items-center gap-2">
-            <span id="badgeBagianSoal" class="px-2.5 py-1 rounded-lg bg-rose-100 text-[#881337] text-xs font-extrabold">I. PILIHAN GANDA</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-extrabold">Soal No. <b id="nomorSoalAktif">1</b></span>
-          </div>
-          <span id="infoMapelGuru" class="text-xs font-bold text-slate-500"></span>
-        </div>
-
-        <!-- TEKS & GAMBAR PERTANYAAN -->
-        <div id="wadahPertanyaan" class="konten-soal text-base text-slate-800 leading-relaxed font-semibold"></div>
-
-        <!-- WADAH OPSI / KOLOM JAWABAN -->
-        <div id="wadahJawaban" class="pt-1"></div>
-
-        <!-- NAVIGASI BAWAH -->
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-slate-200">
-          <button type="button" id="btnPrevSoal" onclick="pindahSoal(indexSoalAktif - 1)"
-            class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 text-xs font-extrabold">
-            <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
-          </button>
-
-          <button type="button" id="btnRaguSoal" onclick="toggleRaguSoal()"
-            class="px-4 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-extrabold border border-amber-300">
-            <i class="fa-regular fa-flag mr-1"></i> Ragu-ragu
-          </button>
-
-          <button type="button" id="btnNextSoal" onclick="pindahSoal(indexSoalAktif + 1)"
-            class="px-4 py-2.5 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white text-xs font-extrabold shadow">
-            Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
-          </button>
-        </div>
+      <div id="badgePelanggaran" class="px-3 py-1.5 rounded-xl bg-white/15 text-xs font-extrabold flex items-center gap-1.5">
+        <i class="fa-solid fa-shield-halved text-gold"></i><span>Keluar Layar: <b id="countPelanggaran">0</b>/<b id="maxPelanggaran">25</b></span>
       </div>
-
-      <!-- PANEL NAVIGASI NOMOR SOAL -->
-      <aside class="lg:col-span-4 bg-white rounded-3xl shadow-md border border-slate-200 p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
-          <h3 class="font-bold text-sm text-[#881337]"><i class="fa-solid fa-grip mr-1.5"></i>Daftar Nomor Soal</h3>
-          <span id="progressTerjawab" class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">0 / 0 Dijawab</span>
-        </div>
-
-        <div id="gridNavigasiNomor" class="space-y-3 max-h-[420px] overflow-y-auto pr-1"></div>
-
-        <div class="flex flex-wrap items-center gap-3 text-[11px] font-bold text-slate-600 pt-2 border-t border-slate-200">
-          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span> Dijawab</span>
-          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span> Ragu</span>
-          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span> Kosong</span>
-        </div>
-
-        <button type="button" onclick="konfirmasiSubmitUjian(false)"
-          class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow">
-          <i class="fa-solid fa-check-double mr-1"></i> Selesai & Kumpulkan Jawaban
-        </button>
-      </aside>
-    </div>
-  </main>
-
-  <!-- 3. HALAMAN SELESAI UJIAN -->
-  <main id="finishSection" class="hidden flex-1 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-3xl shadow-xl border-2 border-emerald-200 p-6 sm:p-8 text-center space-y-4">
-      <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto">
-        <i class="fa-solid fa-circle-check"></i>
-      </div>
-      <h2 class="font-judul text-2xl font-bold text-[#881337]">Jawaban Berhasil Dikumpulkan!</h2>
-      <p id="finishSubText" class="text-sm text-slate-600">Terima kasih telah mengerjakan ujian dengan jujur dan tertib.</p>
-
-      <div id="finishSummaryBox" class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left text-xs space-y-2"></div>
-
-      <button type="button" onclick="kembaliKeHalamanAwal()"
-        class="w-full py-3 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white font-bold text-sm">
-        Kembali ke Halaman Awal
-      </button>
-    </div>
-  </main>
-
-  <!-- MODAL PERINGATAN ANTI-CURANG -->
-  <div id="modalPeringatan" class="hidden fixed inset-0 bg-slate-900/75 z-50 flex items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-red-300 text-center space-y-3">
-      <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto animate-bounce">
-        <i class="fa-solid fa-volume-high"></i>
-      </div>
-      <h3 class="font-judul text-lg font-bold text-red-700">Peringatan Pengawasan Ujian!</h3>
-      <p id="teksPeringatanModal" class="text-sm text-slate-700 font-semibold"></p>
-      <button type="button" onclick="tutupModalPeringatan()"
-        class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">
-        Saya Mengerti & Lanjutkan Ujian
+      <button type="button" onclick="konfirmasiSubmitUjian(false)" class="px-3.5 py-1.5 rounded-xl bg-gold hover:bg-gold-2 text-maroon text-xs font-extrabold shadow">
+        <i class="fa-solid fa-paper-plane mr-1"></i> Kumpulkan
       </button>
     </div>
   </div>
+</header>
 
-  <footer class="bg-white/80 border-t border-slate-200 py-3 px-4 text-center text-xs text-slate-500 mt-auto">
-    SD Negeri 4 Tugusari • Kepala Sekolah: <span class="font-extrabold text-slate-700">Amisis Daniyati, S.Pd.SD., M.M.</span>
-  </footer>
+<!-- 1. LOGIN -->
+<main id="loginSection" class="flex-1 flex items-center justify-center p-3 sm:p-6">
+  <div class="card w-full max-w-md sm:max-w-lg rounded-3xl overflow-hidden">
+    <div class="bg-gradient-to-br from-maroon-3 to-maroon-2 p-5 sm:p-6 text-white flex items-center gap-3 sm:gap-4 border-b-4 border-gold">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white p-1.5 shadow flex items-center justify-center shrink-0 ring-2 ring-gold">
+        <img src="logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-full h-full rounded-xl bg-gold text-maroon items-center justify-center text-xl font-bold"><i class="fa-solid fa-user-graduate"></i></div>
+      </div>
+      <div>
+        <span class="inline-block px-2.5 py-0.5 rounded-full bg-gold text-maroon text-[11px] font-extrabold mb-1">RUANG UJIAN KELAS 6</span>
+        <h2 class="font-judul text-lg sm:text-xl font-bold">Masuk Ruang Ujian</h2>
+        <p class="text-xs text-amber-100 mt-0.5">Isi nama lengkap dan token ujian dari guru</p>
+      </div>
+    </div>
+    <form id="formMulaiUjian" class="p-5 sm:p-6 space-y-4">
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap Siswa (Kelas 6)</label>
+        <input type="text" id="inputNamaSiswa" required placeholder="Ketik nama lengkapmu..." class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-bold text-slate-800 focus:border-maroon focus:outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-1">Token Ujian</label>
+        <input type="text" id="inputTokenUjian" required placeholder="CONTOH: MTK6" class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-mono font-extrabold text-slate-800 focus:border-maroon focus:outline-none" />
+      </div>
+      <div class="bg-amber-50 border-2 border-gold rounded-2xl p-3 text-xs text-amber-900 space-y-1">
+        <p class="font-extrabold"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>Tata Tertib Ujian Online:</p>
+        <ul class="list-disc pl-4 space-y-0.5 text-[11px] sm:text-xs">
+          <li>Dilarang membuka tab lain, Google, atau keluar dari layar ujian.</li>
+          <li>Setiap perpindahan layar membunyikan <b>alarm peringatan</b> dan tercatat otomatis.</li>
+          <li>Jika melebihi batas pelanggaran, ujian otomatis dikumpulkan.</li>
+        </ul>
+      </div>
+      <button type="submit" id="btnMulaiUjian" class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 border-b-4 border-gold font-bold text-sm transition shadow-md">
+        <i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal
+      </button>
+    </form>
+  </div>
+</main>
 
-  <script>
-    let ujianState = null;
-    let indexSoalAktif = 0;
-    let timerInterval = null;
-    let isSubmitting = false;
-    let lastViolationTs = 0;
-    let antiCurangTerpasang = false;
-    let examAudioCtx = null;
-
-    function siapkanAudioAlarm() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        if (!examAudioCtx) examAudioCtx = new AudioCtx();
-        if (examAudioCtx.state === "suspended") examAudioCtx.resume();
-      } catch (e) {}
-    }
-
-    function bunyikanAlarmPelanggaran() {
-      try {
-        siapkanAudioAlarm();
-        if (!examAudioCtx) return;
-        const now = examAudioCtx.currentTime;
-        const nadaList = [
-          { freq: 920, start: 0.0, dur: 0.22 },
-          { freq: 640, start: 0.25, dur: 0.22 },
-          { freq: 980, start: 0.50, dur: 0.28 },
-          { freq: 640, start: 0.81, dur: 0.22 },
-          { freq: 1040, start: 1.06, dur: 0.35 }
-        ];
-        nadaList.forEach(n => {
-          const osc = examAudioCtx.createOscillator();
-          const gain = examAudioCtx.createGain();
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(n.freq, now + n.start);
-          gain.gain.setValueAtTime(0.001, now + n.start);
-          gain.gain.exponentialRampToValueAtTime(0.45, now + n.start + 0.02);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.dur);
-          osc.connect(gain);
-          gain.connect(examAudioCtx.destination);
-          osc.start(now + n.start);
-          osc.stop(now + n.start + n.dur + 0.02);
-        });
-      } catch (e) {}
-    }
-
-    ["click", "touchstart", "keydown"].forEach(evt => {
-      document.addEventListener(evt, siapkanAudioAlarm, { passive: true });
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (parsed && parsed.aktif && Array.isArray(parsed.soalList) && parsed.soalList.length > 0) {
-            ujianState = parsed;
-            aktifkanModeUjian();
-          }
-        } catch (e) {
-          localStorage.removeItem(STORAGE_KEY);
-        }
-      }
-    });
-
-    async function callGasSiswa(payload, maxRetries = 3) {
-      let lastErr = null;
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-          const res = await fetch(DEFAULT_GAS_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload)
-          });
-          return await res.json();
-        } catch (err) {
-          lastErr = err;
-          if (attempt < maxRetries) await new Promise(r => setTimeout(r, 600 + Math.floor(Math.random() * 800)));
-        }
-      }
-      throw lastErr;
-    }
-
-    document.getElementById("formMulaiUjian").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      siapkanAudioAlarm();
-      const namaSiswa = document.getElementById("inputNamaSiswa").value.trim().toUpperCase();
-      const token = document.getElementById("inputTokenUjian").value.trim().toUpperCase();
-      const btn = document.getElementById("btnMulaiUjian");
-
-      if (!namaSiswa || !token) return;
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Memeriksa Token & Memuat Soal...';
-
-      try {
-        const res = await callGasSiswa({
-          action: "mulaiUjian",
-          namaSiswa,
-          kelas: KELAS_SISWA,
-          token
-        });
-
-        if (res.status !== "success") {
-          alert(res.message || "Gagal memulai ujian.");
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal';
-          return;
-        }
-
-        const durasiMenit = Number(res.pengaturan.durasiMenit) || 75;
-        const normalizedSoal = (res.soalList || []).map(q => {
-          let t = String(q.tipe || "PG").trim().toUpperCase();
-          if (t === "URAIAN" || t === "ESAI") t = "ESSAY";
-          return { ...q, tipe: t };
-        });
-
-        ujianState = {
-          aktif: true,
-          namaSiswa,
-          kelas: KELAS_SISWA,
-          paket: res.sesi.paket,
-          mapel: res.sesi.mapel,
-          guruPengampu: res.sesi.guruPengampu || "",
-          durasiMenit,
-          maxCurang: Number(res.pengaturan.maxCurang) || 25,
-          endTime: Date.now() + durasiMenit * 60 * 1000,
-          soalList: normalizedSoal,
-          jawaban: {},
-          ragu: {},
-          pelanggaran: 0,
-          logCurang: []
-        };
-        simpanLokal();
-        aktifkanModeUjian();
-      } catch (err) {
-        alert("Gagal terhubung ke server ujian. Periksa jaringan internet Anda.");
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal';
-      }
-    });
-
-    function simpanLokal() {
-      if (ujianState) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(ujianState));
-      }
-    }
-
-    function aktifkanModeUjian() {
-      document.getElementById("loginSection").classList.add("hidden");
-      document.getElementById("finishSection").classList.add("hidden");
-      document.getElementById("examSection").classList.remove("hidden");
-      document.getElementById("examTopStatus").classList.remove("hidden");
-
-      document.getElementById("subHeaderInfo").textContent = `${ujianState.mapel} • Peserta: ${ujianState.namaSiswa} (Kelas 6)`;
-      document.getElementById("infoMapelGuru").textContent = `${ujianState.mapel} (${ujianState.paket})`;
-      document.getElementById("maxPelanggaran").textContent = ujianState.maxCurang;
-      updateTampilanPelanggaran();
-
-      mulaiTimerUjian();
-      pasangAntiCurang();
-      pindahSoal(0);
-    }
-
-    function mulaiTimerUjian() {
-      if (timerInterval) clearInterval(timerInterval);
-      const tick = () => {
-        if (!ujianState || !ujianState.aktif || isSubmitting) return;
-        const sisaDetik = Math.max(0, Math.floor((ujianState.endTime - Date.now()) / 1000));
-        const menit = String(Math.floor(sisaDetik / 60)).padStart(2, "0");
-        const detik = String(sisaDetik % 60).padStart(2, "0");
-        const disp = document.getElementById("timerDisplay");
-        disp.textContent = `${menit}:${detik}`;
-        if (sisaDetik <= 300) disp.classList.add("text-red-300", "animate-pulse");
-
-        if (sisaDetik <= 0) {
-          clearInterval(timerInterval);
-          kirimJawabanKeServer("Waktu Habis (Otomatis)");
-        }
-      };
-      tick();
-      timerInterval = setInterval(tick, 1000);
-    }
-
-    function pasangAntiCurang() {
-      if (antiCurangTerpasang) return;
-      antiCurangTerpasang = true;
-
-      document.addEventListener("contextmenu", (e) => {
-        if (ujianState && ujianState.aktif) e.preventDefault();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (ujianState && ujianState.aktif && (e.ctrlKey || e.metaKey) && ["c", "x", "u", "s", "p"].includes(e.key.toLowerCase())) {
-          e.preventDefault();
-        }
-      });
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden && ujianState && ujianState.aktif && !isSubmitting) {
-          catatPelanggaran("Berpindah tab / meminimalkan browser");
-        }
-      });
-      window.addEventListener("blur", () => {
-        if (ujianState && ujianState.aktif && !isSubmitting) {
-          catatPelanggaran("Keluar dari jendela fokus ujian");
-        }
-      });
-    }
-
-    function catatPelanggaran(alasan) {
-      const now = Date.now();
-      if (now - lastViolationTs < 1500) return;
-      lastViolationTs = now;
-
-      bunyikanAlarmPelanggaran();
-
-      ujianState.pelanggaran += 1;
-      const waktu = new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-      ujianState.logCurang.push(`[${waktu}] ${alasan}`);
-      simpanLokal();
-      updateTampilanPelanggaran();
-
-      if (ujianState.pelanggaran >= ujianState.maxCurang) {
-        kirimJawabanKeServer(`Melebihi Batas Pelanggaran (${ujianState.pelanggaran}x)`);
-        return;
-      }
-
-      const sisa = ujianState.maxCurang - ujianState.pelanggaran;
-      document.getElementById("teksPeringatanModal").innerHTML =
-        `Sistem mendeteksi aktivitas: <b>${alasan}</b>.<br/>Pelanggaran tercatat: <b>${ujianState.pelanggaran} dari ${ujianState.maxCurang}</b> (sisa toleransi ${sisa}x sebelum dikumpulkan otomatis).`;
-      document.getElementById("modalPeringatan").classList.remove("hidden");
-    }
-
-    function tutupModalPeringatan() {
-      siapkanAudioAlarm();
-      document.getElementById("modalPeringatan").classList.add("hidden");
-    }
-
-    function updateTampilanPelanggaran() {
-      document.getElementById("countPelanggaran").textContent = ujianState.pelanggaran;
-      const badge = document.getElementById("badgePelanggaran");
-      if (ujianState.pelanggaran > 0) {
-        badge.className = "px-3 py-1.5 rounded-xl bg-red-600 text-white text-xs font-extrabold flex items-center gap-1.5";
-      }
-    }
-
-    function getLabelBagian(tipe) {
-      const t = String(tipe || "PG").trim().toUpperCase();
-      if (t === "PG") return { badge: "I. PILIHAN GANDA", cls: "bg-rose-100 text-[#881337]" };
-      if (t === "PGK") return { badge: "I. PG KOMPLEKS (PILIH > 1)", cls: "bg-purple-100 text-purple-800" };
-      if (t === "ESSAY" || t === "URAIAN") return { badge: "III. ESSAY / URAIAN", cls: "bg-indigo-100 text-indigo-800" };
-      return { badge: "II. ISIAN SINGKAT", cls: "bg-amber-100 text-amber-800" };
-    }
-
-    function getHurufOpsiTersedia(q) {
-      const dasar = ["A", "B", "C"];
-      if (q && q.opsi && String(q.opsi.D || "").trim() !== "") {
-        dasar.push("D");
-      }
-      return dasar;
-    }
-
-    function pindahSoal(idx) {
-      if (!ujianState || idx < 0 || idx >= ujianState.soalList.length) return;
-      indexSoalAktif = idx;
-      const q = ujianState.soalList[idx];
-      const tipe = String(q.tipe || "PG").trim().toUpperCase();
-      const infoBagian = getLabelBagian(tipe);
-
-      const badge = document.getElementById("badgeBagianSoal");
-      badge.textContent = infoBagian.badge;
-      badge.className = `px-2.5 py-1 rounded-lg text-xs font-extrabold ${infoBagian.cls}`;
-      document.getElementById("nomorSoalAktif").textContent = q.noLabel || (idx + 1);
-
-      const wadahTanya = document.getElementById("wadahPertanyaan");
-      wadahTanya.innerHTML = q.pertanyaanHTML || "";
-
-      const wadahJwb = document.getElementById("wadahJawaban");
-      const jwbSaatIni = ujianState.jawaban[q.id] || "";
-
-      if (tipe === "PG") {
-        const hurufList = getHurufOpsiTersedia(q);
-        wadahJwb.innerHTML = `<div class="space-y-2.5">` + hurufList.map(h => {
-          const teksOpsi = q.opsi && q.opsi[h] ? q.opsi[h] : "";
-          const terpilih = jwbSaatIni === h;
-          return `
-            <button type="button" onclick="pilihOpsiPG('${q.id}', '${h}')"
-              class="w-full text-left p-3.5 rounded-2xl border-2 transition flex items-start gap-3 ${terpilih ? "border-[#881337] bg-rose-50/80 shadow-sm" : "border-slate-200 hover:border-rose-300 bg-white"}">
-              <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${terpilih ? "bg-[#881337] text-white" : "bg-slate-100 text-slate-700"}">${h}</span>
-              <div class="konten-soal text-sm font-semibold text-slate-800 flex-1">${teksOpsi}</div>
-            </button>`;
-        }).join("") + `</div>`;
-      } else if (tipe === "PGK") {
-        const hurufList = getHurufOpsiTersedia(q);
-        const dipilihSet = new Set(String(jwbSaatIni).split(",").map(x => x.trim().toUpperCase()).filter(Boolean));
-        wadahJwb.innerHTML = `
-          <p class="text-xs font-extrabold text-purple-800 mb-2"><i class="fa-solid fa-square-check mr-1"></i>Pilih lebih dari satu jawaban yang benar:</p>
-          <div class="space-y-2.5">` + hurufList.map(h => {
-            const teksOpsi = q.opsi && q.opsi[h] ? q.opsi[h] : "";
-            const terpilih = dipilihSet.has(h);
-            return `
-              <button type="button" onclick="toggleOpsiPGK('${q.id}', '${h}')"
-                class="w-full text-left p-3.5 rounded-2xl border-2 transition flex items-start gap-3 ${terpilih ? "border-purple-700 bg-purple-50/80 shadow-sm" : "border-slate-200 hover:border-purple-300 bg-white"}">
-                <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${terpilih ? "bg-purple-700 text-white" : "bg-slate-100 text-slate-700"}">
-                  ${terpilih ? `<i class="fa-solid fa-check"></i>` : h}
-                </span>
-                <div class="konten-soal text-sm font-semibold text-slate-800 flex-1">${teksOpsi}</div>
-              </button>`;
-          }).join("") + `</div>`;
-      } else if (tipe === "ESSAY" || tipe === "URAIAN") {
-        wadahJwb.innerHTML = `
-          <label class="block text-xs font-extrabold text-indigo-800 mb-1.5">Tuliskan jawaban uraian / essay lengkapmu di bawah ini:</label>
-          <textarea rows="5" placeholder="Ketik jawaban uraianmu di sini..."
-            oninput="isiJawabanTeks('${q.id}', this.value)"
-            class="w-full p-3.5 border-2 border-indigo-200 rounded-2xl text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">${escapeHtml(jwbSaatIni)}</textarea>
-        `;
-      } else {
-        wadahJwb.innerHTML = `
-          <label class="block text-xs font-extrabold text-amber-800 mb-1.5">Tuliskan jawabanmu di bawah ini:</label>
-          <textarea rows="3" placeholder="Ketik jawabanmu di sini..."
-            oninput="isiJawabanTeks('${q.id}', this.value)"
-            class="w-full p-3.5 border-2 border-amber-200 rounded-2xl text-sm font-bold text-slate-800 focus:border-amber-600 focus:outline-none">${escapeHtml(jwbSaatIni)}</textarea>
-        `;
-      }
-
-      document.getElementById("btnPrevSoal").disabled = idx === 0;
-      const btnNext = document.getElementById("btnNextSoal");
-      if (idx === ujianState.soalList.length - 1) {
-        btnNext.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Selesai';
-        btnNext.onclick = () => konfirmasiSubmitUjian(false);
-        btnNext.className = "px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow";
-      } else {
-        btnNext.innerHTML = 'Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>';
-        btnNext.onclick = () => pindahSoal(indexSoalAktif + 1);
-        btnNext.className = "px-4 py-2.5 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white text-xs font-extrabold shadow";
-      }
-
-      const isRagu = Boolean(ujianState.ragu[q.id]);
-      document.getElementById("btnRaguSoal").className = isRagu
-        ? "px-4 py-2.5 rounded-xl bg-amber-400 text-slate-900 text-xs font-extrabold border border-amber-500 shadow-sm"
-        : "px-4 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-extrabold border border-amber-300";
-
-      renderNavigasiNomor();
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([wadahTanya, wadahJwb]).catch(() => {});
-      }
-    }
-
-    function pilihOpsiPG(qId, huruf) {
-      ujianState.jawaban[qId] = huruf;
-      simpanLokal();
-      pindahSoal(indexSoalAktif);
-    }
-
-    function toggleOpsiPGK(qId, huruf) {
-      const setJ = new Set(String(ujianState.jawaban[qId] || "").split(",").map(x => x.trim().toUpperCase()).filter(Boolean));
-      if (setJ.has(huruf)) setJ.delete(huruf);
-      else setJ.add(huruf);
-      const hasil = ["A", "B", "C", "D"].filter(h => setJ.has(h)).join(",");
-      if (hasil) ujianState.jawaban[qId] = hasil;
-      else delete ujianState.jawaban[qId];
-      simpanLokal();
-      pindahSoal(indexSoalAktif);
-    }
-
-    function isiJawabanTeks(qId, val) {
-      if (val && val.trim().length > 0) ujianState.jawaban[qId] = val;
-      else delete ujianState.jawaban[qId];
-      simpanLokal();
-      renderNavigasiNomor();
-    }
-
-    function toggleRaguSoal() {
-      const q = ujianState.soalList[indexSoalAktif];
-      if (!q) return;
-      if (ujianState.ragu[q.id]) delete ujianState.ragu[q.id];
-      else ujianState.ragu[q.id] = true;
-      simpanLokal();
-      pindahSoal(indexSoalAktif);
-    }
-
-    function renderNavigasiNomor() {
-      const container = document.getElementById("gridNavigasiNomor");
-      const total = ujianState.soalList.length;
-      const terjawab = ujianState.soalList.filter(q => String(ujianState.jawaban[q.id] || "").trim() !== "").length;
-      document.getElementById("progressTerjawab").textContent = `${terjawab} / ${total} Dijawab`;
-
-      const mapped = ujianState.soalList.map((q, i) => ({
-        q,
-        i,
-        t: String(q.tipe || "PG").trim().toUpperCase()
-      }));
-
-      const kelompok = [
-        { judul: "I. Pilihan Ganda / PGK", items: mapped.filter(x => x.t === "PG" || x.t === "PGK") },
-        { judul: "II. Isian Singkat", items: mapped.filter(x => x.t === "ISIAN") },
-        { judul: "III. Essay / Uraian", items: mapped.filter(x => x.t === "ESSAY" || x.t === "URAIAN") },
-        { judul: "Soal Lainnya", items: mapped.filter(x => !["PG", "PGK", "ISIAN", "ESSAY", "URAIAN"].includes(x.t)) }
-      ].filter(k => k.items.length > 0);
-
-      container.innerHTML = kelompok.map(k => `
-        <div>
-          <p class="text-[11px] font-extrabold text-slate-500 mb-1.5">${k.judul}</p>
-          <div class="grid grid-cols-5 gap-1.5">
-            ${k.items.map(({ q, i }) => {
-              const adaJwb = String(ujianState.jawaban[q.id] || "").trim() !== "";
-              const isRagu = Boolean(ujianState.ragu[q.id]);
-              const isAktif = i === indexSoalAktif;
-              let warna = "bg-slate-100 text-slate-700 hover:bg-slate-200";
-              if (isRagu) warna = "bg-amber-400 text-slate-900";
-              else if (adaJwb) warna = "bg-emerald-600 text-white";
-              return `
-                <button type="button" onclick="pindahSoal(${i})"
-                  class="h-9 rounded-xl font-extrabold text-xs transition ${warna} ${isAktif ? "ring-2 ring-offset-1 ring-[#881337]" : ""}">
-                  ${escapeHtml(q.noLabel || (i + 1))}
-                </button>`;
-            }).join("")}
-          </div>
+<!-- 2. UJIAN -->
+<main id="examSection" class="hidden flex-1 max-w-6xl w-full mx-auto p-3 sm:p-4">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+    <div class="card lg:col-span-8 rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-gold/60 pb-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="badgeBagianSoal" class="px-2.5 py-1 rounded-lg bg-rose-100 text-maroon text-xs font-extrabold">I. PILIHAN GANDA</span>
+          <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-maroon text-xs font-extrabold">Soal No. <b id="nomorSoalAktif">1</b></span>
         </div>
-      `).join("");
+        <span id="infoMapelGuru" class="text-xs font-bold text-slate-500"></span>
+      </div>
+      <div id="wadahPertanyaan" class="konten-soal text-[15px] sm:text-base text-slate-800 leading-relaxed font-semibold break-words"></div>
+      <div id="wadahJawaban" class="pt-1"></div>
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-4 border-t-2 border-gold/60">
+        <button type="button" id="btnPrevSoal" onclick="pindahSoal(indexSoalAktif-1)" class="px-3 sm:px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 text-xs font-extrabold"><i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya</button>
+        <button type="button" id="btnRaguSoal" onclick="toggleRaguSoal()" class="px-3 sm:px-4 py-2.5 rounded-xl bg-amber-100 text-amber-900 text-xs font-extrabold border border-amber-300"><i class="fa-regular fa-flag mr-1"></i> Ragu-ragu</button>
+        <button type="button" id="btnNextSoal" onclick="pindahSoal(indexSoalAktif+1)" class="px-3 sm:px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-2 text-white text-xs font-extrabold shadow">Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i></button>
+      </div>
+    </div>
+
+    <aside class="card lg:col-span-4 rounded-3xl p-4 sm:p-5 space-y-4 lg:sticky lg:top-24">
+      <div class="flex items-center justify-between gap-2 border-b-2 border-gold/60 pb-2.5">
+        <h3 class="font-bold text-sm text-maroon"><i class="fa-solid fa-grip mr-1.5"></i>Daftar Nomor Soal</h3>
+        <span id="progressTerjawab" class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">0 / 0 Dijawab</span>
+      </div>
+      <div id="gridNavigasiNomor" class="space-y-3 max-h-64 lg:max-h-[420px] overflow-y-auto pr-1"></div>
+      <div class="flex flex-wrap items-center gap-3 text-[11px] font-bold text-slate-600 pt-2 border-t-2 border-gold/60">
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span> Dijawab</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span> Ragu</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span> Kosong</span>
+      </div>
+      <button type="button" onclick="konfirmasiSubmitUjian(false)" class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 border-b-4 border-gold font-extrabold text-xs shadow"><i class="fa-solid fa-check-double mr-1"></i> Selesai &amp; Kumpulkan Jawaban</button>
+    </aside>
+  </div>
+</main>
+
+<!-- 3. SELESAI -->
+<main id="finishSection" class="hidden flex-1 flex items-center justify-center p-3 sm:p-4">
+  <div class="card w-full max-w-lg rounded-3xl p-5 sm:p-8 text-center space-y-4">
+    <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto"><i class="fa-solid fa-circle-check"></i></div>
+    <h2 class="font-judul text-xl sm:text-2xl font-bold text-maroon">Jawaban Berhasil Dikumpulkan!</h2>
+    <p id="finishSubText" class="text-sm text-slate-600">Terima kasih telah mengerjakan ujian dengan jujur dan tertib.</p>
+    <div id="finishSummaryBox" class="bg-amber-50 border border-gold rounded-2xl p-4 text-left text-xs space-y-2"></div>
+    <button type="button" onclick="kembaliKeHalamanAwal()" class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 border-b-4 border-gold font-bold text-sm">Kembali ke Halaman Awal</button>
+  </div>
+</main>
+
+<!-- MODAL PERINGATAN -->
+<div id="modalPeringatan" class="hidden fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-4 border-gold text-center space-y-3">
+    <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto animate-bounce"><i class="fa-solid fa-volume-high"></i></div>
+    <h3 class="font-judul text-lg font-bold text-maroon">Peringatan Pengawasan Ujian!</h3>
+    <p id="teksPeringatanModal" class="text-sm text-slate-700 font-semibold"></p>
+    <button type="button" onclick="tutupModalPeringatan()" class="w-full py-2.5 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 font-bold text-sm">Saya Mengerti &amp; Lanjutkan Ujian</button>
+  </div>
+</div>
+
+<footer class="bg-maroon-3 border-t-4 border-gold py-3 px-4 text-center text-[11px] sm:text-xs text-amber-100 mt-auto space-y-0.5">
+  <p>SD Negeri 4 Tugusari &bull; Kec. Sumber Jaya, Kab. Lampung Barat</p>
+  <p>Kepala Sekolah: <span class="font-extrabold text-gold-2">Amisis Daniyati, S.Pd.SD., M.M.</span></p>
+  <p>Dibuat oleh: <span class="font-extrabold text-gold-2">Amir Salim, S.Si.</span></p>
+</footer>
+</div>
+
+<script>
+// Latar animasi kelas 6: bintang, roket, ikon belajar & simbol matematika
+(function(){
+  const box=document.getElementById('bgAnim'),hp=window.innerWidth<640;
+  const R=(a,b)=>a+Math.random()*(b-a);
+  const add=(html,cls,st)=>{const e=document.createElement(cls[0]);e.className=cls[1];e.innerHTML=html;Object.assign(e.style,st);box.appendChild(e);};
+  for(let i=0;i<(hp?35:70);i++)add('',['div','star'],{left:R(0,100)+'%',top:R(0,100)+'%',animationDelay:R(0,3)+'s',animationDuration:R(2,5)+'s'});
+  for(let i=0;i<3;i++)add('',['div','shoot'],{left:R(40,100)+'%',animationDelay:(i*2.5+R(0,2))+'s',animationDuration:R(6,10)+'s'});
+  add('<i class="fa-solid fa-rocket"></i>',['div','rocket'],{});
+  for(let i=0;i<3;i++)add('<i class="fa-solid fa-cloud"></i>',['div','awan'],{top:R(5,70)+'%',fontSize:R(50,110)+'px',animationDuration:R(60,110)+'s',animationDelay:(-R(0,80))+'s'});
+  const ikon=['book-open','pencil','ruler-combined','calculator','graduation-cap','lightbulb','atom','flask','globe','star','trophy','puzzle-piece','brain','compass-drafting'];
+  const sim=['+','−','×','÷','=','π','6','½','%','√','∠','△','x²'];
+  const n=hp?16:30;
+  for(let i=0;i<n;i++){
+    const st={left:R(0,95)+'%',fontSize:R(18,38)+'px',animationDuration:R(16,32)+'s',animationDelay:(-R(0,28))+'s'};
+    if(i%2===0)add('<i class="fa-solid fa-'+ikon[(i/2|0)%ikon.length]+'"></i>',['span','fl ic'],st);
+    else add(sim[(i/2|0)%sim.length],['span','fl'],st);
+  }
+})();
+
+let ujianState=null,indexSoalAktif=0,timerInterval=null,isSubmitting=false,lastViolationTs=0,antiCurangTerpasang=false,examAudioCtx=null;
+
+function siapkanAudioAlarm(){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!examAudioCtx)examAudioCtx=new A();if(examAudioCtx.state==="suspended")examAudioCtx.resume();}catch(e){}}
+function bunyikanAlarmPelanggaran(){
+  try{siapkanAudioAlarm();if(!examAudioCtx)return;const now=examAudioCtx.currentTime;
+  [{f:920,s:0,d:.22},{f:640,s:.25,d:.22},{f:980,s:.5,d:.28},{f:640,s:.81,d:.22},{f:1040,s:1.06,d:.35}].forEach(n=>{
+    const o=examAudioCtx.createOscillator(),g=examAudioCtx.createGain();o.type="sawtooth";
+    o.frequency.setValueAtTime(n.f,now+n.s);g.gain.setValueAtTime(.001,now+n.s);
+    g.gain.exponentialRampToValueAtTime(.45,now+n.s+.02);g.gain.exponentialRampToValueAtTime(.001,now+n.s+n.d);
+    o.connect(g);g.connect(examAudioCtx.destination);o.start(now+n.s);o.stop(now+n.s+n.d+.02);});}catch(e){}
+}
+["click","touchstart","keydown"].forEach(evt=>document.addEventListener(evt,siapkanAudioAlarm,{passive:true}));
+
+window.addEventListener("DOMContentLoaded",()=>{
+  const saved=localStorage.getItem(STORAGE_KEY);
+  if(saved){try{const p=JSON.parse(saved);
+    if(p&&p.aktif&&Array.isArray(p.soalList)&&p.soalList.length>0){ujianState=p;aktifkanModeUjian();}
+  }catch(e){localStorage.removeItem(STORAGE_KEY);}}
+});
+
+async function callGasSiswa(payload,maxRetries=3){
+  let lastErr=null;
+  for(let a=1;a<=maxRetries;a++){
+    try{const res=await fetch(DEFAULT_GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});return await res.json();}
+    catch(err){lastErr=err;if(a<maxRetries)await new Promise(r=>setTimeout(r,600+Math.floor(Math.random()*800)));}
+  }
+  throw lastErr;
+}
+
+document.getElementById("formMulaiUjian").addEventListener("submit",async(e)=>{
+  e.preventDefault();siapkanAudioAlarm();
+  const namaSiswa=document.getElementById("inputNamaSiswa").value.trim().toUpperCase();
+  const token=document.getElementById("inputTokenUjian").value.trim().toUpperCase();
+  const btn=document.getElementById("btnMulaiUjian");
+  const resetBtn=()=>{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal';};
+  if(!namaSiswa||!token)return;
+  btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Memeriksa Token & Memuat Soal...';
+  try{
+    const res=await callGasSiswa({action:"mulaiUjian",namaSiswa,kelas:KELAS_SISWA,token});
+    if(res.status!=="success"){alert(res.message||"Gagal memulai ujian.");resetBtn();return;}
+    const durasiMenit=Number(res.pengaturan.durasiMenit)||75;
+    const soal=(res.soalList||[]).map(q=>{let t=String(q.tipe||"PG").trim().toUpperCase();if(t==="URAIAN"||t==="ESAI")t="ESSAY";return{...q,tipe:t};});
+    ujianState={aktif:true,namaSiswa,kelas:KELAS_SISWA,paket:res.sesi.paket,mapel:res.sesi.mapel,guruPengampu:res.sesi.guruPengampu||"",durasiMenit,
+      maxCurang:Number(res.pengaturan.maxCurang)||25,endTime:Date.now()+durasiMenit*60000,soalList:soal,jawaban:{},ragu:{},pelanggaran:0,logCurang:[]};
+    simpanLokal();aktifkanModeUjian();
+  }catch(err){alert("Gagal terhubung ke server ujian. Periksa jaringan internet Anda.");resetBtn();}
+});
+
+function simpanLokal(){if(ujianState)localStorage.setItem(STORAGE_KEY,JSON.stringify(ujianState));}
+
+function aktifkanModeUjian(){
+  document.getElementById("linkPortalGuru").classList.add("hidden");
+  ["loginSection","finishSection"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById("examSection").classList.remove("hidden");
+  document.getElementById("examTopStatus").classList.remove("hidden");
+  document.getElementById("subHeaderInfo").textContent=`${ujianState.mapel} • Peserta: ${ujianState.namaSiswa} (Kelas 6)`;
+  document.getElementById("infoMapelGuru").textContent=`${ujianState.mapel} (${ujianState.paket})`;
+  document.getElementById("maxPelanggaran").textContent=ujianState.maxCurang;
+  updateTampilanPelanggaran();mulaiTimerUjian();pasangAntiCurang();pindahSoal(0);
+}
+
+function mulaiTimerUjian(){
+  if(timerInterval)clearInterval(timerInterval);
+  const tick=()=>{
+    if(!ujianState||!ujianState.aktif||isSubmitting)return;
+    const s=Math.max(0,Math.floor((ujianState.endTime-Date.now())/1000));
+    const disp=document.getElementById("timerDisplay");
+    disp.textContent=`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+    if(s<=300)disp.classList.add("text-red-300","animate-pulse");
+    if(s<=0){clearInterval(timerInterval);kirimJawabanKeServer("Waktu Habis (Otomatis)");}
+  };
+  tick();timerInterval=setInterval(tick,1000);
+}
+
+function pasangAntiCurang(){
+  if(antiCurangTerpasang)return;antiCurangTerpasang=true;
+  const aktif=()=>ujianState&&ujianState.aktif&&!isSubmitting;
+  document.addEventListener("contextmenu",e=>{if(ujianState&&ujianState.aktif)e.preventDefault();});
+  document.addEventListener("keydown",e=>{if(ujianState&&ujianState.aktif&&(e.ctrlKey||e.metaKey)&&["c","x","u","s","p"].includes(e.key.toLowerCase()))e.preventDefault();});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&aktif())catatPelanggaran("Berpindah tab / meminimalkan browser");});
+  window.addEventListener("blur",()=>{if(aktif())catatPelanggaran("Keluar dari jendela fokus ujian");});
+}
+
+function catatPelanggaran(alasan){
+  const now=Date.now();if(now-lastViolationTs<1500)return;lastViolationTs=now;
+  bunyikanAlarmPelanggaran();
+  ujianState.pelanggaran+=1;
+  const w=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  ujianState.logCurang.push(`[${w}] ${alasan}`);simpanLokal();updateTampilanPelanggaran();
+  if(ujianState.pelanggaran>=ujianState.maxCurang){kirimJawabanKeServer(`Melebihi Batas Pelanggaran (${ujianState.pelanggaran}x)`);return;}
+  const sisa=ujianState.maxCurang-ujianState.pelanggaran;
+  document.getElementById("teksPeringatanModal").innerHTML=`Sistem mendeteksi aktivitas: <b>${alasan}</b>.<br/>Pelanggaran tercatat: <b>${ujianState.pelanggaran} dari ${ujianState.maxCurang}</b> (sisa toleransi ${sisa}x sebelum dikumpulkan otomatis).`;
+  document.getElementById("modalPeringatan").classList.remove("hidden");
+}
+function tutupModalPeringatan(){siapkanAudioAlarm();document.getElementById("modalPeringatan").classList.add("hidden");}
+function updateTampilanPelanggaran(){
+  document.getElementById("countPelanggaran").textContent=ujianState.pelanggaran;
+  if(ujianState.pelanggaran>0)document.getElementById("badgePelanggaran").className="px-3 py-1.5 rounded-xl bg-red-600 text-white text-xs font-extrabold flex items-center gap-1.5";
+}
+
+function getLabelBagian(tipe){
+  const t=String(tipe||"PG").trim().toUpperCase();
+  if(t==="PG")return{badge:"I. PILIHAN GANDA",cls:"bg-rose-100 text-maroon"};
+  if(t==="PGK")return{badge:"I. PG KOMPLEKS (PILIH > 1)",cls:"bg-purple-100 text-purple-800"};
+  if(t==="ESSAY"||t==="URAIAN")return{badge:"III. ESSAY / URAIAN",cls:"bg-indigo-100 text-indigo-800"};
+  return{badge:"II. ISIAN SINGKAT",cls:"bg-amber-100 text-amber-800"};
+}
+function getHurufOpsiTersedia(q){const d=["A","B","C"];if(q&&q.opsi&&String(q.opsi.D||"").trim()!=="")d.push("D");return d;}
+
+function pindahSoal(idx){
+  if(!ujianState||idx<0||idx>=ujianState.soalList.length)return;
+  indexSoalAktif=idx;
+  const q=ujianState.soalList[idx],tipe=String(q.tipe||"PG").trim().toUpperCase(),info=getLabelBagian(tipe);
+  const badge=document.getElementById("badgeBagianSoal");
+  badge.textContent=info.badge;badge.className=`px-2.5 py-1 rounded-lg text-xs font-extrabold ${info.cls}`;
+  document.getElementById("nomorSoalAktif").textContent=q.noLabel||(idx+1);
+  const wT=document.getElementById("wadahPertanyaan");wT.innerHTML=q.pertanyaanHTML||"";
+  const wJ=document.getElementById("wadahJawaban"),jwb=ujianState.jawaban[q.id]||"";
+
+  if(tipe==="PG"){
+    wJ.innerHTML=`<div class="space-y-2.5">`+getHurufOpsiTersedia(q).map(h=>{
+      const teks=q.opsi&&q.opsi[h]?q.opsi[h]:"",on=jwb===h;
+      return `<button type="button" onclick="pilihOpsiPG('${q.id}','${h}')" class="w-full text-left p-3 sm:p-3.5 rounded-2xl border-2 transition flex items-start gap-3 ${on?"border-maroon bg-amber-50 shadow-sm":"border-slate-200 hover:border-gold bg-white"}">
+        <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${on?"bg-maroon text-gold-2":"bg-slate-100 text-slate-700"}">${h}</span>
+        <div class="konten-soal text-sm font-semibold text-slate-800 flex-1 min-w-0 break-words">${teks}</div></button>`;}).join("")+`</div>`;
+  }else if(tipe==="PGK"){
+    const set=new Set(String(jwb).split(",").map(x=>x.trim().toUpperCase()).filter(Boolean));
+    wJ.innerHTML=`<p class="text-xs font-extrabold text-purple-800 mb-2"><i class="fa-solid fa-square-check mr-1"></i>Pilih lebih dari satu jawaban yang benar:</p><div class="space-y-2.5">`+getHurufOpsiTersedia(q).map(h=>{
+      const teks=q.opsi&&q.opsi[h]?q.opsi[h]:"",on=set.has(h);
+      return `<button type="button" onclick="toggleOpsiPGK('${q.id}','${h}')" class="w-full text-left p-3 sm:p-3.5 rounded-2xl border-2 transition flex items-start gap-3 ${on?"border-purple-700 bg-purple-50/80 shadow-sm":"border-slate-200 hover:border-purple-300 bg-white"}">
+        <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${on?"bg-purple-700 text-white":"bg-slate-100 text-slate-700"}">${on?`<i class="fa-solid fa-check"></i>`:h}</span>
+        <div class="konten-soal text-sm font-semibold text-slate-800 flex-1 min-w-0 break-words">${teks}</div></button>`;}).join("")+`</div>`;
+  }else if(tipe==="ESSAY"||tipe==="URAIAN"){
+    wJ.innerHTML=`<label class="block text-xs font-extrabold text-indigo-800 mb-1.5">Tuliskan jawaban uraian / essay lengkapmu di bawah ini:</label>
+      <textarea rows="5" placeholder="Ketik jawaban uraianmu di sini..." oninput="isiJawabanTeks('${q.id}',this.value)" class="w-full p-3.5 border-2 border-indigo-200 rounded-2xl text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">${escapeHtml(jwb)}</textarea>`;
+  }else{
+    wJ.innerHTML=`<label class="block text-xs font-extrabold text-amber-800 mb-1.5">Tuliskan jawabanmu di bawah ini:</label>
+      <textarea rows="3" placeholder="Ketik jawabanmu di sini..." oninput="isiJawabanTeks('${q.id}',this.value)" class="w-full p-3.5 border-2 border-amber-300 rounded-2xl text-sm font-bold text-slate-800 focus:border-maroon focus:outline-none">${escapeHtml(jwb)}</textarea>`;
+  }
+
+  document.getElementById("btnPrevSoal").disabled=idx===0;
+  const bn=document.getElementById("btnNextSoal");
+  if(idx===ujianState.soalList.length-1){
+    bn.innerHTML='<i class="fa-solid fa-check mr-1"></i> Selesai';bn.onclick=()=>konfirmasiSubmitUjian(false);
+    bn.className="px-3 sm:px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow";
+  }else{
+    bn.innerHTML='Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>';bn.onclick=()=>pindahSoal(indexSoalAktif+1);
+    bn.className="px-3 sm:px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-2 text-white text-xs font-extrabold shadow";
+  }
+  document.getElementById("btnRaguSoal").className=ujianState.ragu[q.id]
+    ?"px-3 sm:px-4 py-2.5 rounded-xl bg-gold text-maroon text-xs font-extrabold border border-amber-500 shadow-sm"
+    :"px-3 sm:px-4 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-extrabold border border-amber-300";
+  renderNavigasiNomor();
+  if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([wT,wJ]).catch(()=>{});
+}
+
+function pilihOpsiPG(id,h){ujianState.jawaban[id]=h;simpanLokal();pindahSoal(indexSoalAktif);}
+function toggleOpsiPGK(id,h){
+  const s=new Set(String(ujianState.jawaban[id]||"").split(",").map(x=>x.trim().toUpperCase()).filter(Boolean));
+  s.has(h)?s.delete(h):s.add(h);
+  const r=["A","B","C","D"].filter(x=>s.has(x)).join(",");
+  r?ujianState.jawaban[id]=r:delete ujianState.jawaban[id];
+  simpanLokal();pindahSoal(indexSoalAktif);
+}
+function isiJawabanTeks(id,v){
+  if(v&&v.trim().length>0)ujianState.jawaban[id]=v;else delete ujianState.jawaban[id];
+  simpanLokal();renderNavigasiNomor();
+}
+function toggleRaguSoal(){
+  const q=ujianState.soalList[indexSoalAktif];if(!q)return;
+  ujianState.ragu[q.id]?delete ujianState.ragu[q.id]:ujianState.ragu[q.id]=true;
+  simpanLokal();pindahSoal(indexSoalAktif);
+}
+
+function renderNavigasiNomor(){
+  const c=document.getElementById("gridNavigasiNomor"),total=ujianState.soalList.length;
+  const done=ujianState.soalList.filter(q=>String(ujianState.jawaban[q.id]||"").trim()!=="").length;
+  document.getElementById("progressTerjawab").textContent=`${done} / ${total} Dijawab`;
+  const m=ujianState.soalList.map((q,i)=>({q,i,t:String(q.tipe||"PG").trim().toUpperCase()}));
+  const kel=[
+    {j:"I. Pilihan Ganda / PGK",it:m.filter(x=>x.t==="PG"||x.t==="PGK")},
+    {j:"II. Isian Singkat",it:m.filter(x=>x.t==="ISIAN")},
+    {j:"III. Essay / Uraian",it:m.filter(x=>x.t==="ESSAY"||x.t==="URAIAN")},
+    {j:"Soal Lainnya",it:m.filter(x=>!["PG","PGK","ISIAN","ESSAY","URAIAN"].includes(x.t))}
+  ].filter(k=>k.it.length>0);
+  c.innerHTML=kel.map(k=>`<div><p class="text-[11px] font-extrabold text-slate-500 mb-1.5">${k.j}</p>
+    <div class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-5 gap-1.5">${k.it.map(({q,i})=>{
+      const ada=String(ujianState.jawaban[q.id]||"").trim()!=="",rg=Boolean(ujianState.ragu[q.id]);
+      let w="bg-slate-100 text-slate-700 hover:bg-slate-200";
+      if(rg)w="bg-amber-400 text-slate-900";else if(ada)w="bg-emerald-600 text-white";
+      return `<button type="button" onclick="pindahSoal(${i})" class="h-9 rounded-xl font-extrabold text-xs transition ${w} ${i===indexSoalAktif?"ring-2 ring-offset-1 ring-maroon":""}">${escapeHtml(q.noLabel||(i+1))}</button>`;
+    }).join("")}</div></div>`).join("");
+}
+
+function konfirmasiSubmitUjian(otomatis){
+  if(otomatis){kirimJawabanKeServer("Otomatis");return;}
+  const total=ujianState.soalList.length;
+  const done=ujianState.soalList.filter(q=>String(ujianState.jawaban[q.id]||"").trim()!=="").length;
+  const belum=total-done;
+  const pesan=belum>0?`Masih ada ${belum} soal yang belum dijawab.\n\nApakah kamu yakin ingin mengumpulkan jawaban sekarang?`:"Semua soal sudah dijawab. Kumpulkan jawaban sekarang?";
+  if(confirm(pesan))kirimJawabanKeServer("Dikumpulkan Siswa");
+}
+
+async function kirimJawabanKeServer(alasan){
+  if(isSubmitting||!ujianState)return;
+  isSubmitting=true;ujianState.aktif=false;
+  if(timerInterval)clearInterval(timerInterval);
+  document.getElementById("modalPeringatan").classList.add("hidden");
+  document.getElementById("examSection").classList.add("hidden");
+  document.getElementById("examTopStatus").classList.add("hidden");
+  document.getElementById("finishSection").classList.remove("hidden");
+  const box=document.getElementById("finishSummaryBox");
+  box.innerHTML=`<p class="text-center font-bold text-maroon py-4"><i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Sedang mengirim dan memeriksa jawaban...</p>`;
+  try{
+    const res=await callGasSiswa({action:"submitUjian",namaSiswa:ujianState.namaSiswa,kelas:KELAS_SISWA,paket:ujianState.paket,jawaban:ujianState.jawaban,pelanggaran:ujianState.pelanggaran,logCurang:ujianState.logCurang,alasanSubmit:alasan});
+    localStorage.removeItem(STORAGE_KEY);
+    if(res.status==="success"){
+      box.innerHTML=`
+        <div class="flex justify-between gap-2"><span class="text-slate-500">Nama Peserta:</span><b class="text-right">${escapeHtml(ujianState.namaSiswa)}</b></div>
+        <div class="flex justify-between gap-2"><span class="text-slate-500">Mata Pelajaran:</span><b class="text-right">${escapeHtml(ujianState.mapel)} (Kelas 6)</b></div>
+        <div class="flex justify-between gap-2"><span class="text-slate-500">Status Pengumpulan:</span><b class="text-right">${escapeHtml(alasan)}</b></div>
+        <div class="flex justify-between gap-2"><span class="text-slate-500">Catatan Keluar Layar:</span><b>${ujianState.pelanggaran} kali</b></div>
+        <hr class="border-gold/60 my-1" />
+        ${res.adaUraian
+          ?`<div class="p-2.5 rounded-xl bg-amber-100 border border-gold text-amber-900 font-bold">Skor Pilihan Ganda: ${res.skorPG}. Nilai akhir akan muncul lengkap setelah Guru mengoreksi jawaban Isian/Essay.</div>`
+          :`<div class="flex justify-between items-center text-sm pt-1"><span class="font-bold text-slate-700">Nilai Akhir:</span><span class="px-3 py-1 rounded-xl bg-maroon text-gold-2 font-extrabold text-base">${res.nilaiAkhir}</span></div>`}`;
+    }else{
+      box.innerHTML=`<p class="text-red-600 font-bold">${escapeHtml(res.message||"Terjadi kendala saat menyimpan.")}</p>`;
     }
-
-    function konfirmasiSubmitUjian(otomatis) {
-      if (otomatis) {
-        kirimJawabanKeServer("Otomatis");
-        return;
-      }
-      const total = ujianState.soalList.length;
-      const terjawab = ujianState.soalList.filter(q => String(ujianState.jawaban[q.id] || "").trim() !== "").length;
-      const belum = total - terjawab;
-      const pesan = belum > 0
-        ? `Masih ada ${belum} soal yang belum dijawab.\n\nApakah kamu yakin ingin mengumpulkan jawaban sekarang?`
-        : "Semua soal sudah dijawab. Kumpulkan jawaban sekarang?";
-      if (confirm(pesan)) {
-        kirimJawabanKeServer("Dikumpulkan Siswa");
-      }
-    }
-
-    async function kirimJawabanKeServer(alasanSubmit) {
-      if (isSubmitting || !ujianState) return;
-      isSubmitting = true;
-      ujianState.aktif = false;
-      if (timerInterval) clearInterval(timerInterval);
-
-      document.getElementById("modalPeringatan").classList.add("hidden");
-      document.getElementById("examSection").classList.add("hidden");
-      document.getElementById("examTopStatus").classList.add("hidden");
-      document.getElementById("finishSection").classList.remove("hidden");
-
-      const box = document.getElementById("finishSummaryBox");
-      box.innerHTML = `<p class="text-center font-bold text-[#881337] py-4"><i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Sedang mengirim dan memeriksa jawaban...</p>`;
-
-      try {
-        const res = await callGasSiswa({
-          action: "submitUjian",
-          namaSiswa: ujianState.namaSiswa,
-          kelas: KELAS_SISWA,
-          paket: ujianState.paket,
-          jawaban: ujianState.jawaban,
-          pelanggaran: ujianState.pelanggaran,
-          logCurang: ujianState.logCurang,
-          alasanSubmit
-        });
-
-        localStorage.removeItem(STORAGE_KEY);
-
-        if (res.status === "success") {
-          box.innerHTML = `
-            <div class="flex justify-between"><span class="text-slate-500">Nama Peserta:</span><b>${escapeHtml(ujianState.namaSiswa)}</b></div>
-            <div class="flex justify-between"><span class="text-slate-500">Mata Pelajaran:</span><b>${escapeHtml(ujianState.mapel)} (Kelas 6)</b></div>
-            <div class="flex justify-between"><span class="text-slate-500">Status Pengumpulan:</span><b>${escapeHtml(alasanSubmit)}</b></div>
-            <div class="flex justify-between"><span class="text-slate-500">Catatan Keluar Layar:</span><b>${ujianState.pelanggaran} kali</b></div>
-            <hr class="border-slate-200 my-1" />
-            ${res.adaUraian
-              ? `<div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold">
-                  Skor Pilihan Ganda: ${res.skorPG}. Nilai akhir akan muncul lengkap setelah Guru mengoreksi jawaban Isian/Essay.
-                </div>`
-              : `<div class="flex justify-between items-center text-sm pt-1">
-                  <span class="font-bold text-slate-700">Nilai Akhir:</span>
-                  <span class="px-3 py-1 rounded-xl bg-emerald-600 text-white font-extrabold text-base">${res.nilaiAkhir}</span>
-                </div>`}
-          `;
-        } else {
-          box.innerHTML = `<p class="text-red-600 font-bold">${escapeHtml(res.message || "Terjadi kendala saat menyimpan.")}</p>`;
-        }
-      } catch (err) {
-        box.innerHTML = `<p class="text-red-600 font-bold">Gagal mengirim jawaban karena koneksi terputus. Jangan tutup halaman ini, muat ulang halaman untuk mengirim ulang.</p>`;
-      }
-    }
-
-    function kembaliKeHalamanAwal() {
-      localStorage.removeItem(STORAGE_KEY);
-      location.reload();
-    }
-
-    function escapeHtml(str) {
-      return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    }
-  </script>
+  }catch(err){
+    box.innerHTML=`<p class="text-red-600 font-bold">Gagal mengirim jawaban karena koneksi terputus. Jangan tutup halaman ini, muat ulang halaman untuk mengirim ulang.</p>`;
+  }
+}
+function kembaliKeHalamanAwal(){localStorage.removeItem(STORAGE_KEY);location.reload();}
+function escapeHtml(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+</script>
 </body>
 </html>
