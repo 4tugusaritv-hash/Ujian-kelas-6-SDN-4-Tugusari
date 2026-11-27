@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ujian Online Kelas 6 - SDN 4 Tugusari</title>
+  <title>Ujian Online - SDN 4 Tugusari</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,7 +52,7 @@
   <script>
     const KELAS_AKTIF = "6";
     const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
-    const STORAGE_KEY = "UJIAN_SDN4_TUGUSARI_K6_STATE";
+    const STORAGE_KEY = `UJIAN_SDN4_TUGUSARI_K${KELAS_AKTIF}_STATE`;
   </script>
 
   <!-- HEADER -->
@@ -69,7 +69,7 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="font-judul font-bold text-base sm:text-lg leading-tight">Ujian Online SD Negeri 4 Tugusari</h1>
-            <span class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
+            <span id="badgeKelasHeader" class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
           </div>
           <p id="subHeaderInfo" class="text-xs text-rose-200">Kecamatan Sumber Jaya, Kabupaten Lampung Barat</p>
         </div>
@@ -121,7 +121,7 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-sm font-bold text-slate-700 mb-1">Kelas</label>
-            <input type="text" value="Kelas 6" readonly
+            <input type="text" id="inputKelasReadonly" value="Kelas 6" readonly
               class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl bg-slate-100 font-extrabold text-[#881337]" />
           </div>
           <div>
@@ -135,7 +135,7 @@
           <p class="font-extrabold"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>Tata Tertib Ujian Online:</p>
           <ul class="list-disc pl-4 space-y-0.5 text-[11px]">
             <li>Dilarang membuka tab lain, Google, atau keluar dari layar ujian.</li>
-            <li>Setiap perpindahan layar tercatat otomatis oleh sistem pengawas.</li>
+            <li>Setiap perpindahan layar membunyikan <b>alarm peringatan</b> dan tercatat otomatis.</li>
             <li>Jika melebihi batas pelanggaran, ujian otomatis dikumpulkan.</li>
           </ul>
         </div>
@@ -237,8 +237,8 @@
   <!-- MODAL PERINGATAN ANTI-CURANG -->
   <div id="modalPeringatan" class="hidden fixed inset-0 bg-slate-900/75 z-50 flex items-center justify-center p-4">
     <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-red-300 text-center space-y-3">
-      <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto">
-        <i class="fa-solid fa-triangle-exclamation"></i>
+      <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto animate-bounce">
+        <i class="fa-solid fa-volume-high"></i>
       </div>
       <h3 class="font-judul text-lg font-bold text-red-700">Peringatan Pengawasan Ujian!</h3>
       <p id="teksPeringatanModal" class="text-sm text-slate-700 font-semibold"></p>
@@ -259,6 +259,53 @@
     let timerInterval = null;
     let isSubmitting = false;
     let lastViolationTs = 0;
+    let antiCurangTerpasang = false;
+    let examAudioCtx = null;
+
+    document.getElementById("badgeKelasHeader").textContent = `KELAS ${KELAS_AKTIF}`;
+    document.getElementById("inputKelasReadonly").value = `Kelas ${KELAS_AKTIF}`;
+
+    // INISIALISASI AUDIO ALARM (WEB AUDIO API - BEBAS FILE EKSTERNAL)
+    function siapkanAudioAlarm() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!examAudioCtx) examAudioCtx = new AudioCtx();
+        if (examAudioCtx.state === "suspended") examAudioCtx.resume();
+      } catch (e) {}
+    }
+
+    function bunyikanAlarmPelanggaran() {
+      try {
+        siapkanAudioAlarm();
+        if (!examAudioCtx) return;
+        const now = examAudioCtx.currentTime;
+        const nadaList = [
+          { freq: 920, start: 0.0, dur: 0.22 },
+          { freq: 640, start: 0.25, dur: 0.22 },
+          { freq: 980, start: 0.50, dur: 0.28 },
+          { freq: 640, start: 0.81, dur: 0.22 },
+          { freq: 1040, start: 1.06, dur: 0.35 }
+        ];
+        nadaList.forEach(n => {
+          const osc = examAudioCtx.createOscillator();
+          const gain = examAudioCtx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(n.freq, now + n.start);
+          gain.gain.setValueAtTime(0.001, now + n.start);
+          gain.gain.exponentialRampToValueAtTime(0.45, now + n.start + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.dur);
+          osc.connect(gain);
+          gain.connect(examAudioCtx.destination);
+          osc.start(now + n.start);
+          osc.stop(now + n.start + n.dur + 0.02);
+        });
+      } catch (e) {}
+    }
+
+    ["click", "touchstart", "keydown"].forEach(evt => {
+      document.addEventListener(evt, siapkanAudioAlarm, { passive: true });
+    });
 
     // CEK SESI TERSIMPAN JIKA BROWSER TEREFRESH SAAT UJIAN
     window.addEventListener("DOMContentLoaded", () => {
@@ -296,6 +343,7 @@
 
     document.getElementById("formMulaiUjian").addEventListener("submit", async (e) => {
       e.preventDefault();
+      siapkanAudioAlarm();
       const namaSiswa = document.getElementById("inputNamaSiswa").value.trim().toUpperCase();
       const token = document.getElementById("inputTokenUjian").value.trim().toUpperCase();
       const btn = document.getElementById("btnMulaiUjian");
@@ -320,6 +368,11 @@
         }
 
         const durasiMenit = Number(res.pengaturan.durasiMenit) || 75;
+        const normalizedSoal = (res.soalList || []).map(q => ({
+          ...q,
+          tipe: String(q.tipe || "PG").trim().toUpperCase() === "URAIAN" ? "ESSAY" : String(q.tipe || "PG").trim().toUpperCase()
+        }));
+
         ujianState = {
           aktif: true,
           namaSiswa,
@@ -330,7 +383,7 @@
           durasiMenit,
           maxCurang: Number(res.pengaturan.maxCurang) || 25,
           endTime: Date.now() + durasiMenit * 60 * 1000,
-          soalList: res.soalList || [],
+          soalList: normalizedSoal,
           jawaban: {},
           ragu: {},
           pelanggaran: 0,
@@ -387,8 +440,11 @@
       timerInterval = setInterval(tick, 1000);
     }
 
-    // PENGAWASAN ANTI-CURANG
+    // PENGAWASAN ANTI-CURANG + ALARM SUARA
     function pasangAntiCurang() {
+      if (antiCurangTerpasang) return;
+      antiCurangTerpasang = true;
+
       document.addEventListener("contextmenu", (e) => {
         if (ujianState && ujianState.aktif) e.preventDefault();
       });
@@ -414,6 +470,8 @@
       if (now - lastViolationTs < 1500) return;
       lastViolationTs = now;
 
+      bunyikanAlarmPelanggaran();
+
       ujianState.pelanggaran += 1;
       const waktu = new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
       ujianState.logCurang.push(`[${waktu}] ${alasan}`);
@@ -432,6 +490,7 @@
     }
 
     function tutupModalPeringatan() {
+      siapkanAudioAlarm();
       document.getElementById("modalPeringatan").classList.add("hidden");
     }
 
@@ -444,17 +503,27 @@
     }
 
     function getLabelBagian(tipe) {
-      if (tipe === "PG") return { badge: "I. PILIHAN GANDA", cls: "bg-rose-100 text-[#881337]" };
-      if (tipe === "PGK") return { badge: "I. PG KOMPLEKS (PILIH > 1)", cls: "bg-purple-100 text-purple-800" };
-      if (tipe === "ESSAY") return { badge: "III. ESSAY / URAIAN", cls: "bg-indigo-100 text-indigo-800" };
+      const t = String(tipe || "PG").trim().toUpperCase();
+      if (t === "PG") return { badge: "I. PILIHAN GANDA", cls: "bg-rose-100 text-[#881337]" };
+      if (t === "PGK") return { badge: "I. PG KOMPLEKS (PILIH > 1)", cls: "bg-purple-100 text-purple-800" };
+      if (t === "ESSAY" || t === "URAIAN") return { badge: "III. ESSAY / URAIAN", cls: "bg-indigo-100 text-indigo-800" };
       return { badge: "II. ISIAN SINGKAT", cls: "bg-amber-100 text-amber-800" };
+    }
+
+    function getHurufOpsiTersedia(q) {
+      const dasar = ["A", "B", "C"];
+      if (q && q.opsi && String(q.opsi.D || "").trim() !== "") {
+        dasar.push("D");
+      }
+      return dasar;
     }
 
     function pindahSoal(idx) {
       if (!ujianState || idx < 0 || idx >= ujianState.soalList.length) return;
       indexSoalAktif = idx;
       const q = ujianState.soalList[idx];
-      const infoBagian = getLabelBagian(q.tipe);
+      const tipe = String(q.tipe || "PG").trim().toUpperCase();
+      const infoBagian = getLabelBagian(tipe);
 
       const badge = document.getElementById("badgeBagianSoal");
       badge.textContent = infoBagian.badge;
@@ -467,8 +536,8 @@
       const wadahJwb = document.getElementById("wadahJawaban");
       const jwbSaatIni = ujianState.jawaban[q.id] || "";
 
-      if (q.tipe === "PG") {
-        const hurufList = ["A", "B", "C", "D"];
+      if (tipe === "PG") {
+        const hurufList = getHurufOpsiTersedia(q);
         wadahJwb.innerHTML = `<div class="space-y-2.5">` + hurufList.map(h => {
           const teksOpsi = q.opsi && q.opsi[h] ? q.opsi[h] : "";
           const terpilih = jwbSaatIni === h;
@@ -479,8 +548,8 @@
               <div class="konten-soal text-sm font-semibold text-slate-800 flex-1">${teksOpsi}</div>
             </button>`;
         }).join("") + `</div>`;
-      } else if (q.tipe === "PGK") {
-        const hurufList = ["A", "B", "C", "D"];
+      } else if (tipe === "PGK") {
+        const hurufList = getHurufOpsiTersedia(q);
         const dipilihSet = new Set(String(jwbSaatIni).split(",").map(x => x.trim().toUpperCase()).filter(Boolean));
         wadahJwb.innerHTML = `
           <p class="text-xs font-extrabold text-purple-800 mb-2"><i class="fa-solid fa-square-check mr-1"></i>Pilih lebih dari satu jawaban yang benar:</p>
@@ -496,19 +565,19 @@
                 <div class="konten-soal text-sm font-semibold text-slate-800 flex-1">${teksOpsi}</div>
               </button>`;
           }).join("") + `</div>`;
-      } else if (q.tipe === "ESSAY") {
+      } else if (tipe === "ESSAY" || tipe === "URAIAN") {
         wadahJwb.innerHTML = `
-          <label class="block text-xs font-extrabold text-indigo-800 mb-1.5">Tuliskan langkah pengerjaan dan jawabanmu:</label>
+          <label class="block text-xs font-extrabold text-indigo-800 mb-1.5">Tuliskan jawaban uraian / essay lengkapmu di bawah ini:</label>
           <textarea rows="5" placeholder="Ketik jawaban uraianmu di sini..."
             oninput="isiJawabanTeks('${q.id}', this.value)"
-            class="w-full p-3.5 border-2 border-slate-200 rounded-2xl text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">${escapeHtml(jwbSaatIni)}</textarea>
+            class="w-full p-3.5 border-2 border-indigo-200 rounded-2xl text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">${escapeHtml(jwbSaatIni)}</textarea>
         `;
       } else {
         wadahJwb.innerHTML = `
-          <label class="block text-xs font-extrabold text-amber-800 mb-1.5">Tuliskan jawaban singkatmu:</label>
-          <input type="text" value="${escapeHtml(jwbSaatIni)}" placeholder="Ketik jawaban singkat di sini..."
+          <label class="block text-xs font-extrabold text-amber-800 mb-1.5">Tuliskan jawabanmu di bawah ini:</label>
+          <textarea rows="3" placeholder="Ketik jawabanmu di sini..."
             oninput="isiJawabanTeks('${q.id}', this.value)"
-            class="w-full p-3.5 border-2 border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:border-amber-600 focus:outline-none" />
+            class="w-full p-3.5 border-2 border-amber-200 rounded-2xl text-sm font-bold text-slate-800 focus:border-amber-600 focus:outline-none">${escapeHtml(jwbSaatIni)}</textarea>
         `;
       }
 
@@ -574,10 +643,17 @@
       const terjawab = ujianState.soalList.filter(q => String(ujianState.jawaban[q.id] || "").trim() !== "").length;
       document.getElementById("progressTerjawab").textContent = `${terjawab} / ${total} Dijawab`;
 
+      const mapped = ujianState.soalList.map((q, i) => ({
+        q,
+        i,
+        t: String(q.tipe || "PG").trim().toUpperCase()
+      }));
+
       const kelompok = [
-        { judul: "I. Pilihan Ganda / PGK", items: ujianState.soalList.map((q, i) => ({ q, i })).filter(x => x.q.tipe === "PG" || x.q.tipe === "PGK") },
-        { judul: "II. Isian Singkat", items: ujianState.soalList.map((q, i) => ({ q, i })).filter(x => x.q.tipe === "ISIAN") },
-        { judul: "III. Essay / Uraian", items: ujianState.soalList.map((q, i) => ({ q, i })).filter(x => x.q.tipe === "ESSAY") }
+        { judul: "I. Pilihan Ganda / PGK", items: mapped.filter(x => x.t === "PG" || x.t === "PGK") },
+        { judul: "II. Isian Singkat", items: mapped.filter(x => x.t === "ISIAN") },
+        { judul: "III. Essay / Uraian", items: mapped.filter(x => x.t === "ESSAY" || x.t === "URAIAN") },
+        { judul: "Soal Lainnya", items: mapped.filter(x => !["PG", "PGK", "ISIAN", "ESSAY", "URAIAN"].includes(x.t)) }
       ].filter(k => k.items.length > 0);
 
       container.innerHTML = kelompok.map(k => `
