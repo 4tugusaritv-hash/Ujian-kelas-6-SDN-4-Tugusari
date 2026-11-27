@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ujian Online - SDN 4 Tugusari</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Ujian Online Kelas 6 - SDN 4 Tugusari</title>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css)" />
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)" />
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
+  <link href="[https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap)" rel="stylesheet" />
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
     };
   </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="MathJax-script" async src="[https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js](https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js)"></script>
   <style>
     body {
       font-family: 'Nunito', sans-serif;
@@ -24,7 +24,7 @@
       user-select: none;
       -webkit-user-select: none;
     }
-    input, textarea {
+    input, textarea, select {
       user-select: text;
       -webkit-user-select: text;
     }
@@ -50,9 +50,9 @@
 <body class="text-slate-800 min-h-screen flex flex-col">
 
   <script>
-    const KELAS_AKTIF = "6";
-    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
-    const STORAGE_KEY = `UJIAN_SDN4_TUGUSARI_K${KELAS_AKTIF}_STATE`;
+    const DEFAULT_GAS_URL = "[https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec](https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec)";
+    const STORAGE_KEY = "UJIAN_SDN4_TUGUSARI_KELAS6_STATE";
+    const KELAS_SISWA = "6";
   </script>
 
   <!-- HEADER -->
@@ -69,7 +69,7 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="font-judul font-bold text-base sm:text-lg leading-tight">Ujian Online SD Negeri 4 Tugusari</h1>
-            <span id="badgeKelasHeader" class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
+            <span class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
           </div>
           <p id="subHeaderInfo" class="text-xs text-rose-200">Kecamatan Sumber Jaya, Kabupaten Lampung Barat</p>
         </div>
@@ -93,7 +93,7 @@
     </div>
   </header>
 
-  <!-- 1. HALAMAN LOGIN SISWA -->
+  <!-- 1. HALAMAN LOGIN SISWA KELAS 6 -->
   <main id="loginSection" class="flex-1 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-xl border-2 border-rose-100 overflow-hidden">
       <div class="bg-gradient-to-br from-[#881337] to-[#be123c] p-6 text-white flex items-center gap-4">
@@ -105,30 +105,23 @@
           </div>
         </div>
         <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[11px] font-extrabold mb-1">RUANG UJIAN SISWA</span>
+          <span class="inline-block px-2.5 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[11px] font-extrabold mb-1">RUANG UJIAN KELAS 6</span>
           <h2 class="font-judul text-xl font-bold">Masuk Ruang Ujian</h2>
-          <p class="text-xs text-rose-100 mt-0.5">Isi nama lengkap dan token dari guru</p>
+          <p class="text-xs text-rose-100 mt-0.5">Isi nama lengkap dan token ujian dari guru</p>
         </div>
       </div>
 
       <form id="formMulaiUjian" class="p-6 space-y-4">
         <div>
-          <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap Siswa</label>
+          <label class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap Siswa (Kelas 6)</label>
           <input type="text" id="inputNamaSiswa" required placeholder="Ketik nama lengkapmu..."
             class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-bold text-slate-800 focus:border-[#be123c] focus:outline-none" />
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-sm font-bold text-slate-700 mb-1">Kelas</label>
-            <input type="text" id="inputKelasReadonly" value="Kelas 6" readonly
-              class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl bg-slate-100 font-extrabold text-[#881337]" />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-slate-700 mb-1">Token Ujian</label>
-            <input type="text" id="inputTokenUjian" required placeholder="CONTOH: MTK6"
-              class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-mono font-extrabold text-slate-800 focus:border-[#be123c] focus:outline-none" />
-          </div>
+        <div>
+          <label class="block text-sm font-bold text-slate-700 mb-1">Token Ujian</label>
+          <input type="text" id="inputTokenUjian" required placeholder="CONTOH: MTK6"
+            class="w-full px-3.5 py-2.5 border-2 border-slate-200 rounded-xl uppercase font-mono font-extrabold text-slate-800 focus:border-[#be123c] focus:outline-none" />
         </div>
 
         <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-xs text-amber-900 space-y-1">
@@ -262,10 +255,6 @@
     let antiCurangTerpasang = false;
     let examAudioCtx = null;
 
-    document.getElementById("badgeKelasHeader").textContent = `KELAS ${KELAS_AKTIF}`;
-    document.getElementById("inputKelasReadonly").value = `Kelas ${KELAS_AKTIF}`;
-
-    // INISIALISASI AUDIO ALARM (WEB AUDIO API - BEBAS FILE EKSTERNAL)
     function siapkanAudioAlarm() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -307,7 +296,6 @@
       document.addEventListener(evt, siapkanAudioAlarm, { passive: true });
     });
 
-    // CEK SESI TERSIMPAN JIKA BROWSER TEREFRESH SAAT UJIAN
     window.addEventListener("DOMContentLoaded", () => {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -356,7 +344,7 @@
         const res = await callGasSiswa({
           action: "mulaiUjian",
           namaSiswa,
-          kelas: KELAS_AKTIF,
+          kelas: KELAS_SISWA,
           token
         });
 
@@ -368,15 +356,16 @@
         }
 
         const durasiMenit = Number(res.pengaturan.durasiMenit) || 75;
-        const normalizedSoal = (res.soalList || []).map(q => ({
-          ...q,
-          tipe: String(q.tipe || "PG").trim().toUpperCase() === "URAIAN" ? "ESSAY" : String(q.tipe || "PG").trim().toUpperCase()
-        }));
+        const normalizedSoal = (res.soalList || []).map(q => {
+          let t = String(q.tipe || "PG").trim().toUpperCase();
+          if (t === "URAIAN" || t === "ESAI") t = "ESSAY";
+          return { ...q, tipe: t };
+        });
 
         ujianState = {
           aktif: true,
           namaSiswa,
-          kelas: KELAS_AKTIF,
+          kelas: KELAS_SISWA,
           paket: res.sesi.paket,
           mapel: res.sesi.mapel,
           guruPengampu: res.sesi.guruPengampu || "",
@@ -410,7 +399,7 @@
       document.getElementById("examSection").classList.remove("hidden");
       document.getElementById("examTopStatus").classList.remove("hidden");
 
-      document.getElementById("subHeaderInfo").textContent = `${ujianState.mapel} • Peserta: ${ujianState.namaSiswa} (Kelas ${ujianState.kelas})`;
+      document.getElementById("subHeaderInfo").textContent = `${ujianState.mapel} • Peserta: ${ujianState.namaSiswa} (Kelas 6)`;
       document.getElementById("infoMapelGuru").textContent = `${ujianState.mapel} (${ujianState.paket})`;
       document.getElementById("maxPelanggaran").textContent = ujianState.maxCurang;
       updateTampilanPelanggaran();
@@ -440,7 +429,6 @@
       timerInterval = setInterval(tick, 1000);
     }
 
-    // PENGAWASAN ANTI-CURANG + ALARM SUARA
     function pasangAntiCurang() {
       if (antiCurangTerpasang) return;
       antiCurangTerpasang = true;
@@ -712,7 +700,7 @@
         const res = await callGasSiswa({
           action: "submitUjian",
           namaSiswa: ujianState.namaSiswa,
-          kelas: ujianState.kelas,
+          kelas: KELAS_SISWA,
           paket: ujianState.paket,
           jawaban: ujianState.jawaban,
           pelanggaran: ujianState.pelanggaran,
@@ -725,7 +713,7 @@
         if (res.status === "success") {
           box.innerHTML = `
             <div class="flex justify-between"><span class="text-slate-500">Nama Peserta:</span><b>${escapeHtml(ujianState.namaSiswa)}</b></div>
-            <div class="flex justify-between"><span class="text-slate-500">Mata Pelajaran:</span><b>${escapeHtml(ujianState.mapel)} (Kelas ${escapeHtml(ujianState.kelas)})</b></div>
+            <div class="flex justify-between"><span class="text-slate-500">Mata Pelajaran:</span><b>${escapeHtml(ujianState.mapel)} (Kelas 6)</b></div>
             <div class="flex justify-between"><span class="text-slate-500">Status Pengumpulan:</span><b>${escapeHtml(alasanSubmit)}</b></div>
             <div class="flex justify-between"><span class="text-slate-500">Catatan Keluar Layar:</span><b>${ujianState.pelanggaran} kali</b></div>
             <hr class="border-slate-200 my-1" />
