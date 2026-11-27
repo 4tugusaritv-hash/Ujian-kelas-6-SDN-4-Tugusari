@@ -23,9 +23,11 @@
                         radial-gradient(circle at 90% 15%, rgba(251, 191, 36, 0.18) 0%, transparent 25%);
     }
     .font-judul { font-family: 'Fredoka', sans-serif; }
-    .preview-html img { max-width: 220px; height: auto; border-radius: 0.375rem; margin: 0.35rem 0; }
+    .preview-html img { max-width: 240px; max-height: 220px; height: auto; border-radius: 0.375rem; margin: 0.35rem 0; }
     .preview-html table { border-collapse: collapse; margin: 0.35rem 0; }
     .preview-html td, .preview-html th { border: 1px solid #cbd5e1; padding: 0.25rem 0.5rem; }
+    .preview-html ul { list-style-type: disc; padding-left: 1.25rem; margin: 0.25rem 0; }
+    .preview-html ol { list-style-type: lower-alpha; padding-left: 1.25rem; margin: 0.25rem 0; }
   </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
@@ -256,7 +258,7 @@
             </div>
           </div>
 
-          <!-- PERSENTASE BOBOT NILAI DI TEMPAT INPUT SOAL -->
+          <!-- PERSENTASE BOBOT NILAI -->
           <div class="bg-rose-50/90 border-2 border-rose-200 rounded-2xl p-3.5 space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-extrabold text-[#881337]"><i class="fa-solid fa-percent mr-1"></i>Bobot Nilai Mapel Ini</span>
@@ -301,6 +303,7 @@
               <label class="block text-xs font-bold text-slate-700 mb-1">Unggah Naskah Soal Word (.docx)</label>
               <input type="file" id="inputDocx" accept=".docx"
                 class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:font-bold file:bg-[#be123c] file:text-white hover:file:bg-[#881337]" />
+              <p class="text-[11px] text-slate-500 mt-1">Mendukung naskah soal saja (tanpa kunci) maupun naskah yang sudah disertai baris <b>Kunci : ...</b>.</p>
             </div>
 
             <button type="button" id="btnMuatSoalTersimpan" onclick="muatSoalTersimpanKeEditor()"
@@ -321,12 +324,12 @@
 
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs space-y-2">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-slate-700">Format Naskah Word Dinas/Sekolah:</span>
+              <span class="font-bold text-slate-700">Format Naskah Word:</span>
               <button type="button" onclick="salinFormatWord()" class="text-[#be123c] font-bold hover:underline">
                 <i class="fa-regular fa-copy"></i> Salin
               </button>
             </div>
-            <p class="text-[11px] text-slate-600 leading-relaxed">Cukup tambahkan baris <b>Kunci : ...</b> di bawah tiap soal:</p>
+            <p class="text-[11px] text-slate-600 leading-relaxed">Boleh langsung unggah naskah soal saja lalu pilih kunci di sebelah kanan, atau tambahkan baris <b>Kunci : ...</b> di bawah tiap soal:</p>
             <pre id="contohFormatText" class="bg-white p-2.5 rounded border text-[11px] overflow-x-auto leading-relaxed">I. Berilah tanda silang (x)...
 1. Pertanyaan pilihan ganda...
 a. Opsi A    b. Opsi B
@@ -339,7 +342,7 @@ Kunci : Jawaban singkat
 
 III. Jawablah pertanyaan di bawah ini...
 1. Pertanyaan essay / uraian...
-Kunci : Panduan jawaban (opsional)</pre>
+Kunci : Pedoman jawaban (opsional)</pre>
           </div>
         </div>
 
@@ -347,18 +350,18 @@ Kunci : Panduan jawaban (opsional)</pre>
         <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
             <div>
-              <h3 class="font-bold text-base text-[#881337]">Pratinjau & Editor Butir Soal</h3>
-              <p class="text-[11px] text-slate-500">Anda dapat mengedit kunci jawaban, skor, teks soal, atau menambah soal sebelum menyimpan.</p>
+              <h3 class="font-bold text-base text-[#881337]">Pratinjau & Input Kunci / Editor Butir Soal</h3>
+              <p class="text-[11px] text-slate-500">Klik huruf <b>A/B/C/D</b> pada PG atau isi kotak <b>Kunci / Pedoman Jawaban</b> pada Isian & Essay.</p>
             </div>
             <div class="flex flex-wrap items-center gap-1.5">
-              <div id="ringkasanDeteksiSoal" class="hidden flex flex-wrap gap-1.5 text-xs font-bold mr-2"></div>
+              <div id="ringkasanDeteksiSoal" class="hidden flex flex-wrap items-center gap-1.5 text-xs font-bold mr-1"></div>
               <button type="button" onclick="tambahSoalManual('PG')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-[#881337] text-[11px] font-extrabold">+ PG</button>
               <button type="button" onclick="tambahSoalManual('ISIAN')" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-[11px] font-extrabold">+ Isian</button>
               <button type="button" onclick="tambahSoalManual('ESSAY')" class="px-2.5 py-1 rounded-lg bg-indigo-100 hover:bg-indigo-200 text-indigo-800 text-[11px] font-extrabold">+ Essay</button>
             </div>
           </div>
-          <div id="previewSoalContainer" class="space-y-4 max-h-[720px] overflow-y-auto pr-1">
-            <p class="text-sm text-slate-400 italic">Pilih Mata Pelajaran, atur bobot nilai, lalu unggah file .docx atau klik <b>Muat Soal Tersimpan dari Server</b>.</p>
+          <div id="previewSoalContainer" class="space-y-4 max-h-[750px] overflow-y-auto pr-1">
+            <p class="text-sm text-slate-400 italic">Pilih Mata Pelajaran, atur bobot nilai, lalu unggah file <b>.docx</b> atau klik <b>Muat Soal Tersimpan dari Server</b>.</p>
           </div>
         </div>
       </div>
@@ -656,7 +659,7 @@ Kunci : Panduan jawaban (opsional)</pre>
         opsiB: tipe === "PG" ? "Pilihan B" : "",
         opsiC: tipe === "PG" ? "Pilihan C" : "",
         opsiD: tipe === "PG" ? "Pilihan D" : "",
-        kunci: tipe === "PG" ? "A" : "",
+        kunci: "",
         skorMaks: tipe === "ESSAY" ? 10 : (tipe === "ISIAN" ? 5 : 1)
       });
       renderPreviewSoal();
@@ -667,13 +670,32 @@ Kunci : Panduan jawaban (opsional)</pre>
       renderPreviewSoal();
     }
 
+    function pilihKunciPGPreview(idx, huruf) {
+      if (!parsedSoalList[idx]) return;
+      parsedSoalList[idx].kunci = huruf;
+      renderPreviewSoal();
+    }
+
     function ubahFieldParsedSoal(idx, field, val) {
       if (!parsedSoalList[idx]) return;
       parsedSoalList[idx][field] = field === "skorMaks" ? (Number(val) || 0) : val;
       if (field === "tipe") {
         parsedSoalList[idx].skorMaks = val === "ESSAY" ? 10 : (val === "ISIAN" ? 5 : 1);
+        if (val === "PG" && !parsedSoalList[idx].opsiA) {
+          parsedSoalList[idx].opsiA = "Pilihan A";
+          parsedSoalList[idx].opsiB = "Pilihan B";
+          parsedSoalList[idx].opsiC = "Pilihan C";
+          parsedSoalList[idx].opsiD = "Pilihan D";
+        }
         renderPreviewSoal();
       }
+    }
+
+    function lompatKePGKosong() {
+      const idx = parsedSoalList.findIndex(s => s.tipe === "PG" && !String(s.kunci || "").trim());
+      if (idx === -1) return;
+      const el = document.getElementById(`cardSoalPreview_${idx}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     async function muatDataDashboard(skipSoal = false) {
@@ -1051,7 +1073,7 @@ Kunci : Panduan jawaban (opsional)</pre>
       }
     }
 
-    // PARSER OTOMATIS NASKAH WORD DINAS / SEKOLAH (.DOCX)
+    // PARSER OTOMATIS NASKAH WORD (.DOCX) — MENDUKUNG PENOMORAN WORD (<ol>/<li>), MANUAL, & NASKAH TANPA KUNCI
     document.getElementById("inputDocx").addEventListener("change", async (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -1075,6 +1097,7 @@ Kunci : Panduan jawaban (opsional)</pre>
       let currentQ = null;
       let pendingStimulus = "";
       let lastOptionLetter = "";
+      let counterPerTipe = { PG: 0, ISIAN: 0, ESSAY: 0 };
 
       const finalizeQ = () => {
         if (!currentQ) return;
@@ -1092,6 +1115,9 @@ Kunci : Panduan jawaban (opsional)</pre>
         if (/^(?:A|B|C)[\.\)]\s*(?:PILIHAN\s*GANDA)/i.test(clean)) return "PG";
         if (/^(?:A|B|C)[\.\)]\s*(?:ISIAN)/i.test(clean)) return "ISIAN";
         if (/^(?:A|B|C)[\.\)]\s*(?:URAIAN|ESSAY)/i.test(clean)) return "ESSAY";
+        if (/berilah\s+tanda\s+silang|pilihan\s+ganda|huruf\s+a\s*,\s*b\s*,\s*c/i.test(clean) && clean.length < 130) return "PG";
+        if (/isilah\s+titik|isian\s+singkat|^jawablah\s+pertanyaan\s+di\s+bawah\s+ini\s*[!.:]?$/i.test(clean) && clean.length < 110) return "ISIAN";
+        if (/dengan\s+baik\s+dan\s*benar|uraian|essay|^jawablah\s+soal\s+uraian/i.test(clean) && clean.length < 130) return "ESSAY";
         return null;
       };
 
@@ -1100,9 +1126,38 @@ Kunci : Panduan jawaban (opsional)</pre>
         return u.startsWith("PEMERINTAH KABUPATEN") ||
                u.startsWith("DINAS PENDIDIKAN") ||
                u.startsWith("SUMATIF ") ||
+               u.startsWith("ASESMEN ") ||
+               u.startsWith("ASASMEN ") ||
                u.startsWith("PENILAIAN ") ||
                u.startsWith("PETUNJUK UMUM") ||
-               u.startsWith("SELAMAT MENGERJAKAN");
+               u.startsWith("SELAMAT MENGERJAKAN") ||
+               /^TP\s*[:=]/.test(u);
+      };
+
+      const ekstrakKunciDariTeks = (plain, tipe) => {
+        const m = plain.match(/^(?:kunci(?:\s*jawaban)?|kj|jawaban)\s*[:=\-]\s*(.*)$/i);
+        if (!m) return null;
+        let val = m[1].trim();
+        if (tipe === "PG") {
+          const mh = val.match(/^([a-dA-D])/);
+          val = mh ? mh[1].toUpperCase() : val.toUpperCase();
+        }
+        return val;
+      };
+
+      const buatObjekSoal = (tipe, noLabel, htmlAwal, opsi = {}, kunci = "") => {
+        counterPerTipe[tipe] = (counterPerTipe[tipe] || 0) + 1;
+        return {
+          tipe,
+          noLabel: String(noLabel || counterPerTipe[tipe]),
+          pertanyaanHTML: (pendingStimulus ? pendingStimulus + "<br/>" : "") + htmlAwal,
+          opsiA: opsi.A || "",
+          opsiB: opsi.B || "",
+          opsiC: opsi.C || "",
+          opsiD: opsi.D || "",
+          kunci: kunci || "",
+          skorMaks: tipe === "ESSAY" ? 10 : (tipe === "ISIAN" ? 5 : 1)
+        };
       };
 
       for (const el of blocks) {
@@ -1116,6 +1171,132 @@ Kunci : Panduan jawaban (opsional)</pre>
           break;
         }
 
+        // 1. Cek jika block ini adalah penomoran otomatis Word (<ol>)
+        if (tag === "OL") {
+          const directLis = Array.from(el.children).filter(c => c.tagName === "LI");
+          if (directLis.length === 0) continue;
+
+          // Kasus A: <ol> berisi header bagian (misal I. Berilah tanda silang... / II. Jawablah...)
+          if (directLis.length === 1) {
+            const liTxt = (directLis[0].textContent || "").replace(/\u00a0/g, " ").trim();
+            const secHeader = deteksiHeaderBagian(liTxt);
+            if (secHeader && !directLis[0].querySelector("ol")) {
+              finalizeQ();
+              section = secHeader;
+              pendingStimulus = "";
+              continue;
+            }
+          }
+
+          // Kasus B: <ol> saudara yang berisi 4 opsi (A, B, C, D) untuk soal PG sebelumnya
+          if (
+            currentQ &&
+            currentQ.tipe === "PG" &&
+            !currentQ.opsiA &&
+            directLis.length >= 3 &&
+            directLis.length <= 5 &&
+            directLis.every(li => !li.querySelector("ol"))
+          ) {
+            const hurufArr = ["A", "B", "C", "D"];
+            directLis.slice(0, 4).forEach((optLi, idx) => {
+              let optHtml = optLi.innerHTML.trim();
+              const mK = optHtml.match(/(?:<p[^>]*>)?\s*(?:kunci(?:\s*jawaban)?|kj)\s*[:=\-]\s*([a-dA-D])\s*(?:<\/p>)?/i);
+              if (mK) {
+                currentQ.kunci = mK[1].toUpperCase();
+                optHtml = optHtml.replace(mK[0], "").trim();
+              }
+              currentQ["opsi" + hurufArr[idx]] = optHtml.replace(/^\s*[a-dA-D][\.\)]\s*/i, "").trim();
+            });
+            lastOptionLetter = "D";
+            continue;
+          }
+
+          // Kasus C: <ol> berisi daftar butir soal (1, 2, 3, ...)
+          if (!section) {
+            const hasNestedOpts = directLis.some(li => {
+              const subOl = li.querySelector("ol");
+              return subOl && subOl.children.length >= 3 && subOl.children.length <= 5;
+            });
+            section = hasNestedOpts ? "PG" : "ISIAN";
+          }
+
+          for (const li of directLis) {
+            const liPlain = (li.textContent || "").replace(/\u00a0/g, " ").trim();
+            const secDalamLi = deteksiHeaderBagian(liPlain);
+            if (secDalamLi && !li.querySelector("ol")) {
+              finalizeQ();
+              section = secDalamLi;
+              pendingStimulus = "";
+              continue;
+            }
+
+            finalizeQ();
+            const liClone = li.cloneNode(true);
+            let kunciDitemukan = "";
+            let opsiMap = {};
+
+            // Cek jika ada baris Kunci di dalam <li>
+            Array.from(liClone.querySelectorAll("p, div")).forEach(pEl => {
+              const kVal = ekstrakKunciDariTeks((pEl.textContent || "").trim(), section);
+              if (kVal !== null) {
+                kunciDitemukan = kVal;
+                pEl.remove();
+              }
+            });
+
+            // Jika tipe PG dan ada nested <ol> berisi 3-5 opsi, ekstrak menjadi A, B, C, D
+            const nestedOls = Array.from(liClone.querySelectorAll(":scope > ol"));
+            if (section === "PG" && nestedOls.length > 0) {
+              const lastSubOl = nestedOls[nestedOls.length - 1];
+              const subLis = Array.from(lastSubOl.children).filter(c => c.tagName === "LI");
+              if (subLis.length >= 3 && subLis.length <= 5) {
+                const hurufArr = ["A", "B", "C", "D"];
+                subLis.slice(0, 4).forEach((sLi, idx) => {
+                  opsiMap[hurufArr[idx]] = sLi.innerHTML.replace(/^\s*[a-dA-D][\.\)]\s*/i, "").trim();
+                });
+                lastSubOl.remove();
+              }
+            }
+
+            // Cek juga opsi manual a., b., c., d. di dalam <p> di dalam <li>
+            if (section === "PG" && !opsiMap.A) {
+              Array.from(liClone.querySelectorAll(":scope > p")).forEach(pEl => {
+                const pTxt = (pEl.textContent || "").replace(/\u00a0/g, " ").trim();
+                if (/^[a-dA-D][\.\)]\s+/.test(pTxt)) {
+                  const parts = pEl.innerHTML.split(/(?=(?:^|\s{2,}|\t|<br\s*\/?>)[a-dA-D][\.\)]\s+)/i);
+                  parts.forEach(part => {
+                    const mp = part.trim().match(/^([a-dA-D])[\.\)]\s*([\s\S]*)$/i);
+                    if (mp) opsiMap[mp[1].toUpperCase()] = mp[2].trim();
+                  });
+                  pEl.remove();
+                }
+              });
+            }
+
+            let soalHtml = liClone.innerHTML.trim();
+            // Cek Kunci di akhir teks <li> jika tidak dibungkus <p>
+            const mKunciTail = soalHtml.match(/(?:<br\s*\/?>|\n)\s*(?:kunci(?:\s*jawaban)?|kj|jawaban)\s*[:=\-]\s*([^<]+)$/i);
+            if (mKunciTail) {
+              let kv = mKunciTail[1].trim();
+              if (section === "PG") {
+                const mh = kv.match(/^([a-dA-D])/);
+                kv = mh ? mh[1].toUpperCase() : kv.toUpperCase();
+              }
+              kunciDitemukan = kv;
+              soalHtml = soalHtml.replace(mKunciTail[0], "").trim();
+            }
+
+            // Hapus nomor ganda di awal jika author mengetik angka di dalam list otomatis (misal "2 (Keliling...)")
+            soalHtml = soalHtml.replace(/^\s*\d+[\.\)]\s*/, "").trim();
+
+            currentQ = buatObjekSoal(section, counterPerTipe[section] + 1, soalHtml, opsiMap, kunciDitemukan);
+            pendingStimulus = "";
+            lastOptionLetter = opsiMap.A ? "D" : "";
+          }
+          continue;
+        }
+
+        // 2. Deteksi header bagian pada paragraf biasa (<p> / <h1>-<h4>)
         const secBaru = deteksiHeaderBagian(plain);
         if (secBaru) {
           finalizeQ();
@@ -1133,6 +1314,7 @@ Kunci : Panduan jawaban (opsional)</pre>
           }
         }
 
+        // 3. Tabel (bisa berisi opsi a,b,c,d atau stimulus soal)
         if (tag === "TABLE") {
           if (currentQ && currentQ.tipe === "PG") {
             const cells = Array.from(el.querySelectorAll("td, th"));
@@ -1143,8 +1325,7 @@ Kunci : Panduan jawaban (opsional)</pre>
               if (mOpt) {
                 foundOptInTable = true;
                 const h = mOpt[1].toUpperCase();
-                const inner = td.innerHTML.replace(/^\s*[a-dA-D][\.\)]\s*/i, "").trim();
-                currentQ["opsi" + h] = inner;
+                currentQ["opsi" + h] = td.innerHTML.replace(/^\s*[a-dA-D][\.\)]\s*/i, "").trim();
                 lastOptionLetter = h;
               }
             });
@@ -1158,18 +1339,15 @@ Kunci : Panduan jawaban (opsional)</pre>
           continue;
         }
 
-        const mKunci = plain.match(/^(?:kunci(?:\s*jawaban)?|kj)\s*[:=\-]\s*(.*)$/i);
-        if (mKunci && currentQ) {
-          let kVal = mKunci[1].trim();
-          if (currentQ.tipe === "PG") {
-            const mHuruf = kVal.match(/^([a-dA-D])/);
-            kVal = mHuruf ? mHuruf[1].toUpperCase() : kVal.toUpperCase();
-          }
-          currentQ.kunci = kVal;
+        // 4. Baris Kunci Jawaban (jika ada)
+        const kunciBaris = ekstrakKunciDariTeks(plain, currentQ ? currentQ.tipe : section);
+        if (kunciBaris !== null && currentQ) {
+          currentQ.kunci = kunciBaris;
           finalizeQ();
           continue;
         }
 
+        // 5. Paragraf soal bernomor manual (1. ..., 2. ...)
         const mNomor = plain.match(/^(\d+)[\.\)]\s+([\s\S]*)$/);
         if (mNomor) {
           finalizeQ();
@@ -1186,22 +1364,13 @@ Kunci : Panduan jawaban (opsional)</pre>
             });
           }
 
-          currentQ = {
-            tipe: section,
-            noLabel,
-            pertanyaanHTML: (pendingStimulus ? pendingStimulus + "<br/>" : "") + isiAwalHTML,
-            opsiA: opsiInline.A || "",
-            opsiB: opsiInline.B || "",
-            opsiC: opsiInline.C || "",
-            opsiD: opsiInline.D || "",
-            kunci: "",
-            skorMaks: section === "ESSAY" ? 10 : (section === "ISIAN" ? 5 : 1)
-          };
+          currentQ = buatObjekSoal(section, noLabel, isiAwalHTML, opsiInline, "");
           pendingStimulus = "";
           lastOptionLetter = Object.keys(opsiInline).pop() || "";
           continue;
         }
 
+        // 6. Paragraf opsi manual (a. ..., b. ..., c. ..., d. ...)
         if (currentQ && currentQ.tipe === "PG" && /^[a-dA-D][\.\)]\s+/i.test(plain)) {
           const rawHtml = el.innerHTML.trim();
           const parts = rawHtml.split(/(?=(?:^|\s{2,}|\t|<br\s*\/?>)[a-dA-D][\.\)]\s+)/i);
@@ -1216,18 +1385,22 @@ Kunci : Panduan jawaban (opsional)</pre>
           continue;
         }
 
+        // 7. Konten lanjutan / gambar stimulus sebelum soal berikutnya
         if (currentQ) {
           if (lastOptionLetter && currentQ.tipe === "PG") {
-            if (hasImg && !currentQ.kunci) {
+            if (hasImg && !currentQ.kunci && !plain) {
+              // Gambar setelah opsi D adalah stimulus untuk soal PG berikutnya
+              pendingStimulus += el.outerHTML;
+            } else if (hasImg && !currentQ.kunci) {
               currentQ["opsi" + lastOptionLetter] += "<br/>" + el.innerHTML;
             } else {
               pendingStimulus += el.outerHTML;
             }
           } else {
-            currentQ.pertanyaanHTML += "<br/>" + el.innerHTML;
+            currentQ.pertanyaanHTML += "<br/>" + (tag === "UL" ? el.outerHTML : el.innerHTML);
           }
         } else {
-          pendingStimulus += el.outerHTML;
+          pendingStimulus += (tag === "UL" ? el.outerHTML : el.outerHTML);
         }
       }
 
@@ -1250,15 +1423,24 @@ Kunci : Panduan jawaban (opsional)</pre>
       const jmlPG = parsedSoalList.filter(s => s.tipe === "PG").length;
       const jmlIsian = parsedSoalList.filter(s => s.tipe === "ISIAN").length;
       const jmlEssay = parsedSoalList.filter(s => s.tipe === "ESSAY").length;
+      const pgKosong = parsedSoalList.filter(s => s.tipe === "PG" && !String(s.kunci || "").trim()).length;
+
       badgeBox.classList.remove("hidden");
       badgeBox.innerHTML = `
         <span class="px-2 py-0.5 rounded bg-rose-100 text-[#881337]">PG: ${jmlPG}</span>
         <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800">Isian: ${jmlIsian}</span>
         <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">Essay: ${jmlEssay}</span>
+        ${pgKosong > 0
+          ? `<button type="button" onclick="lompatKePGKosong()" class="px-2 py-0.5 rounded bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-extrabold shadow-sm"><i class="fa-solid fa-circle-exclamation mr-1"></i>PG Belum Kunci: ${pgKosong}</button>`
+          : (jmlPG > 0 ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i>Kunci PG Lengkap</span>` : "")}
       `;
 
-      container.innerHTML = parsedSoalList.map((s, idx) => `
-        <div class="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/80 space-y-2.5 text-xs">
+      container.innerHTML = parsedSoalList.map((s, idx) => {
+        const kunciPgAktif = String(s.kunci || "").trim().toUpperCase();
+        const butuhKunciPG = s.tipe === "PG" && !kunciPgAktif;
+
+        return `
+        <div id="cardSoalPreview_${idx}" class="p-3.5 rounded-2xl border-2 ${butuhKunciPG ? "border-amber-300 bg-amber-50/30" : "border-slate-200 bg-slate-50/80"} space-y-2.5 text-xs">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex flex-wrap items-center gap-2">
               <select onchange="ubahFieldParsedSoal(${idx}, 'tipe', this.value)"
@@ -1273,29 +1455,26 @@ Kunci : Panduan jawaban (opsional)</pre>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <label class="flex items-center gap-1 font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Kunci:
-                ${s.tipe === "PG" ? `
-                  <select onchange="ubahFieldParsedSoal(${idx}, 'kunci', this.value)" class="bg-transparent font-extrabold focus:outline-none">
-                    <option value="" ${!s.kunci ? "selected" : ""}>-</option>
-                    <option value="A" ${s.kunci === "A" ? "selected" : ""}>A</option>
-                    <option value="B" ${s.kunci === "B" ? "selected" : ""}>B</option>
-                    <option value="C" ${s.kunci === "C" ? "selected" : ""}>C</option>
-                    <option value="D" ${s.kunci === "D" ? "selected" : ""}>D</option>
-                  </select>` : `
-                  <input type="text" value="${escapeHtml(s.kunci)}" placeholder="(Penilaian Guru)"
-                    onchange="ubahFieldParsedSoal(${idx}, 'kunci', this.value)"
-                    class="w-28 bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-bold text-slate-800" />`}
-              </label>
+              ${s.tipe === "PG" ? `
+                <div class="flex items-center gap-1 bg-white px-2 py-1 rounded-lg border ${butuhKunciPG ? "border-amber-400" : "border-emerald-300"}">
+                  <span class="font-bold ${butuhKunciPG ? "text-amber-700" : "text-emerald-800"} mr-1">Kunci:</span>
+                  ${["A", "B", "C", "D"].map(h => `
+                    <button type="button" onclick="pilihKunciPGPreview(${idx}, '${h}')"
+                      class="w-6 h-6 rounded font-extrabold text-[11px] transition ${kunciPgAktif === h ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 hover:bg-rose-100 text-slate-700"}">${h}</button>
+                  `).join("")}
+                </div>` : `
+                <span class="px-2 py-0.5 rounded bg-slate-200/70 text-slate-700 font-bold text-[11px]">
+                  ${s.kunci ? '<i class="fa-solid fa-check text-emerald-600 mr-1"></i>Pedoman Terisi' : 'Penilaian Manual / Pedoman Opsional'}
+                </span>`}
 
-              <label class="flex items-center gap-1 font-bold text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-200">
+              <label class="flex items-center gap-1 font-bold text-slate-600 bg-white px-2 py-1 rounded-lg border border-slate-200">
                 Skor:
                 <input type="number" value="${s.skorMaks}" min="1" max="100" onchange="ubahFieldParsedSoal(${idx}, 'skorMaks', this.value)"
                   class="w-10 text-center font-extrabold focus:outline-none" />
               </label>
 
               <button type="button" onclick="hapusItemParsedSoal(${idx})" title="Hapus butir soal ini"
-                class="px-2 py-1 rounded bg-red-50 hover:bg-red-100 text-red-600"><i class="fa-solid fa-trash"></i></button>
+                class="px-2 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
 
@@ -1304,27 +1483,46 @@ Kunci : Panduan jawaban (opsional)</pre>
 
           ${s.tipe === "PG" ? `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-0.5">
-              <div class="preview-html p-2 rounded-lg bg-white border flex items-start gap-1.5 ${s.kunci === "A" ? "border-emerald-500 font-bold" : "border-slate-200"}">
-                <b>A.</b> <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'opsiA', this.innerHTML)" class="flex-1 focus:outline-none">${s.opsiA}</div>
-              </div>
-              <div class="preview-html p-2 rounded-lg bg-white border flex items-start gap-1.5 ${s.kunci === "B" ? "border-emerald-500 font-bold" : "border-slate-200"}">
-                <b>B.</b> <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'opsiB', this.innerHTML)" class="flex-1 focus:outline-none">${s.opsiB}</div>
-              </div>
-              <div class="preview-html p-2 rounded-lg bg-white border flex items-start gap-1.5 ${s.kunci === "C" ? "border-emerald-500 font-bold" : "border-slate-200"}">
-                <b>C.</b> <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'opsiC', this.innerHTML)" class="flex-1 focus:outline-none">${s.opsiC}</div>
-              </div>
-              <div class="preview-html p-2 rounded-lg bg-white border flex items-start gap-1.5 ${s.kunci === "D" ? "border-emerald-500 font-bold" : "border-slate-200"}">
-                <b>D.</b> <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'opsiD', this.innerHTML)" class="flex-1 focus:outline-none">${s.opsiD}</div>
-              </div>
-            </div>` : ""}
+              ${["A", "B", "C", "D"].map(h => `
+                <div class="preview-html p-2 rounded-lg bg-white border-2 flex items-start gap-2 transition ${kunciPgAktif === h ? "border-emerald-500 bg-emerald-50/40 font-bold" : "border-slate-200"}">
+                  <button type="button" onclick="pilihKunciPGPreview(${idx}, '${h}')" title="Klik untuk menjadikan ${h} sebagai Kunci Jawaban"
+                    class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-extrabold shrink-0 transition ${kunciPgAktif === h ? "bg-emerald-600 text-white" : "bg-slate-100 hover:bg-emerald-100 text-slate-700"}">${h}</button>
+                  <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'opsi${h}', this.innerHTML)" class="flex-1 focus:outline-none">${s["opsi" + h]}</div>
+                </div>
+              `).join("")}
+            </div>` : `
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-1">
+              <label class="block text-[11px] font-extrabold ${s.tipe === "ESSAY" ? "text-indigo-800" : "text-amber-800"}">
+                <i class="fa-solid fa-key mr-1"></i>${s.tipe === "ESSAY" ? "Kunci / Pedoman Jawaban Essay (Input Manual):" : "Kunci Jawaban Isian Singkat (Input Manual):"}
+              </label>
+              ${s.tipe === "ESSAY"
+                ? `<textarea rows="2" placeholder="Ketik kunci jawaban / rubrik penilaian essay di sini (atau kosongkan jika dikoreksi manual oleh guru)..."
+                    oninput="ubahFieldParsedSoal(${idx}, 'kunci', this.value)"
+                    class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 focus:border-indigo-500 focus:outline-none">${escapeHtml(s.kunci)}</textarea>`
+                : `<input type="text" value="${escapeHtml(s.kunci)}" placeholder="Ketik kunci jawaban singkat di sini (atau kosongkan jika dikoreksi manual oleh guru)..."
+                    oninput="ubahFieldParsedSoal(${idx}, 'kunci', this.value)"
+                    class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:border-amber-500 focus:outline-none" />`}
+            </div>`}
         </div>
-      `).join("");
+      `;
+      }).join("");
 
       if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise().catch(() => {});
     }
 
     async function kirimSoalKeServer() {
       if (parsedSoalList.length === 0) return;
+
+      const pgTanpaKunci = parsedSoalList.filter(s => s.tipe === "PG" && !String(s.kunci || "").trim());
+      if (pgTanpaKunci.length > 0) {
+        const daftarNo = pgTanpaKunci.map(s => s.noLabel).join(", ");
+        const lanjut = confirm(`Ada ${pgTanpaKunci.length} soal Pilihan Ganda yang belum dipilih kunci jawabannya (No. ${daftarNo}).\n\nTetap simpan ke Bank Soal sekarang? (Klik Batal untuk melengkapi kunci PG terlebih dahulu)`);
+        if (!lanjut) {
+          lompatKePGKosong();
+          return;
+        }
+      }
+
       const btn = document.getElementById("btnSimpanBankSoal");
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengunggah ke Bank Soal...';
