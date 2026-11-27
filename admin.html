@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Guru & Mapel Kelas 6 - SDN 4 Tugusari</title>
+  <title>Dashboard Guru & Mapel - SDN 4 Tugusari</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -305,7 +305,7 @@
               <label class="block text-xs font-bold text-slate-700 mb-1">Unggah Naskah Soal Word (.docx)</label>
               <input type="file" id="inputDocx" accept=".docx"
                 class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:font-bold file:bg-[#be123c] file:text-white hover:file:bg-[#881337]" />
-              <p class="text-[11px] text-slate-500 mt-1">Mendukung format paragraf biasa maupun naskah berbentuk <b>tabel Word</b>, sel gabungan, dan tanda centang (`✅` / `✔`).</p>
+              <p class="text-[11px] text-slate-500 mt-1">Mendukung format tag <code>[SOAL]</code>, <code>[A]</code>-<code>[D]</code>, <code>[ISIAN]</code>, <code>[ESSAY]</code>, <code>[KUNCI]</code>, nomor biasa, maupun <b>tabel Word</b>.</p>
             </div>
 
             <button type="button" id="btnMuatSoalTersimpan" onclick="muatSoalTersimpanKeEditor()"
@@ -328,9 +328,9 @@
             <p class="font-bold text-slate-700"><i class="fa-solid fa-circle-info text-[#be123c] mr-1"></i>Panduan Input & Edit Cepat:</p>
             <ul class="list-disc pl-4 text-[11px] text-slate-600 space-y-1">
               <li><b>PG (1 Benar):</b> Klik salah satu huruf <b>A / B / C / D</b>.</li>
-              <li><b>PGK (Benar &gt; 1):</b> Ubah tipe soal menjadi <b>PGK</b>, lalu klik 2 atau lebih huruf kunci (misal <b>A</b> dan <b>C</b>).</li>
-              <li><b>Tambah Gambar Manual:</b> Klik tombol <b>+ Gambar</b> pada kartu soal untuk menyisipkan gambar dari perangkat (otomatis dikompres).</li>
-              <li><b>Rumus Pecahan:</b> Ketik <code>$\frac{5}{6}$</code> atau <code>$5\frac{3}{10}$</code> di kotak soal/opsi untuk tampilan pecahan rapi.</li>
+              <li><b>PGK (Benar &gt; 1):</b> Ubah tipe soal menjadi <b>PGK</b>, lalu klik 2 atau lebih huruf kunci.</li>
+              <li><b>Isian vs Essay:</b> Klik <b>Ubah Isian ↔ Essay</b> di kanan atas jika bagian uraian ingin dinilai sebagai Essay (skor 0–10).</li>
+              <li><b>Tambah Gambar Manual:</b> Klik tombol <b>+ Gambar</b> pada kartu soal untuk menyisipkan gambar dari perangkat.</li>
             </ul>
           </div>
         </div>
@@ -340,12 +340,13 @@
           <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3">
             <div>
               <h3 class="font-bold text-base text-[#881337]">Pratinjau & Input Kunci / Editor Butir Soal</h3>
-              <p class="text-[11px] text-slate-500">Pilih tipe <b>PG</b> (1 benar) atau <b>PGK</b> (benar &gt; 1), tambah gambar manual, dan lengkapi kunci jawaban.</p>
+              <p class="text-[11px] text-slate-500">Periksa soal, gambar, tipe (<b>PG</b>, <b>PGK</b>, <b>ISIAN</b>, <b>ESSAY</b>), dan kunci jawaban sebelum menyimpan.</p>
             </div>
             <div class="flex flex-wrap items-center gap-1.5">
               <div id="ringkasanDeteksiSoal" class="hidden flex flex-wrap items-center gap-1.5 text-xs font-bold mr-1"></div>
+              <button type="button" onclick="konversiMassalIsianEssay()" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-[11px] font-extrabold" title="Tukar semua tipe Isian menjadi Essay atau sebaliknya">Ubah Isian ↔ Essay</button>
               <button type="button" onclick="tambahSoalManual('PG')" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-[#881337] text-[11px] font-extrabold">+ PG</button>
-              <button type="button" onclick="tambahSoalManual('PGK')" class="px-2.5 py-1 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-800 text-[11px] font-extrabold">+ PGK (&gt;1)</button>
+              <button type="button" onclick="tambahSoalManual('PGK')" class="px-2.5 py-1 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-800 text-[11px] font-extrabold">+ PGK</button>
               <button type="button" onclick="tambahSoalManual('ISIAN')" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-[11px] font-extrabold">+ Isian</button>
               <button type="button" onclick="tambahSoalManual('ESSAY')" class="px-2.5 py-1 rounded-lg bg-indigo-100 hover:bg-indigo-200 text-indigo-800 text-[11px] font-extrabold">+ Essay</button>
             </div>
@@ -361,7 +362,7 @@
     <section id="tabSesiUjian" class="tab-panel hidden">
       <div class="bg-white max-w-4xl rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
         <div>
-          <h3 class="font-bold text-base text-[#881337]">Jadwal & Token Ujian Kelas 6</h3>
+          <h3 class="font-bold text-base text-[#881337]">Jadwal & Token Ujian</h3>
           <p class="text-xs text-slate-500 mt-0.5">Ubah status menjadi <b>AKTIF</b> pada mata pelajaran yang sedang diujikan, lalu bagikan <b>Token Siswa</b>.</p>
         </div>
         <div class="border border-slate-200 rounded-xl overflow-x-auto">
@@ -642,6 +643,23 @@
       }
     }
 
+    function konversiMassalIsianEssay() {
+      const adaIsian = parsedSoalList.some(s => s.tipe === "ISIAN");
+      const adaEssay = parsedSoalList.some(s => s.tipe === "ESSAY");
+      if (!adaIsian && !adaEssay) {
+        alert("Tidak ada soal bertipe Isian atau Essay pada daftar ini.");
+        return;
+      }
+      const target = adaIsian ? "ESSAY" : "ISIAN";
+      parsedSoalList.forEach(s => {
+        if (s.tipe === "ISIAN" || s.tipe === "ESSAY") {
+          s.tipe = target;
+          s.skorMaks = target === "ESSAY" ? 10 : 5;
+        }
+      });
+      renderPreviewSoal();
+    }
+
     function tambahSoalManual(tipe) {
       const isObjektif = (tipe === "PG" || tipe === "PGK");
       const countTipe = parsedSoalList.filter(s => isObjektif ? (s.tipe === "PG" || s.tipe === "PGK") : s.tipe === tipe).length;
@@ -652,7 +670,7 @@
         opsiA: isObjektif ? "Pilihan A" : "",
         opsiB: isObjektif ? "Pilihan B" : "",
         opsiC: isObjektif ? "Pilihan C" : "",
-        opsiD: isObjektif ? "Pilihan D" : "",
+        opsiD: isObjektif ? "" : "",
         kunci: "",
         skorMaks: tipe === "ESSAY" ? 10 : (tipe === "ISIAN" ? 5 : (tipe === "PGK" ? 2 : 1))
       });
@@ -688,7 +706,7 @@
           s.opsiA = "Pilihan A";
           s.opsiB = "Pilihan B";
           s.opsiC = "Pilihan C";
-          s.opsiD = "Pilihan D";
+          s.opsiD = "";
         }
         if (val === "PG" && String(s.kunci || "").includes(",")) {
           s.kunci = String(s.kunci).split(",")[0].trim();
@@ -697,47 +715,76 @@
       }
     }
 
-    // KOMPRESI GAMBAR OTOMATIS DI BAWAH BATAS 50.000 KARAKTER GOOGLE SHEETS
-    function kompresFileGambarKeDataURL(file, maxCharLimit = 36000) {
+    // KOMPRESI DATA URL GAMBAR DI BAWAH BATAS 50.000 KARAKTER GOOGLE SHEETS
+    function kompresDataURLGambar(srcDataUrl, maxCharLimit = 35000) {
+      return new Promise((resolve) => {
+        if (!srcDataUrl || srcDataUrl.length <= maxCharLimit) {
+          resolve(srcDataUrl);
+          return;
+        }
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          let width = Math.min(img.width, 460);
+          let height = Math.round((img.height * width) / img.width);
+          let quality = 0.8;
+          let dataUrl = srcDataUrl;
+
+          for (let step = 0; step < 8; step++) {
+            canvas.width = width;
+            canvas.height = height;
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+            dataUrl = canvas.toDataURL("image/jpeg", quality);
+            if (dataUrl.length <= maxCharLimit) break;
+            quality = Math.max(0.45, quality - 0.1);
+            width = Math.round(width * 0.82);
+            height = Math.round(height * 0.82);
+          }
+          resolve(dataUrl);
+        };
+        img.onerror = () => resolve(srcDataUrl);
+        img.src = srcDataUrl;
+      });
+    }
+
+    function kompresFileGambarKeDataURL(file, maxCharLimit = 35000) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = (ev) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            let width = Math.min(img.width, 460);
-            let height = Math.round((img.height * width) / img.width);
-            let quality = 0.8;
-            let dataUrl = "";
-
-            for (let step = 0; step < 8; step++) {
-              canvas.width = width;
-              canvas.height = height;
-              ctx.fillStyle = "#ffffff";
-              ctx.fillRect(0, 0, width, height);
-              ctx.drawImage(img, 0, 0, width, height);
-              dataUrl = canvas.toDataURL("image/jpeg", quality);
-              if (dataUrl.length <= maxCharLimit) break;
-              quality = Math.max(0.45, quality - 0.1);
-              width = Math.round(width * 0.82);
-              height = Math.round(height * 0.82);
-            }
-            resolve(dataUrl);
-          };
-          img.onerror = reject;
-          img.src = ev.target.result;
+        reader.onload = async (ev) => {
+          const compressed = await kompresDataURLGambar(ev.target.result, maxCharLimit);
+          resolve(compressed);
         };
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
     }
 
+    async function kompresSemuaGambarDalamSoalList(list) {
+      for (const s of list) {
+        for (const key of ["pertanyaanHTML", "opsiA", "opsiB", "opsiC", "opsiD"]) {
+          if (!s[key] || !s[key].includes("data:image")) continue;
+          const tmp = document.createElement("div");
+          tmp.innerHTML = s[key];
+          const imgs = Array.from(tmp.querySelectorAll("img"));
+          for (const im of imgs) {
+            const src = im.getAttribute("src") || "";
+            if (src.startsWith("data:image") && src.length > 35000) {
+              im.setAttribute("src", await kompresDataURLGambar(src, 35000));
+            }
+          }
+          s[key] = tmp.innerHTML;
+        }
+      }
+    }
+
     async function sisipkanGambarManualSoal(idx, inputEl) {
       const file = inputEl.files && inputEl.files[0];
       if (!file || !parsedSoalList[idx]) return;
       try {
-        const dataUrl = await kompresFileGambarKeDataURL(file, 36000);
+        const dataUrl = await kompresFileGambarKeDataURL(file, 35000);
         if ((parsedSoalList[idx].pertanyaanHTML.length + dataUrl.length) > 48000) {
           alert("Ukuran gambar masih terlalu besar untuk satu sel database. Gunakan gambar yang lebih sederhana.");
           return;
@@ -928,7 +975,10 @@
         return t === "PG" || t === "PGK";
       });
       const soalIsian = bank.filter(r => String(r[2]).trim().toUpperCase() === "ISIAN");
-      const soalEssay = bank.filter(r => String(r[2]).trim().toUpperCase() === "ESSAY");
+      const soalEssay = bank.filter(r => {
+        const t = String(r[2]).trim().toUpperCase();
+        return t === "ESSAY" || t === "URAIAN";
+      });
       const hasilList = dashboardState.hasilUjian || [];
       const nSiswa = hasilList.length;
 
@@ -1088,7 +1138,7 @@
         let jwbObj = {};
         try { jwbObj = JSON.parse(sw.jawaban || "{}"); } catch (e) {}
         const itemsHTML = semuaUraian.map(q => {
-          const qId = String(q[0]), tipe = String(q[2]).trim().toUpperCase(), maxSkor = tipe === "ESSAY" ? 10 : 5;
+          const qId = String(q[0]), tipe = String(q[2]).trim().toUpperCase(), maxSkor = (tipe === "ESSAY" || tipe === "URAIAN") ? 10 : 5;
           const jwbSiswa = jwbObj[qId] || "-", skorSaatIni = Number(sw.skorButir[qId] ?? 0);
           const btns = Array.from({ length: maxSkor + 1 }, (_, k) => `
             <button type="button" onclick="ubahSkorIsianLokal(${sIdx}, '${qId}', ${k}, ${maxSkor})" id="btnScore_${sIdx}_${qId}_${k}"
@@ -1098,7 +1148,7 @@
             <div class="flex flex-col justify-between gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
               <div class="space-y-1">
                 <div class="flex items-center gap-2">
-                  <span class="px-2 py-0.5 rounded font-extrabold text-[10px] text-white ${tipe === "ESSAY" ? "bg-indigo-600" : "bg-[#be123c]"}">${tipe}</span>
+                  <span class="px-2 py-0.5 rounded font-extrabold text-[10px] text-white ${(tipe === "ESSAY" || tipe === "URAIAN") ? "bg-indigo-600" : "bg-[#be123c]"}">${tipe}</span>
                   <span class="font-bold text-[#881337]">No. ${escapeHtml(q[3])}</span>
                   <span class="text-slate-500">Kunci: <b class="text-emerald-700">${escapeHtml(q[11] || "(Penilaian Guru)")}</b></span>
                 </div>
@@ -1151,7 +1201,7 @@
       }
     }
 
-    // PARSER OTOMATIS NASKAH WORD (.DOCX) — MENDUKUNG TABEL NASKAH DINAS, SEL GABUNGAN, CENTANG ✅, & PARAGRAF BIASA
+    // PARSER OTOMATIS NASKAH WORD (.DOCX) — MENDUKUNG TAG [SOAL]/[A]/[ISIAN]/[ESSAY]/[KUNCI], TABEL WORD, & NOMOR BIASA
     document.getElementById("inputDocx").addEventListener("change", async (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -1159,6 +1209,7 @@
         const arrayBuffer = await file.arrayBuffer();
         const result = await mammoth.convertToHtml({ arrayBuffer });
         parsedSoalList = parseHtmlNaskahDinas(result.value);
+        await kompresSemuaGambarDalamSoalList(parsedSoalList);
         renderPreviewSoal();
       } catch (err) {
         alert("Gagal membaca file Word (.docx): " + err.message);
@@ -1230,7 +1281,7 @@
 
       const finalizeQ = () => {
         if (!currentQ) return;
-        currentQ.pertanyaanHTML = currentQ.pertanyaanHTML.trim();
+        currentQ.pertanyaanHTML = currentQ.pertanyaanHTML.replace(/^(?:<br\s*\/?>\s*)+|(?:<br\s*\/?>\s*)+$/gi, "").trim();
         if (currentQ.tipe === "PG" && String(currentQ.kunci || "").includes(",")) {
           currentQ.tipe = "PGK";
           currentQ.skorMaks = 2;
@@ -1243,14 +1294,14 @@
       const deteksiHeaderBagian = (plain) => {
         const clean = plain.replace(/\s+/g, " ").trim();
         if (/^I[\.\)]?(?:\s|$)/i.test(clean) && !/^II/i.test(clean)) return "PG";
-        if (/^II[\.\)]?(?:\s|$)/i.test(clean) && !/^III/i.test(clean)) return "ISIAN";
+        if (/^II[\.\)]?(?:\s|$)/i.test(clean) && !/^III/i.test(clean)) return /essay/i.test(clean) ? "ESSAY" : "ISIAN";
         if (/^III[\.\)]?(?:\s|$)/i.test(clean)) return "ESSAY";
         if (/^(?:A|B|C)[\.\)]\s*(?:PILIHAN\s*GANDA)/i.test(clean)) return "PG";
         if (/^(?:A|B|C)[\.\)]\s*(?:ISIAN)/i.test(clean)) return "ISIAN";
         if (/^(?:A|B|C)[\.\)]\s*(?:URAIAN|ESSAY)/i.test(clean)) return "ESSAY";
         if (/berilah\s+tanda\s+silang|pilihan\s+ganda|huruf\s+a\s*,\s*b\s*,\s*c/i.test(clean) && clean.length < 130) return "PG";
         if (/isilah\s+titik|isian\s+singkat|^jawablah\s+pertanyaan\s+di\s+bawah\s+ini\s*[!.:]?$/i.test(clean) && clean.length < 110) return "ISIAN";
-        if (/dengan\s+baik\s+dan\s*benar|uraian|essay|^jawablah\s+soal\s+uraian/i.test(clean) && clean.length < 130) return "ESSAY";
+        if (/dengan\s+baik\s+dan\s*benar|^jawablah\s+soal\s+uraian/i.test(clean) && clean.length < 130) return "ESSAY";
         return null;
       };
 
@@ -1258,6 +1309,10 @@
         const u = plain.toUpperCase();
         return u.startsWith("PEMERINTAH KABUPATEN") ||
                u.startsWith("DINAS PENDIDIKAN") ||
+               u.startsWith("SD NEGERI") ||
+               u.startsWith("KEC.") ||
+               u.startsWith("ALAMAT:") ||
+               u.startsWith("TAHUN PELAJARAN") ||
                u.startsWith("K. NASIONAL") ||
                u.startsWith("SUMATIF ") ||
                u.startsWith("ASESMEN ") ||
@@ -1267,11 +1322,14 @@
                u.startsWith("SELAMAT MENGERJAKAN") ||
                /^TP\s*[:=]/.test(u) ||
                /^MAPEL\s*[:=]/.test(u) ||
+               /^MATA\s+PELAJARAN\s*[:=]/.test(u) ||
+               /^KELAS\s*[:=]/.test(u) ||
+               /^NAMA\s*[:=]/.test(u) ||
                /^HARI\/TANGGAL/.test(u);
       };
 
       const ekstrakKunciDariTeks = (plain, tipe) => {
-        const m = plain.match(/^(?:kunci(?:\s*jawaban)?|kj|jawaban)\s*[:=\-]\s*(.*)$/i);
+        const m = plain.match(/^(?:\[KUNCI\]|kunci(?:\s*jawaban)?|kj|jawaban)\s*[:=\-]?\s*(.*)$/i);
         if (!m) return null;
         let val = m[1].trim();
         if (tipe === "PG" || tipe === "PGK") {
@@ -1282,13 +1340,14 @@
       };
 
       const buatObjekSoal = (tipe, noLabel, htmlAwal, opsi = {}, kunci = "") => {
-        const tFinal = (tipe === "PG" && String(kunci).includes(",")) ? "PGK" : tipe;
+        const tNorm = tipe === "URAIAN" ? "ESSAY" : tipe;
+        const tFinal = (tNorm === "PG" && String(kunci).includes(",")) ? "PGK" : tNorm;
         const bucket = (tFinal === "PG" || tFinal === "PGK") ? "PG" : tFinal;
         counterPerTipe[bucket] = (counterPerTipe[bucket] || 0) + 1;
         return {
           tipe: tFinal,
           noLabel: String(noLabel || counterPerTipe[bucket]),
-          pertanyaanHTML: (pendingStimulus ? pendingStimulus + "<br/>" : "") + htmlAwal,
+          pertanyaanHTML: ((pendingStimulus ? pendingStimulus + "<br/>" : "") + (htmlAwal || "")).replace(/^(?:<br\s*\/?>\s*)+/i, ""),
           opsiA: opsi.A || "",
           opsiB: opsi.B || "",
           opsiC: opsi.C || "",
@@ -1308,7 +1367,7 @@
         }
       };
 
-      // PARSER KHUSUS TABEL NASKAH SOAL DINAS (SEPERTI mtk.docx)
+      // PARSER KHUSUS TABEL NASKAH SOAL DINAS
       const parseTabelNaskah = (tableEl) => {
         const rows = Array.from(tableEl.querySelectorAll(":scope > tbody > tr, :scope > tr"));
         let ditemukanSoalDiTabel = false;
@@ -1342,7 +1401,6 @@
           const c0 = colTexts[0] || "";
           const c1 = colTexts[1] || "";
 
-          // Baris opsi PG di dalam tabel -> col0 kosong, col1 = "A." / "B." / "C." / "D.", col2 = isi opsi
           if (currentQ && (currentQ.tipe === "PG" || currentQ.tipe === "PGK") && !c0 && /^[a-dA-D][\.\)]?$/.test(c1) && cells[2]) {
             const h = c1[0].toUpperCase();
             const { hasCheck, cleaned } = bersihkanCentangKunci(cells[2].innerHTML);
@@ -1353,7 +1411,6 @@
             continue;
           }
 
-          // Sel nomor digabung (misal col0 berisi "4.\n5.\n6.\n7.\n8.\n9.\n10." dan col1 berisi soal-soal)
           const daftarNomorMerged = c0.match(/\b\d+[\.\)]/g);
           if (daftarNomorMerged && daftarNomorMerged.length > 1 && cells[1]) {
             finalizeQ();
@@ -1369,7 +1426,6 @@
             continue;
           }
 
-          // Baris soal tunggal -> col0 = "1." (atau "1"), col1 = teks/gambar soal
           const mNoCol0 = c0.match(/^(\d+)[\.\)]?$/);
           if (mNoCol0 && cells[1]) {
             finalizeQ();
@@ -1405,7 +1461,6 @@
             continue;
           }
 
-          // Stimulus bersama di dalam tabel
           if (!c0 && cells[1] && !/^[a-dA-D][\.\)]?$/.test(c1)) {
             finalizeQ();
             pendingStimulus += (pendingStimulus ? "<br/>" : "") + cells[1].innerHTML.trim();
@@ -1426,6 +1481,38 @@
         if (/^LEMBAR\s+JAWABAN/i.test(plain)) {
           finalizeQ();
           break;
+        }
+
+        // 0. FORMAT TAG BRACKET: [SOAL], [PG], [PGK], [ISIAN], [ESSAY], [URAIAN], [A]-[D], [KUNCI]
+        const mTagMulai = plain.match(/^\[(SOAL|PG|PGK|ISIAN|ESSAY|URAIAN)\]\s*([\s\S]*)$/i);
+        if (mTagMulai) {
+          finalizeQ();
+          const tagJenis = mTagMulai[1].toUpperCase();
+          const tipeBaru = tagJenis === "SOAL" ? (section || "PG") : (tagJenis === "URAIAN" ? "ESSAY" : tagJenis);
+          section = tipeBaru;
+          const sisaHtml = el.innerHTML.replace(/^\s*\[(?:SOAL|PG|PGK|ISIAN|ESSAY|URAIAN)\]\s*/i, "").trim();
+          currentQ = buatObjekSoal(tipeBaru, null, sisaHtml, {}, "");
+          pendingStimulus = "";
+          lastOptionLetter = "";
+          continue;
+        }
+
+        const mTagOpsi = plain.match(/^\[([A-D])\]\s*([\s\S]*)$/i);
+        if (mTagOpsi && currentQ && (currentQ.tipe === "PG" || currentQ.tipe === "PGK")) {
+          const h = mTagOpsi[1].toUpperCase();
+          const isiOpsiHtml = el.innerHTML.replace(/^\s*\[[a-dA-D]\]\s*/i, "").trim();
+          const { hasCheck, cleaned } = bersihkanCentangKunci(isiOpsiHtml);
+          currentQ["opsi" + h] = cleaned;
+          if (hasCheck) tambahKunciOpsi(currentQ, h);
+          lastOptionLetter = h;
+          continue;
+        }
+
+        if (/^\[KUNCI\]/i.test(plain) && currentQ) {
+          const kVal = ekstrakKunciDariTeks(plain, currentQ.tipe);
+          if (kVal !== null) currentQ.kunci = kVal;
+          finalizeQ();
+          continue;
         }
 
         // 1. Cek Penomoran Otomatis Word (<ol>)
@@ -1464,7 +1551,7 @@
               currentQ["opsi" + hurufArr[idx]] = cleaned;
               if (hasCheck) tambahKunciOpsi(currentQ, hurufArr[idx]);
             });
-            lastOptionLetter = "D";
+            lastOptionLetter = hurufArr[Math.min(3, directLis.length - 1)];
             continue;
           }
 
@@ -1563,7 +1650,7 @@
           continue;
         }
 
-        // 3. Tabel Word (tabel naskah soal penuh atau tabel opsi/stimulus)
+        // 3. Tabel Word (tabel naskah soal penuh atau tabel kop/opsi/stimulus)
         if (tag === "TABLE") {
           const diprosesSebagaiNaskah = parseTabelNaskah(el);
           if (diprosesSebagaiNaskah) continue;
@@ -1587,7 +1674,7 @@
             if (foundOptInTable) continue;
           }
           if (currentQ && lastOptionLetter === "") {
-            currentQ.pertanyaanHTML += el.outerHTML;
+            currentQ.pertanyaanHTML += "<br/>" + el.outerHTML;
           } else {
             pendingStimulus += el.outerHTML;
           }
@@ -1657,7 +1744,7 @@
           continue;
         }
 
-        // 7. Konten lanjutan / gambar stimulus
+        // 7. Konten lanjutan / gambar / puisi / bacaan di dalam butir soal
         if (currentQ) {
           if (lastOptionLetter && (currentQ.tipe === "PG" || currentQ.tipe === "PGK")) {
             if (hasImg && !currentQ.kunci && !plain) {
@@ -1668,10 +1755,13 @@
               pendingStimulus += el.outerHTML;
             }
           } else {
-            currentQ.pertanyaanHTML += "<br/>" + (tag === "UL" ? el.outerHTML : el.innerHTML);
+            const isiTambah = tag === "UL" ? el.outerHTML : el.innerHTML.trim();
+            currentQ.pertanyaanHTML += (currentQ.pertanyaanHTML ? "<br/>" : "") + isiTambah;
           }
         } else {
-          pendingStimulus += el.outerHTML;
+          if (!isKopAtauPetunjuk(plain) && !deteksiHeaderBagian(plain) && !/pilihlah\s+jawaban\s+yang\s+paling\s+tepat/i.test(plain)) {
+            pendingStimulus += (pendingStimulus ? "<br/>" : "") + el.innerHTML.trim();
+          }
         }
       }
 
@@ -1702,7 +1792,7 @@
       const jmlPG = parsedSoalList.filter(s => s.tipe === "PG").length;
       const jmlPGK = parsedSoalList.filter(s => s.tipe === "PGK").length;
       const jmlIsian = parsedSoalList.filter(s => s.tipe === "ISIAN").length;
-      const jmlEssay = parsedSoalList.filter(s => s.tipe === "ESSAY").length;
+      const jmlEssay = parsedSoalList.filter(s => s.tipe === "ESSAY" || s.tipe === "URAIAN").length;
       const pgKosong = parsedSoalList.filter(s => (s.tipe === "PG" || s.tipe === "PGK") && !String(s.kunci || "").trim()).length;
 
       if (badgeBox) {
@@ -1720,11 +1810,12 @@
 
       container.innerHTML = parsedSoalList.map((s, idx) => {
         const isObjektif = (s.tipe === "PG" || s.tipe === "PGK");
+        const isEssay = (s.tipe === "ESSAY" || s.tipe === "URAIAN");
         const kunciSet = new Set(String(s.kunci || "").split(",").map(x => x.trim().toUpperCase()).filter(Boolean));
         const butuhKunciPG = isObjektif && kunciSet.size === 0;
         const adaGambar = /<img\s/i.test(s.pertanyaanHTML || "");
 
-        const badgeBg = s.tipe === "PG" ? "bg-[#881337]" : (s.tipe === "PGK" ? "bg-purple-700" : (s.tipe === "ESSAY" ? "bg-indigo-600" : "bg-amber-600"));
+        const badgeBg = s.tipe === "PG" ? "bg-[#881337]" : (s.tipe === "PGK" ? "bg-purple-700" : (isEssay ? "bg-indigo-600" : "bg-amber-600"));
 
         return `
         <div id="cardSoalPreview_${idx}" class="p-3.5 rounded-2xl border-2 ${butuhKunciPG ? "border-amber-300 bg-amber-50/30" : "border-slate-200 bg-slate-50/80"} space-y-2.5 text-xs">
@@ -1735,13 +1826,12 @@
                 <option value="PG" ${s.tipe === "PG" ? "selected" : ""}>PG (1 Benar)</option>
                 <option value="PGK" ${s.tipe === "PGK" ? "selected" : ""}>PGK (Benar &gt; 1)</option>
                 <option value="ISIAN" ${s.tipe === "ISIAN" ? "selected" : ""}>ISIAN</option>
-                <option value="ESSAY" ${s.tipe === "ESSAY" ? "selected" : ""}>ESSAY</option>
+                <option value="ESSAY" ${isEssay ? "selected" : ""}>ESSAY</option>
               </select>
               <span class="font-bold text-slate-600">No.</span>
               <input type="text" value="${escapeHtml(s.noLabel)}" onchange="ubahFieldParsedSoal(${idx}, 'noLabel', this.value)"
                 class="w-12 px-1.5 py-0.5 border border-slate-300 rounded font-extrabold text-center bg-white" />
 
-              <!-- TOMBOL TAMBAH / HAPUS GAMBAR MANUAL -->
               <label class="px-2.5 py-1 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-800 font-extrabold cursor-pointer transition">
                 <i class="fa-regular fa-image mr-1"></i>+ Gambar
                 <input type="file" accept="image/*" class="hidden" onchange="sisipkanGambarManualSoal(${idx}, this)" />
@@ -1777,7 +1867,7 @@
             </div>
           </div>
 
-          <!-- KOTAK EDITOR TEKS/RUMUS (AMAN DARI MATHJAX DOM) -->
+          <!-- KOTAK EDITOR TEKS/RUMUS -->
           <div contenteditable="true" onblur="ubahFieldParsedSoal(${idx}, 'pertanyaanHTML', this.innerHTML); renderPreviewSoal();"
             class="preview-html text-sm text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200 focus:border-[#be123c] focus:outline-none">${s.pertanyaanHTML}</div>
           ${/\$|\\\(|\\\[/.test(s.pertanyaanHTML || "") ? `
@@ -1802,14 +1892,14 @@
               `).join("")}
             </div>` : `
             <div class="bg-white p-2.5 rounded-xl border border-slate-200 space-y-1">
-              <label class="block text-[11px] font-extrabold ${s.tipe === "ESSAY" ? "text-indigo-800" : "text-amber-800"}">
-                <i class="fa-solid fa-key mr-1"></i>${s.tipe === "ESSAY" ? "Kunci / Pedoman Jawaban Essay (Input Manual):" : "Kunci Jawaban Isian Singkat (Input Manual):"}
+              <label class="block text-[11px] font-extrabold ${isEssay ? "text-indigo-800" : "text-amber-800"}">
+                <i class="fa-solid fa-key mr-1"></i>${isEssay ? "Kunci / Pedoman Jawaban Essay (Input Manual):" : "Kunci Jawaban Isian Singkat (Input Manual):"}
               </label>
-              ${s.tipe === "ESSAY"
-                ? `<textarea rows="2" placeholder="Ketik kunci jawaban / rubrik penilaian essay di sini (atau kosongkan jika dikoreksi manual oleh guru)..."
+              ${isEssay
+                ? `<textarea rows="2" placeholder="Ketik kunci jawaban / rubrik penilaian essay di sini..."
                     oninput="ubahFieldParsedSoal(${idx}, 'kunci', this.value)"
                     class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold text-slate-800 focus:border-indigo-500 focus:outline-none">${escapeHtml(s.kunci)}</textarea>`
-                : `<input type="text" value="${escapeHtml(s.kunci)}" placeholder="Ketik kunci jawaban singkat di sini (atau kosongkan jika dikoreksi manual oleh guru)..."
+                : `<input type="text" value="${escapeHtml(s.kunci)}" placeholder="Ketik kunci jawaban singkat di sini..."
                     oninput="ubahFieldParsedSoal(${idx}, 'kunci', this.value)"
                     class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 focus:border-amber-500 focus:outline-none" />`}
             </div>`}
