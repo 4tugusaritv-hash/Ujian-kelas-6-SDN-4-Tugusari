@@ -60,6 +60,61 @@
 <body class="text-slate-800 min-h-screen flex flex-col">
 
 
+  <script>
+    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
+    const KELAS_AKTIF = "6";
+
+    const PROFIL_SEKOLAH = {
+      namaSekolah: "SD Negeri 4 Tugusari",
+      kecamatan: "Kecamatan Sumber Jaya, Kabupaten Lampung Barat",
+      kepalaSekolah: "Amisis Daniyati, S.Pd.SD., M.M.",
+      nipKepalaSekolah: "197504122006042014"
+    };
+
+    const SEMUA_MAPEL_LIST = [
+      "Matematika",
+      "Bahasa Indonesia",
+      "IPAS",
+      "Pendidikan Pancasila",
+      "Seni Budaya",
+      "PJOK",
+      "Bahasa Inggris",
+      "Koding & Kecerdasan Artifisial"
+    ];
+
+    const KODE_MAPEL_SINGKAT = {
+      "Matematika": "MTK",
+      "Bahasa Indonesia": "BINDO",
+      "IPAS": "IPAS",
+      "Pendidikan Pancasila": "PP",
+      "Seni Budaya": "SBDP",
+      "PJOK": "PJOK",
+      "Bahasa Inggris": "BIG",
+      "Koding & Kecerdasan Artifisial": "KKA"
+    };
+
+    const DEFAULT_PENGAMPU_MAPEL = {
+      "Matematika": "Amir Salim, S.Si",
+      "Bahasa Indonesia": "Wali Kelas 6",
+      "IPAS": "Wali Kelas 6",
+      "Pendidikan Pancasila": "Wali Kelas 6",
+      "Seni Budaya": "Guru Mapel Kelas 6",
+      "PJOK": "Guru PJOK Kelas 6",
+      "Bahasa Inggris": "Guru Mapel Kelas 6",
+      "Koding & Kecerdasan Artifisial": "Amir Salim, S.Si"
+    };
+
+    function getGasUrl() {
+      const inp = document.getElementById("inputGasUrl");
+      return (inp && inp.value.trim()) ? inp.value.trim() : DEFAULT_GAS_URL;
+    }
+
+    function buatKodePaket(mapel) {
+      const kode = KODE_MAPEL_SINGKAT[mapel] || String(mapel || "MAPEL").replace(/[^A-Za-z0-9]/g, "").toUpperCase().slice(0, 5);
+      return `${kode}_${KELAS_AKTIF}`;
+    }
+  </script>
+
   <!-- HEADER -->
   <header class="bg-gradient-to-r from-[#881337] via-[#be123c] to-[#9f1239] text-white shadow-md border-b border-[#fbbf24] sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-3">
