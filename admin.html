@@ -20,8 +20,7 @@
   <style>
     body {
       font-family: 'Nunito', sans-serif;
-      background: linear-gradient(160deg, #4a0a13 0%, #6d0f1c 45%, #8b1a2b 100%) !important;
-      background-attachment: fixed !important;
+      background: #f5f5f4 !important;
       padding-bottom: env(safe-area-inset-bottom);
     }
     .font-judul { font-family: 'Fredoka', sans-serif; }
@@ -29,50 +28,23 @@
     .preview-html table { border-collapse: collapse; margin: 0.4rem 0; font-size: 11px; }
     .preview-html td, .preview-html th { border: 1px solid #cbd5e1; padding: 0.25rem 0.45rem; }
 
-    /* ===== TEMA MARUN-EMAS KELAS 6 ===== */
-    body > main, body > footer { position: relative; z-index: 1; }
-    main .bg-white.rounded-2xl, main .bg-white.rounded-3xl { border: 2px solid #f5b301 !important; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .bg-\[\#881337\] { background-color: #6d0f1c !important; }
-    .bg-\[\#be123c\] { background-color: #8b1a2b !important; }
-    .text-\[\#881337\] { color: #6d0f1c !important; }
-    .border-\[\#881337\] { border-color: #6d0f1c !important; }
-    .bg-\[\#fbbf24\] { background-color: #f5b301 !important; }
-    .text-\[\#fbbf24\] { color: #f5b301 !important; }
-    .border-\[\#fbbf24\] { border-color: #f5b301 !important; }
-    .hover\:bg-\[\#be123c\]:hover { background-color: #8b1a2b !important; }
-    .hover\:bg-\[\#881337\]:hover { background-color: #4a0a13 !important; }
-    .hover\:text-\[\#881337\]:hover { color: #6d0f1c !important; }
-    .focus\:border-\[\#be123c\]:focus { border-color: #8b1a2b !important; }
-    .from-\[\#881337\] { --tw-gradient-from: #4a0a13 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(74,10,19,0)) !important; }
-    .via-\[\#be123c\] { --tw-gradient-stops: var(--tw-gradient-from), #6d0f1c, var(--tw-gradient-to, rgba(109,15,28,0)) !important; }
-    .to-\[\#be123c\], .to-\[\#9f1239\] { --tw-gradient-to: #8b1a2b !important; }
-    header { border-bottom: 4px solid #f5b301 !important; }
-    #adminNavControls a { background: #f5b301 !important; color: #4a0a13 !important; font-weight: 800; }
-    #adminNavControls a:hover { background: #ffd24d !important; }
-    #adminNavControls button { background: #4a0a13 !important; border: 1px solid #f5b301; }
-    footer { background: #4a0a13 !important; border-top: 4px solid #f5b301 !important; color: #ffe9a8 !important; line-height: 1.5; }
-    footer b { color: #ffd24d !important; }
-
-    /* Latar animasi kelas 6 */
-    #bgAnim { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-    #bgAnim .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .35; animation: blob 14s ease-in-out infinite alternate; }
-    #bgAnim .b1 { width: 40vmax; height: 40vmax; background: #f5b301; top: -12vmax; left: -10vmax; }
-    #bgAnim .b2 { width: 34vmax; height: 34vmax; background: #c2253b; bottom: -10vmax; right: -8vmax; animation-delay: -6s; }
-    #bgAnim .big6 { position: absolute; right: 4%; top: 50%; transform: translateY(-50%); font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: min(60vmin, 420px); color: rgba(245,179,1,.09); line-height: 1; animation: pulse6 6s ease-in-out infinite; }
-    #bgAnim .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #ffe9a8; animation: twinkle 3s ease-in-out infinite; }
-    #bgAnim .fl { position: absolute; bottom: -70px; color: #f5b301; opacity: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; animation: naik linear infinite; filter: drop-shadow(0 0 6px rgba(245,179,1,.5)); }
-    #bgAnim .fl.ic { color: #ffd24d; }
-    #bgAnim .shoot { position: absolute; top: -10px; width: 110px; height: 2px; background: linear-gradient(90deg, #ffe9a8, transparent); transform: rotate(35deg); opacity: 0; animation: shoot 7s linear infinite; }
-    #bgAnim .rocket { position: absolute; left: -60px; bottom: 8%; font-size: 34px; color: #ffd24d; animation: roket 22s linear infinite; filter: drop-shadow(0 0 10px rgba(255,210,77,.7)); }
-    #bgAnim .awan { position: absolute; font-size: 60px; color: rgba(255,255,255,.07); animation: awan linear infinite; }
-    @keyframes naik { 0% { transform: translate(0,0) rotate(0); opacity: 0; } 10% { opacity: .45; } 50% { transform: translate(28px,-60vh) rotate(180deg); } 90% { opacity: .3; } 100% { transform: translate(-20px,-118vh) rotate(360deg); opacity: 0; } }
-    @keyframes twinkle { 0%,100% { opacity: .15; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.6); } }
-    @keyframes shoot { 0% { transform: translate(0,0) rotate(35deg); opacity: 0; } 4% { opacity: 1; } 14% { transform: translate(-320px,220px) rotate(35deg); opacity: 0; } 100% { opacity: 0; } }
-    @keyframes roket { 0% { transform: translate(0,0) rotate(-40deg); } 100% { transform: translate(115vw,-90vh) rotate(-40deg); } }
-    @keyframes awan { from { transform: translateX(-120px); } to { transform: translateX(115vw); } }
-    @keyframes blob { to { transform: translate(6vmax,5vmax) scale(1.15); } }
-    @keyframes pulse6 { 50% { transform: translateY(-50%) scale(1.06); color: rgba(245,179,1,.15); } }
-    @media (prefers-reduced-motion: reduce) { #bgAnim * { animation: none !important; } }
+    /* ===== TEMA TEDUH PORTAL GURU ===== */
+    main .bg-white.rounded-2xl, main .bg-white.rounded-3xl { border: 1px solid #e2e8f0 !important; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
+    .bg-\[\#881337\] { background-color: #7f2b3a !important; }
+    .bg-\[\#be123c\] { background-color: #93404e !important; }
+    .text-\[\#881337\] { color: #7f2b3a !important; }
+    .border-\[\#881337\] { border-color: #7f2b3a !important; }
+    .bg-\[\#fbbf24\] { background-color: #f3e3b5 !important; }
+    .border-\[\#fbbf24\] { border-color: #d9c48c !important; }
+    .hover\:bg-\[\#be123c\]:hover { background-color: #93404e !important; }
+    .hover\:bg-\[\#881337\]:hover { background-color: #66222e !important; }
+    .focus\:border-\[\#be123c\]:focus { border-color: #93404e !important; }
+    .from-\[\#881337\] { --tw-gradient-from: #7f2b3a !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(127,43,58,0)) !important; }
+    .via-\[\#be123c\] { --tw-gradient-stops: var(--tw-gradient-from), #7f2b3a, var(--tw-gradient-to, rgba(127,43,58,0)) !important; }
+    .to-\[\#be123c\], .to-\[\#9f1239\] { --tw-gradient-to: #7f2b3a !important; }
+    header { border-bottom: 1px solid #66222e !important; }
+    footer { background: #f5f5f4 !important; border-top: 1px solid #e2e8f0 !important; color: #475569 !important; line-height: 1.5; }
+    footer * { color: #475569 !important; }
 
     /* Responsif */
     @media (max-width: 640px) {
@@ -87,65 +59,9 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
-  <div id="bgAnim"><div class="blob b1"></div><div class="blob b2"></div><div class="big6">6</div></div>
-
-  <script>
-    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbz15IiDiCaoDdn8dPjVLCGCrRcKH90ogQExCRSA7c9fVeErlZPXIvgjiNN7pjuOBXyN/exec";
-    const KELAS_AKTIF = "6";
-
-    const PROFIL_SEKOLAH = {
-      namaSekolah: "SD Negeri 4 Tugusari",
-      kecamatan: "Kecamatan Sumber Jaya, Kabupaten Lampung Barat",
-      kepalaSekolah: "Amisis Daniyati, S.Pd.SD., M.M.",
-      nipKepalaSekolah: "197504122006042014"
-    };
-
-    const SEMUA_MAPEL_LIST = [
-      "Matematika",
-      "Bahasa Indonesia",
-      "IPAS",
-      "Pendidikan Pancasila",
-      "Seni Budaya",
-      "PJOK",
-      "Bahasa Inggris",
-      "Koding & Kecerdasan Artifisial"
-    ];
-
-    const KODE_MAPEL_SINGKAT = {
-      "Matematika": "MTK",
-      "Bahasa Indonesia": "BINDO",
-      "IPAS": "IPAS",
-      "Pendidikan Pancasila": "PP",
-      "Seni Budaya": "SBDP",
-      "PJOK": "PJOK",
-      "Bahasa Inggris": "BIG",
-      "Koding & Kecerdasan Artifisial": "KKA"
-    };
-
-    const DEFAULT_PENGAMPU_MAPEL = {
-      "Matematika": "Amir Salim, S.Si",
-      "Bahasa Indonesia": "Wali Kelas 6",
-      "IPAS": "Wali Kelas 6",
-      "Pendidikan Pancasila": "Wali Kelas 6",
-      "Seni Budaya": "Guru Mapel Kelas 6",
-      "PJOK": "Guru PJOK Kelas 6",
-      "Bahasa Inggris": "Guru Mapel Kelas 6",
-      "Koding & Kecerdasan Artifisial": "Amir Salim, S.Si"
-    };
-
-    function getGasUrl() {
-      const inp = document.getElementById("inputGasUrl");
-      return (inp && inp.value.trim()) ? inp.value.trim() : DEFAULT_GAS_URL;
-    }
-
-    function buatKodePaket(mapel) {
-      const kode = KODE_MAPEL_SINGKAT[mapel] || String(mapel || "MAPEL").replace(/[^A-Za-z0-9]/g, "").toUpperCase().slice(0, 5);
-      return `${kode}_${KELAS_AKTIF}`;
-    }
-  </script>
 
   <!-- HEADER -->
-  <header class="bg-gradient-to-r from-[#881337] via-[#be123c] to-[#9f1239] text-white shadow-md border-b-4 border-[#fbbf24] sticky top-0 z-30">
+  <header class="bg-gradient-to-r from-[#881337] via-[#be123c] to-[#9f1239] text-white shadow-md border-b border-[#fbbf24] sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3 min-w-0">
         <div class="w-10 h-10 rounded-xl bg-white p-1 shadow flex items-center justify-center shrink-0 overflow-hidden ring-2 ring-[#fbbf24]">
@@ -160,7 +76,7 @@
             <h1 class="font-judul font-bold text-sm sm:text-lg leading-tight">Portal Guru & Admin — Kelas 6</h1>
             <span class="px-2 py-0.5 rounded-full bg-[#fbbf24] text-[#881337] text-[10px] font-extrabold">KELAS 6</span>
           </div>
-          <p class="text-[11px] sm:text-xs font-extrabold leading-tight" style="color:#ffd24d"><i class="fa-solid fa-user-tie mr-1"></i>Kepala Sekolah: Amisis Daniyati, S.Pd.SD., M.M.</p>
+          <p class="text-[11px] sm:text-xs font-extrabold leading-tight" style="color:#f3e3b5"><i class="fa-solid fa-user-tie mr-1"></i>Kepala Sekolah: Amisis Daniyati, S.Pd.SD., M.M.</p>
           <p id="headerGuruInfo" class="text-[11px] sm:text-xs text-amber-200 truncate">SD Negeri 4 Tugusari • Kec. Sumber Jaya, Kab. Lampung Barat</p>
         </div>
       </div>
@@ -182,7 +98,7 @@
   <!-- LOGIN GURU & ADMIN KELAS 6 -->
   <main id="adminLoginSection" class="flex-1 flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-xl border-2 border-rose-100 overflow-hidden">
-      <div class="bg-gradient-to-br from-[#881337] to-[#be123c] p-6 text-white flex items-center gap-4 border-b-4 border-[#fbbf24]">
+      <div class="bg-gradient-to-br from-[#881337] to-[#be123c] p-6 text-white flex items-center gap-4 border-b border-[#fbbf24]">
         <div class="w-14 h-14 rounded-2xl bg-white p-1.5 shadow flex items-center justify-center shrink-0 ring-2 ring-[#fbbf24]">
           <img src="logo.png" alt="Logo" class="w-full h-full object-contain"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -215,7 +131,7 @@
         </details>
 
         <button type="submit" id="btnLoginAdmin"
-          class="w-full py-3 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white font-bold text-sm transition shadow-md border-b-4 border-[#fbbf24]">
+          class="w-full py-3 rounded-xl bg-[#881337] hover:bg-[#be123c] text-white font-bold text-sm transition shadow-md border-b border-[#fbbf24]">
           Masuk ke Dashboard Kelas 6
         </button>
 
@@ -2203,29 +2119,6 @@
       a.download = `Analisis_Nilai_${paket}.xlsx`;
       a.click();
     }
-  </script>
-
-  <script>
-    /* Latar animasi kelas 6: bintang, roket, awan, ikon belajar & simbol matematika */
-    (function () {
-      const box = document.getElementById("bgAnim"), hp = window.innerWidth < 640;
-      const R = (a, b) => a + Math.random() * (b - a);
-      const add = (html, tag, cls, st) => {
-        const e = document.createElement(tag); e.className = cls; e.innerHTML = html;
-        Object.assign(e.style, st); box.appendChild(e);
-      };
-      for (let i = 0; i < (hp ? 35 : 70); i++) add("", "div", "star", { left: R(0, 100) + "%", top: R(0, 100) + "%", animationDelay: R(0, 3) + "s", animationDuration: R(2, 5) + "s" });
-      for (let i = 0; i < 3; i++) add("", "div", "shoot", { left: R(40, 100) + "%", animationDelay: (i * 2.5 + R(0, 2)) + "s", animationDuration: R(6, 10) + "s" });
-      add('<i class="fa-solid fa-rocket"></i>', "div", "rocket", {});
-      for (let i = 0; i < 3; i++) add('<i class="fa-solid fa-cloud"></i>', "div", "awan", { top: R(5, 70) + "%", fontSize: R(50, 110) + "px", animationDuration: R(60, 110) + "s", animationDelay: (-R(0, 80)) + "s" });
-      const ikon = ["book-open", "pencil", "ruler-combined", "calculator", "graduation-cap", "lightbulb", "atom", "flask", "globe", "star", "trophy", "puzzle-piece", "brain", "compass-drafting"];
-      const sim = ["+", "−", "×", "÷", "=", "π", "6", "½", "%", "√", "∠", "△", "x²"];
-      for (let i = 0; i < (hp ? 16 : 30); i++) {
-        const st = { left: R(0, 95) + "%", fontSize: R(18, 38) + "px", animationDuration: R(16, 32) + "s", animationDelay: (-R(0, 28)) + "s" };
-        if (i % 2 === 0) add('<i class="fa-solid fa-' + ikon[(i / 2 | 0) % ikon.length] + '"></i>', "span", "fl ic", st);
-        else add(sim[(i / 2 | 0) % sim.length], "span", "fl", st);
-      }
-    })();
   </script>
 </body>
 </html>
