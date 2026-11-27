@@ -113,12 +113,23 @@ const KELAS_SISWA="6";
       <div class="bg-amber-50 border-2 border-gold rounded-2xl p-3 text-xs text-amber-900 space-y-1">
         <p class="font-extrabold"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>Tata Tertib Ujian Online:</p>
         <ul class="list-disc pl-4 space-y-0.5 text-[11px] sm:text-xs">
-          <li>Dilarang membuka tab lain, Google, atau keluar dari layar ujian.</li>
+          <li>Ujian berjalan dalam <b>layar penuh</b>. Dilarang membuka tab lain, Google, atau keluar dari layar ujian.</li>
           <li>Setiap perpindahan layar membunyikan <b>alarm peringatan</b> dan tercatat otomatis.</li>
           <li>Jika melebihi batas pelanggaran, ujian otomatis dikumpulkan.</li>
         </ul>
       </div>
-      <button type="submit" id="btnMulaiUjian" class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 border-b-4 border-gold font-bold text-sm transition shadow-md">
+      <div class="bg-rose-50 border-2 border-maroon rounded-2xl p-3 text-xs text-slate-700 space-y-2">
+        <p class="font-extrabold text-maroon"><i class="fa-solid fa-volume-high mr-1"></i>Wajib: Aktifkan Suara HP</p>
+        <p>Matikan mode senyap/getar, besarkan volume media sampai penuh, lalu tekan <b>Tes Suara</b>. Hitung berapa kali bunyi "bip", kemudian pilih jumlahnya.</p>
+        <button type="button" onclick="tesSuara()" class="w-full py-2 rounded-xl bg-gold text-maroon font-extrabold"><i class="fa-solid fa-play mr-1"></i>Tes Suara</button>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="cekSuara(2)" class="py-2 rounded-xl bg-white border-2 border-slate-200 font-extrabold">2 kali</button>
+          <button type="button" onclick="cekSuara(3)" class="py-2 rounded-xl bg-white border-2 border-slate-200 font-extrabold">3 kali</button>
+          <button type="button" onclick="cekSuara(4)" class="py-2 rounded-xl bg-white border-2 border-slate-200 font-extrabold">4 kali</button>
+        </div>
+        <p id="statusSuara" class="font-extrabold text-red-600">Suara belum dicek.</p>
+      </div>
+      <button type="submit" id="btnMulaiUjian" disabled style="opacity:.5" class="w-full py-3 rounded-xl bg-maroon hover:bg-maroon-2 text-gold-2 border-b-4 border-gold font-bold text-sm transition shadow-md">
         <i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal
       </button>
     </form>
@@ -182,6 +193,26 @@ const KELAS_SISWA="6";
   </div>
 </div>
 
+<div id="modalKirim" class="hidden fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-sm w-full rounded-3xl p-6 border-4 border-gold text-center space-y-4">
+    <p id="teksKirim" class="text-sm font-bold text-slate-700"></p>
+    <div class="grid grid-cols-2 gap-2">
+      <button type="button" onclick="document.getElementById('modalKirim').classList.add('hidden')" class="py-2.5 rounded-xl bg-slate-100 font-bold text-sm">Batal</button>
+      <button type="button" onclick="document.getElementById('modalKirim').classList.add('hidden');kirimJawabanKeServer('Dikumpulkan Siswa')" class="py-2.5 rounded-xl bg-maroon text-gold-2 font-bold text-sm">Ya, Kumpulkan</button>
+    </div>
+  </div>
+</div>
+
+<div id="layarKunci" class="hidden fixed inset-0 flex items-center justify-center p-4" style="z-index:60;background:#4a0a13">
+  <div class="bg-white max-w-sm w-full rounded-3xl p-6 border-4 border-gold text-center space-y-3">
+    <div class="text-4xl text-maroon"><i class="fa-solid fa-lock"></i></div>
+    <h3 class="font-judul text-lg font-bold text-maroon">Layar Ujian Terkunci</h3>
+    <p class="text-sm text-slate-700 font-semibold">Kamu berada di luar layar penuh. Tekan tombol di bawah untuk melanjutkan. Waktu ujian tetap berjalan.</p>
+    <p class="text-xs font-bold text-red-600">Pelanggaran: <span id="infoKunci">0</span></p>
+    <button type="button" onclick="masukLayarPenuh()" class="w-full py-3 rounded-xl bg-maroon text-gold-2 font-bold text-sm">Kembali ke Layar Penuh</button>
+  </div>
+</div>
+
 <footer class="bg-maroon-3 border-t-4 border-gold py-3 px-4 text-center text-[11px] sm:text-xs text-amber-100 mt-auto space-y-0.5">
   <p>SD Negeri 4 Tugusari &bull; Kec. Sumber Jaya, Kab. Lampung Barat</p>
   <p>Kepala Sekolah: <span class="font-extrabold text-gold-2">Amisis Daniyati, S.Pd.SD., M.M.</span></p>
@@ -222,6 +253,48 @@ function bunyikanAlarmPelanggaran(){
 }
 ["click","touchstart","keydown"].forEach(evt=>document.addEventListener(evt,siapkanAudioAlarm,{passive:true}));
 
+let jumlahBip=0,suaraSiap=false;
+function tesSuara(){
+  siapkanAudioAlarm();
+  if(!examAudioCtx){document.getElementById("statusSuara").textContent="Browser ini tidak bisa memutar suara. Gunakan Chrome.";return;}
+  jumlahBip=2+Math.floor(Math.random()*3);
+  const now=examAudioCtx.currentTime;
+  for(let i=0;i<jumlahBip;i++){
+    const o=examAudioCtx.createOscillator(),g=examAudioCtx.createGain(),t=now+.1+i*.6;
+    o.type="square";o.frequency.value=880;g.gain.value=.4;
+    o.connect(g);g.connect(examAudioCtx.destination);o.start(t);o.stop(t+.25);
+  }
+  document.getElementById("statusSuara").textContent="Dengarkan, lalu pilih jumlah bunyi.";
+}
+function cekSuara(n){
+  const st=document.getElementById("statusSuara"),btn=document.getElementById("btnMulaiUjian");
+  suaraSiap=jumlahBip>0&&n===jumlahBip;jumlahBip=0;
+  btn.disabled=!suaraSiap;btn.style.opacity=suaraSiap?"1":".5";
+  st.textContent=suaraSiap?"Suara aktif. Kamu boleh mulai.":"Belum tepat. Besarkan volume lalu tekan Tes Suara lagi.";
+  st.className="font-extrabold "+(suaraSiap?"text-emerald-700":"text-red-600");
+}
+
+const elLayar=document.documentElement;
+const mintaLayarPenuh=elLayar.requestFullscreen||elLayar.webkitRequestFullscreen;
+const sedangLayarPenuh=()=>Boolean(document.fullscreenElement||document.webkitFullscreenElement);
+function masukLayarPenuh(){
+  siapkanAudioAlarm();
+  if(!mintaLayarPenuh){document.getElementById("layarKunci").classList.add("hidden");return;}
+  try{const p=mintaLayarPenuh.call(elLayar);if(p&&p.catch)p.catch(()=>{});}catch(e){}
+}
+function keluarLayarPenuh(){
+  document.getElementById("layarKunci").classList.add("hidden");
+  const f=document.exitFullscreen||document.webkitExitFullscreen;
+  if(f&&sedangLayarPenuh()){try{const p=f.call(document);if(p&&p.catch)p.catch(()=>{});}catch(e){}}
+}
+function saatLayarPenuhBerubah(){
+  if(!ujianState||!ujianState.aktif||isSubmitting)return;
+  const penuh=sedangLayarPenuh();
+  document.getElementById("layarKunci").classList.toggle("hidden",penuh);
+  if(!penuh)catatPelanggaran("Keluar dari mode layar penuh");
+}
+["fullscreenchange","webkitfullscreenchange"].forEach(v=>document.addEventListener(v,saatLayarPenuhBerubah));
+
 window.addEventListener("DOMContentLoaded",()=>{
   const saved=localStorage.getItem(STORAGE_KEY);
   if(saved){try{const p=JSON.parse(saved);
@@ -244,17 +317,18 @@ document.getElementById("formMulaiUjian").addEventListener("submit",async(e)=>{
   const token=document.getElementById("inputTokenUjian").value.trim().toUpperCase();
   const btn=document.getElementById("btnMulaiUjian");
   const resetBtn=()=>{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-play mr-1.5"></i> Mulai Kerjakan Soal';};
-  if(!namaSiswa||!token)return;
+  if(!namaSiswa||!token||!suaraSiap)return;
+  masukLayarPenuh();
   btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Memeriksa Token & Memuat Soal...';
   try{
     const res=await callGasSiswa({action:"mulaiUjian",namaSiswa,kelas:KELAS_SISWA,token});
-    if(res.status!=="success"){alert(res.message||"Gagal memulai ujian.");resetBtn();return;}
+    if(res.status!=="success"){keluarLayarPenuh();alert(res.message||"Gagal memulai ujian.");resetBtn();return;}
     const durasiMenit=Number(res.pengaturan.durasiMenit)||75;
     const soal=(res.soalList||[]).map(q=>{let t=String(q.tipe||"PG").trim().toUpperCase();if(t==="URAIAN"||t==="ESAI")t="ESSAY";return{...q,tipe:t};});
     ujianState={aktif:true,namaSiswa,kelas:KELAS_SISWA,paket:res.sesi.paket,mapel:res.sesi.mapel,guruPengampu:res.sesi.guruPengampu||"",durasiMenit,
       maxCurang:Number(res.pengaturan.maxCurang)||25,endTime:Date.now()+durasiMenit*60000,soalList:soal,jawaban:{},ragu:{},pelanggaran:0,logCurang:[]};
     simpanLokal();aktifkanModeUjian();
-  }catch(err){alert("Gagal terhubung ke server ujian. Periksa jaringan internet Anda.");resetBtn();}
+  }catch(err){keluarLayarPenuh();alert("Gagal terhubung ke server ujian. Periksa jaringan internet Anda.");resetBtn();}
 });
 
 function simpanLokal(){if(ujianState)localStorage.setItem(STORAGE_KEY,JSON.stringify(ujianState));}
@@ -268,6 +342,7 @@ function aktifkanModeUjian(){
   document.getElementById("infoMapelGuru").textContent=`${ujianState.mapel} (${ujianState.paket})`;
   document.getElementById("maxPelanggaran").textContent=ujianState.maxCurang;
   updateTampilanPelanggaran();mulaiTimerUjian();pasangAntiCurang();pindahSoal(0);
+  if(mintaLayarPenuh&&!sedangLayarPenuh())document.getElementById("layarKunci").classList.remove("hidden");
 }
 
 function mulaiTimerUjian(){
@@ -305,6 +380,7 @@ function catatPelanggaran(alasan){
 }
 function tutupModalPeringatan(){siapkanAudioAlarm();document.getElementById("modalPeringatan").classList.add("hidden");}
 function updateTampilanPelanggaran(){
+  document.getElementById("infoKunci").textContent=`${ujianState.pelanggaran} dari ${ujianState.maxCurang}`;
   document.getElementById("countPelanggaran").textContent=ujianState.pelanggaran;
   if(ujianState.pelanggaran>0)document.getElementById("badgePelanggaran").className="px-3 py-1.5 rounded-xl bg-red-600 text-white text-xs font-extrabold flex items-center gap-1.5";
 }
@@ -409,7 +485,8 @@ function konfirmasiSubmitUjian(otomatis){
   const done=ujianState.soalList.filter(q=>String(ujianState.jawaban[q.id]||"").trim()!=="").length;
   const belum=total-done;
   const pesan=belum>0?`Masih ada ${belum} soal yang belum dijawab.\n\nApakah kamu yakin ingin mengumpulkan jawaban sekarang?`:"Semua soal sudah dijawab. Kumpulkan jawaban sekarang?";
-  if(confirm(pesan))kirimJawabanKeServer("Dikumpulkan Siswa");
+  document.getElementById("teksKirim").textContent=pesan;
+  document.getElementById("modalKirim").classList.remove("hidden");
 }
 
 async function kirimJawabanKeServer(alasan){
@@ -417,6 +494,8 @@ async function kirimJawabanKeServer(alasan){
   isSubmitting=true;ujianState.aktif=false;
   if(timerInterval)clearInterval(timerInterval);
   document.getElementById("modalPeringatan").classList.add("hidden");
+  document.getElementById("modalKirim").classList.add("hidden");
+  keluarLayarPenuh();
   document.getElementById("examSection").classList.add("hidden");
   document.getElementById("examTopStatus").classList.add("hidden");
   document.getElementById("finishSection").classList.remove("hidden");
@@ -432,9 +511,7 @@ async function kirimJawabanKeServer(alasan){
         <div class="flex justify-between gap-2"><span class="text-slate-500">Status Pengumpulan:</span><b class="text-right">${escapeHtml(alasan)}</b></div>
         <div class="flex justify-between gap-2"><span class="text-slate-500">Catatan Keluar Layar:</span><b>${ujianState.pelanggaran} kali</b></div>
         <hr class="border-gold/60 my-1" />
-        ${res.adaUraian
-          ?`<div class="p-2.5 rounded-xl bg-amber-100 border border-gold text-amber-900 font-bold">Skor Pilihan Ganda: ${res.skorPG}. Nilai akhir akan muncul lengkap setelah Guru mengoreksi jawaban Isian/Essay.</div>`
-          :`<div class="flex justify-between items-center text-sm pt-1"><span class="font-bold text-slate-700">Nilai Akhir:</span><span class="px-3 py-1 rounded-xl bg-maroon text-gold-2 font-extrabold text-base">${res.nilaiAkhir}</span></div>`}`;
+        <div class="p-3 rounded-xl bg-white border border-gold text-center text-sm font-bold text-maroon">Hebat, kamu sudah menyelesaikan ujian! Setiap usaha yang jujur membuatmu semakin pintar. Terus rajin belajar, berdoa, dan percaya pada dirimu sendiri. Kamu pasti bisa!</div>`;
     }else{
       box.innerHTML=`<p class="text-red-600 font-bold">${escapeHtml(res.message||"Terjadi kendala saat menyimpan.")}</p>`;
     }
